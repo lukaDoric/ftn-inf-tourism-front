@@ -17,7 +17,7 @@ function setUserLoginState(isLoggedIn: boolean) {
 
 function handleLogin(event: Event) {
     event.preventDefault();
-
+    
     const form = document.querySelector("form") as HTMLFormElement;
     const formData = new FormData(form);
     const username = formData.get("username") as string;
@@ -27,12 +27,7 @@ function handleLogin(event: Event) {
         .then((user) => {
             localStorage.setItem('username', user.username);
             localStorage.setItem('role', user.role);
-            localStorage.setItem('userId', user.id.toString());
             setUserLoginState(true);
-            if (user.role === 'vlasnik') {
-
-                window.location.href = `../../../restaurants/pages/viewRestaurants/viewRestaurants.html`;
-            }
         })
         .catch((error) => {
             console.error('Login failed', error.message);
