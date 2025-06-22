@@ -1,5 +1,5 @@
-import { User } from "../../users/model/user.model";
-import { Meal } from "./meal.model";
+import { User } from "../../users/model/user.model.js";
+import { Meal } from "./meal.model.js";
 
 export interface Restaurant {
   id?: number;

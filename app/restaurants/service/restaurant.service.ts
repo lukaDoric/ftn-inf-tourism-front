@@ -59,8 +59,8 @@ export class RestaurantService {
         }
         return response.json();
       })
-      .then((user: Restaurant) => {
-        return user;
+      .then((restaurant: Restaurant) => {
+        return restaurant;
       })
       .catch((error) => {
         console.error(`Error:`, error.status);
@@ -80,8 +80,8 @@ export class RestaurantService {
         }
         return response.json();
       })
-      .then((user: Restaurant) => {
-        return user;
+      .then((restaurant: Restaurant) => {
+        return restaurant;
       })
       .catch((error) => {
         console.error(`Error:`, error.status);

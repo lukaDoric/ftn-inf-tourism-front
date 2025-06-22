@@ -203,8 +203,7 @@ longitudeInput.addEventListener("blur", () => {
 
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-  const ready = updateSubmitButton();
-  if (ready) {
+  if (updateSubmitButton()) {
     submitForm();
   }
 });
