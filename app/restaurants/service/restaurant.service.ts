@@ -17,10 +17,10 @@ export class RestaurantService {
       })
       .then((data) => {
         if (ownerId) {
-          // API vraća niz restorana direktno ako je ownerId prosleđen
+          // API vraca niz restorana direktno ako je ownerId prosledjen
           return data as Restaurant[];
         } else {
-          // API vraća objekat sa poljem Data ako nema ownerId
+          // API vraca objekat sa poljem Data ako nema ownerId
           return data.Data as Restaurant[];
         }
       })
@@ -40,6 +40,48 @@ export class RestaurantService {
       })
       .then((restaurants: Restaurant) => {
         return restaurants;
+      })
+      .catch((error) => {
+        console.error(`Error:`, error.status);
+        throw error;
+      });
+  }
+
+  add(formData: Restaurant): Promise<Restaurant> {
+    return fetch(this.apiURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw { status: response.status, message: response.text };
+        }
+        return response.json();
+      })
+      .then((user: Restaurant) => {
+        return user;
+      })
+      .catch((error) => {
+        console.error(`Error:`, error.status);
+        throw error;
+      });
+  }
+
+  update(id: string, formData: Restaurant): Promise<Restaurant> {
+    return fetch(`${this.apiURL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw { status: response.status, message: response.text };
+        }
+        return response.json();
+      })
+      .then((user: Restaurant) => {
+        return user;
       })
       .catch((error) => {
         console.error(`Error:`, error.status);

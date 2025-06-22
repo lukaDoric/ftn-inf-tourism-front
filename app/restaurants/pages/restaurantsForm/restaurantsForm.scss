@@ -66,6 +66,7 @@ body {
   }
 
   .error-msg {
+    visibility: hidden;
     color: $warn-color;
     font-size: 12px;
     margin-left: 0;
@@ -95,7 +96,6 @@ body {
   }
 }
 
-// Opcionalno za mobilni prikaz
 @media (max-width: 768px) {
   #restaurant-form-container {
     flex-direction: column;

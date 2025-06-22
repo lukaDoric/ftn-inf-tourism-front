@@ -3,15 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dodaj restoran</title>
+    <title id="restaurant-head-title">Dodaj restoran</title>
     <link
       rel="stylesheet"
       href="../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.css"
     />
-    <script
-      type="module"
-      src="../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.js"
-    ></script>
   </head>
   <body>
     <nav class="navbar">
@@ -28,7 +24,9 @@
       <div class="half-image"></div>
 
       <form id="restaurant-form">
-        <div class="form-row"><h1>Unesi novi restoran</h1></div>
+        <div class="form-row">
+          <h1 id="new-restaurant-title">Unesi novi restoran</h1>
+        </div>
         <div class="form-row">
           <label for="name">Naziv</label>
           <input
@@ -38,7 +36,9 @@
             placeholder=" Naziv vaseg restorana"
           />
         </div>
-        <span id="name-error" class="error-msg"></span>
+        <span id="name-error" class="error-msg"
+          >Ime se mora sastojati bar od 2 karaktera</span
+        >
 
         <div class="form-row">
           <label for="description">Opis</label>
@@ -47,9 +47,10 @@
             name="description"
             rows="4"
             placeholder="Unesite opis..."
+            maxlength="250"
           ></textarea>
         </div>
-        <span id="description-error" class="error-msg"></span>
+        <span id="description-error" class="error-msg">Polje je obavezno</span>
 
         <div class="form-row">
           <label for="capacity">Kapacitet</label>
@@ -58,9 +59,10 @@
             id="capacity"
             name="capacity"
             placeholder="Unesite maksimalan broj gostiju"
+            min="1"
           />
         </div>
-        <span id="capacity-error" class="error-msg"></span>
+        <span id="capacity-error" class="error-msg">Polje je obavezno</span>
 
         <div class="form-row">
           <label for="imageURL">URL do slike</label>
@@ -71,7 +73,7 @@
             placeholder="Stavite URL od slike vaseg restorana"
           />
         </div>
-        <span id="imageURL-error" class="error-msg"></span>
+        <span id="imageURL-error" class="error-msg">Polje je obavezno</span>
 
         <div class="form-row">
           <label for="latitude">Lat</label>
@@ -82,7 +84,7 @@
             placeholder="Geografska sirina"
           />
         </div>
-        <span id="latitude-error" class="error-msg"></span>
+        <span id="latitude-error" class="error-msg">Polje je obavezno</span>
 
         <div class="form-row">
           <label for="longitude">Long</label>
@@ -93,7 +95,7 @@
             placeholder="Geografska duzina"
           />
         </div>
-        <span id="longitude-error" class="error-msg"></span>
+        <span id="longitude-error" class="error-msg">Polje je obavezno</span>
 
         <div class="form-row">
           <label for="status">Status restorana:</label>
@@ -105,9 +107,15 @@
         <span id="status-error" class="error-msg"></span>
 
         <div class="form-row">
-          <button type="submit" class="restaurant-button">Sačuvaj</button>
+          <button type="submit" id="submitBtn" class="restaurant-button">
+            Sačuvaj
+          </button>
         </div>
       </form>
     </div>
+    <script
+      type="module"
+      src="../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.js"
+    ></script>
   </body>
 </html>

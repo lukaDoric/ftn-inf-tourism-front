@@ -6,11 +6,11 @@ export interface Restaurant {
   name: string;
   description: string;
   capacity: number;
-  imgURL: string;
+  imageURL: string;
   latitude: number;
   longitude: number;
   status: string;
-  owner: User;
+  owner?: User;
   ownerId: number;
   meals: Meal[];
 }

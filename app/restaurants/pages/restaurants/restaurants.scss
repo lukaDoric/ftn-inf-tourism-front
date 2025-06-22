@@ -53,11 +53,13 @@ body {
 #restaurants-container {
   display: flex;
   flex-direction: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
   padding: 40px;
   gap: 50px;
 
   .restaurant-card {
+    min-width: 450px;
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;

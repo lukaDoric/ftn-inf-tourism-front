@@ -25,7 +25,7 @@ function renderRestaurants(restaurants: Restaurant[]): void {
 
     //Prvo cu prikazati sliku
     const image = document.createElement("img");
-    image.src = restaurant.imgURL;
+    image.src = restaurant.imageURL;
     image.className = "restaurant-image";
 
     //Zatim naslov
