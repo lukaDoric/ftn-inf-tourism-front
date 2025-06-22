@@ -1,5 +1,5 @@
 export interface Keypoint{
-    id: number;
+    id?: number;
     order: number;
     name: string;
     description: string;
