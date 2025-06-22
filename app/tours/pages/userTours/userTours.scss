@@ -1,0 +1,67 @@
+@import "../../../styles/global";
+
+
+.main {
+  width: 60%;
+  margin: 0 auto;         
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+  button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+
+        & + button {
+          margin-left: 0.5rem;
+        }
+      } 
+
+  .main-welcome,
+  .main-options,
+  .main-content {
+    width: 100%;         
+    margin-bottom: 1.5rem;
+  }
+
+  .main-content {
+    table.tourlist {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+      th, td {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        text-align: left;
+        font-size: 0.95rem;
+      }
+
+      th {
+        background-color: #f1f1f1;
+        font-weight: bold;
+      }
+
+      td {
+        vertical-align: top;
+      }
+
+      td:last-child,
+      td:nth-last-child(2) {
+        white-space: nowrap;
+      }
+
+    }
+  }
+}

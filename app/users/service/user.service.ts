@@ -2,10 +2,10 @@ import { User } from "../model/user.model";
 
 export class UserService {
   private apiUrl: string;
-
   constructor() {
     this.apiUrl = "http://localhost:48696/api/users";
   }
+
 
   login(username: string, password: string): Promise<User> {
     const url = `${this.apiUrl}/login`;
@@ -34,3 +34,4 @@ export class UserService {
       });
   }
 }
+
