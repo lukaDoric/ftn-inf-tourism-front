@@ -3,6 +3,11 @@ import { RestaurantService } from "../../service/restaurant.service.js";
 
 const restaurantService = new RestaurantService();
 
+const addBtn = document.querySelector("#addBtn");
+addBtn.addEventListener("click", function () {
+  window.location.href = "../restaurantsForm/restaurantsForm.html";
+});
+
 function renderRestaurants(restaurants: Restaurant[]): void {
   const div = document.querySelector("#restaurants-container");
   if (!div) return;
@@ -48,12 +53,15 @@ function renderRestaurants(restaurants: Restaurant[]): void {
     actions.className = "restaurants-actions";
 
     const detailsBtn = document.createElement("button");
-    detailsBtn.textContent = "Izmeni";
+    detailsBtn.textContent = "Detalji";
     detailsBtn.className = "restaurant-button";
 
     const editBtn = document.createElement("button");
     editBtn.textContent = "Izmeni";
     editBtn.className = "restaurant-button";
+    editBtn.addEventListener("click", function () {
+      window.location.href = `../restaurantsForm/restaurantsForm.html?id=${restaurant.id}`;
+    });
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Obrisi";

@@ -1,0 +1,124 @@
+@import "../../../styles/global.scss";
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url("https://img.freepik.com/free-photo/flat-lay-tasty-local-food-assortment-with-copy-space_23-2148833802.jpg?ga=GA1.1.1171597954.1750573227&semt=ais_hybrid&w=740");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#restaurant-form-container {
+  margin-top: 30px;
+  flex: 1;
+  display: flex;
+  width: 90vw;
+  max-width: 1200px;
+  height: calc(100vh - 60px); // cela visina ekrana minus navbar
+  background-color: rgba(255, 255, 255, 0.85); // providna pozadina za container
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  align-self: center;
+}
+
+.half-image {
+  width: 50%;
+  background-image: url("https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg?cs=srgb&dl=pexels-life-of-pix-67468.jpg&fm=jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+#restaurant-form {
+  width: 50%;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-weight: bold;
+      color: black;
+      font-size: 14px;
+    }
+
+    input,
+    textarea,
+    select {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  .error-msg {
+    color: $warn-color;
+    font-size: 12px;
+    margin-left: 0;
+  }
+
+  .restaurant-button {
+    align-self: flex-end;
+    background-color: $button-color;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: darken($button-color, 10%);
+      box-shadow: 0 6px 12px rgba(40, 167, 69, 0.5);
+      transform: translateY(-3px);
+      cursor: pointer;
+    }
+
+    &:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
+    }
+  }
+}
+
+// Opcionalno za mobilni prikaz
+@media (max-width: 768px) {
+  #restaurant-form-container {
+    flex-direction: column;
+    height: auto;
+    width: 90vw;
+  }
+
+  .half-image,
+  #restaurant-form {
+    width: 100%;
+  }
+
+  #restaurant-form {
+    padding: 20px;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 10vw;
+  }
+
+  .form-row {
+    width: 280px;
+  }
+}
