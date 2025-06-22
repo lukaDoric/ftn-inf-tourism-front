@@ -6,7 +6,7 @@ export interface Restaurant {
   name: string;
   description: string;
   capacity: number;
-  imgURLs: string[];
+  imgURL: string;
   latitude: number;
   longitude: number;
   status: string;
