@@ -1,23 +1,23 @@
 import { UserService } from "../../service/user.service.js";
 
 const userService = new UserService();
-const loginLink = document.querySelector('#login') as HTMLElement;
-const logoutLink = document.querySelector('#logout') as HTMLElement;
+const loginLink = document.querySelector("#login") as HTMLElement;
+const logoutLink = document.querySelector("#logout") as HTMLElement;
 const submitButton = document.querySelector("#submit") as HTMLElement;
 
 function setUserLoginState(isLoggedIn: boolean) {
-    if (isLoggedIn) {
-        loginLink.style.display = 'none';
-        logoutLink.style.display = 'block';
-    } else {
-        loginLink.style.display = 'block';
-        logoutLink.style.display = 'none';
-    }
+  if (isLoggedIn) {
+    loginLink.style.display = "none";
+    logoutLink.style.display = "block";
+  } else {
+    loginLink.style.display = "block";
+    logoutLink.style.display = "none";
+  }
 }
 
 function handleLogin(event: Event) {
-    event.preventDefault();
 
+event.preventDefault();
   const form = document.querySelector("form") as HTMLFormElement;
   const formData = new FormData(form);
   const username = formData.get("username") as string;
@@ -34,6 +34,7 @@ function handleLogin(event: Event) {
         window.location.href = `../../../restaurants/pages/restaurants/restaurants.html?ownerId=${user.id}`;
       } else if (user.role === "vodic") {
         window.location.href = `../../../tours/pages/userTours/userTours.html?ownerId=${user.id}`;
+        
       } else if (user.role === "turista") {
         window.location.href = "";
       } else {
@@ -46,27 +47,28 @@ function handleLogin(event: Event) {
 }
 
 function handleLogout() {
-    localStorage.removeItem('username');
-    localStorage.removeItem('role');
-    setUserLoginState(false);
+  localStorage.removeItem("userId");
+  localStorage.removeItem("username");
+  localStorage.removeItem("role");
+  setUserLoginState(false);
 }
 
 function checkLoginStatus() {
-    const username = localStorage.getItem('username');
-    if (username) {
-        setUserLoginState(true);
-    } else {
-        setUserLoginState(false);
-    }
+  const username = localStorage.getItem("username");
+  if (username) {
+    setUserLoginState(true);
+  } else {
+    setUserLoginState(false);
+  }
 }
 
 if (submitButton) {
-    submitButton.addEventListener("click", handleLogin);
+  submitButton.addEventListener("click", handleLogin);
 }
 
-const logoutElement = document.querySelector('#logout');
+const logoutElement = document.querySelector("#logout");
 if (logoutElement) {
-    logoutElement.addEventListener('click', handleLogout);
+  logoutElement.addEventListener("click", handleLogout);
 }
 
 checkLoginStatus();
