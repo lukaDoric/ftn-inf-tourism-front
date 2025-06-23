@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj turu</title>
+    <link rel="stylesheet" href="../../../../dist/tours/pages/tourForm/tourForm.css">
+    <script type="module" src="../../../../dist/tours/pages/tourForm/tourForm.js" defer></script>
+</head>
+<body>
+    <div>
+        <form id="form">
+            <input id="tourId" name="id" type="hidden"/>
+
+            <label for="name">Naziv ture:</label>
+            <input id="name" name="name" type="text" required minlength="3" placeholder="Unesite naziv ture" />
+            <span id="nameError"></span>
+            <br/>
+
+            <label for="description">Opis</label>
+            <input id="description" name="description" type="text" required placeholder="Unesite opis ture" />
+            <span id="descriptionError"></span>
+            <br/>
+
+            <label for="date">Datum i vreme početka:</label>
+            <input id="date" name="date" type="datetime-local" required/>
+            <span id="dateError"></span>
+            <br/>
+
+            <label for="maxParticipants">Maksimalno ucesnika:</label>
+            <input id="maxParticipants" name="maxParticipants" type="number" required min="1"/>
+            <span id="maxParticipantsError"></span>
+            <br/>
+            
+        </form>
+        <div class="actions">
+            <button id="submitBtn" type="button">Sačuvaj</button>
+            <button id="cancelBtn">Otkaži</button>
+        </div>
+    </div>
+</body>
+</html>

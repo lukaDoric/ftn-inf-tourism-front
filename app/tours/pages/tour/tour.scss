@@ -1,0 +1,33 @@
+@import '../../../styles/global.scss';
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    h1{
+        color: blue;
+        text-align: center;
+    }
+    #addBtn {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        width: auto;
+        height: auto;
+        color: white;
+        background-color: blue;
+    }
+
+    table {
+        border: 1px solid black;
+        border-radius: 10px;
+
+        thead {
+            background-color: blue;
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}
