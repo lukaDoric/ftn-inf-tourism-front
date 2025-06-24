@@ -1,0 +1,75 @@
+@use"../../../styles/global.scss" as*;
+
+.restaurant-container {
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .restaurant-card {
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 600px;
+        display: flex;
+        margin: 10px;
+
+
+        #card-pictureSection {
+            display: inline-block;
+            height: 300px;
+           
+
+            img {
+                display: inline-block;
+                width: 200px;
+                border-radius: 10px;
+            }
+        }
+
+        #card-mainSection {
+            height: 100%;
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+
+            p {
+                display: inline-block;
+                width: 100%;
+                margin: 5px;
+            }
+
+            #restaurantName {
+                font-size: 22px;
+            }
+
+            #button-container {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-around;
+
+                .button {
+                    width: 100px;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+
+    }
+}
+
+#addBtn {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+h1{
+    font-family: 'Segoe UI', sans-serif;
+  font-size: 28px;
+  color: #333;
+  text-shadow: 2px 2px 4px lightgray;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+}
