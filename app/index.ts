@@ -8,6 +8,7 @@ function setUserLoginState(isLoggedIn: boolean) {
     } else {
         loginLink.style.display = 'block';
         logoutLink.style.display = 'none';
+        window.location.href = '/app/users/pages/login/login.html';
     }
 }
 

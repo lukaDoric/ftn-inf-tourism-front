@@ -9,6 +9,7 @@ function setUserLoginState(isLoggedIn: boolean) {
     if (isLoggedIn) {
         loginLink.style.display = 'none';
         logoutLink.style.display = 'block';
+        window.location.href = '../../../index.html'
     } else {
         loginLink.style.display = 'block';
         logoutLink.style.display = 'none';
@@ -25,6 +26,7 @@ function handleLogin(event: Event) {
 
     userService.login(username, password)
         .then((user) => {
+            localStorage.setItem('userId', user.id.toString());
             localStorage.setItem('username', user.username);
             localStorage.setItem('role', user.role);
             setUserLoginState(true);
@@ -35,6 +37,7 @@ function handleLogin(event: Event) {
 }
 
 function handleLogout() {
+    localStorage.removeItem('userId');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     setUserLoginState(false);

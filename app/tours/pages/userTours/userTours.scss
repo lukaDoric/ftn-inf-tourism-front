@@ -1,0 +1,20 @@
+@import '../../../styles/global.scss';
+
+.tours-container{
+    margin-top: 50px;
+    display: flex;
+    .tour-card {
+        margin-left: 5px;
+        border: 1px solid black;
+        width: 20%;
+        text-align: center;
+        button {
+            margin-left: 10px;
+        }
+    }
+}
+
+.button-wrapper {
+    margin-top: 20px;
+    text-align: center;
+}
