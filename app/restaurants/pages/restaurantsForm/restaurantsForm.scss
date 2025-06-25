@@ -1,0 +1,30 @@
+@use'../../../../dist/styles/global.css' as*;
+
+#form-container {
+  form {
+    gap: 0;
+    width: 300px;
+  }
+}
+
+h1 {
+
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 28px;
+  color: #333;
+  text-shadow: 2px 2px 4px lightgray;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+
+}
+
+#description {
+  font-family: Arial, sans-serif;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: none;
+  border: 2px solid black;
+
+}

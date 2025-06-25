@@ -22,7 +22,7 @@ label {
     color: $primary-color;
 }
 
-input {
+input{
     padding: 8px;
     border-radius: 4px;
     font-size: 14px;
@@ -51,8 +51,9 @@ button {
     .nav-item {
         margin-right: 15px;
 
-        a {
+        a,b {
             color: white;
+            text-decoration: none;
         }
     }
 
