@@ -8,6 +8,7 @@ function Initialize(): void {
   const logoutElement = document.querySelector("#logout");
   if (logoutElement) {
     logoutElement.addEventListener("click", function () {
+      localStorage.removeItem("id");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
       window.location.href = "/app/users/pages/login/login.html";
@@ -75,7 +76,7 @@ function InitializeForm(): TourFormData {
       description: tourDescription,
       dateTime: tourStartDate,
       maxGuests: tourMaxGuests,
-      guideId: localStorage.getItem("userId"),
+      guideId: localStorage.getItem("id"),
     };
     return formData;
   } catch (error) {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>restaurant form page</title>
+    <link rel="stylesheet" href='../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.css'>
+    
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="../../../index.html">Home</a></li>
+            <li class="nav-item" id="restaurants"><a 
+                href="../../../restaurants/pages/restaurants/restaurants.html">Restaurants</a></li>
+            <li class="nav-item" id="logout"><a href="../../../users/pages/login/login.html">Logout</a></li>
+        </ul>
+        </nav>
+        <h1 id="form-title"></h1>
+        <div id="form-container">
+            <form id="form-restaurant">
+                
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required/>
+                <br>
+
+                <label for="description">Descritpion:</label>
+                <textarea name="description" id="description" rows="4" required></textarea>
+                <!-- <input type="text" name="description" id="description" required/> -->
+                <br>
+
+                <label for="capacity">Capacity:</label>
+                <input type="number" name="capacity" id="capacity" required/>
+                <br>
+
+                <label for="imageUrl">Image URL:</label>
+                <input type="text" name="imageUrl" id="imageUrl" required/>
+                <br>
+
+                <label for="latitude">Latitude:</label>
+                <input type="number" name="latitude" id="latitude" required/>
+                <br>
+
+                <label for="longitude">Longitude:</label>
+                <input type="number" name="longitude" id="longitude" required/>
+                <br>
+
+                <button type="button" id="submitBtn">Submit</button>
+            </form>
+
+        </div>
+    <script type="module" src="../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.js"></script>
+</body>
+</html>

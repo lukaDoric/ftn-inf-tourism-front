@@ -6,6 +6,7 @@ function Initialize(): void {
   const logoutElement = document.querySelector("#logout");
   if (logoutElement) {
     logoutElement.addEventListener("click", function () {
+      localStorage.removeItem("id");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
       window.location.href = "/app/users/pages/login/login.html";
@@ -21,7 +22,7 @@ function Initialize(): void {
 }
 
 function renderData(): void {
-  const id = parseInt(localStorage.getItem("userId")) as number;
+  const id = parseInt(localStorage.getItem("id")) as number;
   tourService.getAllWithId(id).then((tours) => {
     for (let i = 0; i < tours.length; i++) {
       const toursContainer = document.querySelector(".tours-container");

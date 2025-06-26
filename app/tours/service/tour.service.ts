@@ -8,8 +8,8 @@ export class TourService {
     this.apiUrl = "http://localhost:5105/api/tours";
   }
 
-  getAllWithId(userId: number): Promise<Tour[]> {
-    return fetch(`${this.apiUrl}?guideId=${userId}`)
+  getAllWithId(id: number): Promise<Tour[]> {
+    return fetch(`${this.apiUrl}?guideId=${id}`)
       .then((response) => {
         if (!response.ok) {
           throw { status: response.status, message: response.text };
