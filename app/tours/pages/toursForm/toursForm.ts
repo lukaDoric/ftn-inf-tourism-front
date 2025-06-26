@@ -5,6 +5,16 @@ import { Tour } from "../../model/tour.model.js";
 const tourService = new TourService();
 
 function Initialize(): void {
+  const logoutElement = document.querySelector("#logout");
+  if (logoutElement) {
+    logoutElement.addEventListener("click", function () {
+      localStorage.removeItem("username");
+      localStorage.removeItem("role");
+      window.location.href = "/app/users/pages/login/login.html";
+    });
+  }
+  //End of logout function
+
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const id = parseInt(urlParams.get("id"));
@@ -15,9 +25,10 @@ function Initialize(): void {
     tourService.getById(id).then((tour: Tour) => {
       FillForm(tour);
       submitBtn.addEventListener("click", function (e) {
-        e.preventDefault()
-        tourService.update(id, InitializeForm())
-        .then(() => { window.location.href = '../userTours/userTours.html' });
+        e.preventDefault();
+        tourService.update(id, InitializeForm()).then(() => {
+          window.location.href = "../userTours/userTours.html";
+        });
       });
 
       submitBtn.textContent = "Update";
@@ -25,8 +36,9 @@ function Initialize(): void {
   } else {
     submitBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      tourService.add(InitializeForm())
-      .then(() => { window.location.href = "../userTours/userTours.html" });
+      tourService.add(InitializeForm()).then(() => {
+        window.location.href = "../userTours/userTours.html";
+      });
     });
   }
 }
@@ -54,7 +66,7 @@ function InitializeForm(): TourFormData {
       tourMaxGuests.toString().trim() == "" ||
       tourStartDate.toString().trim() == "Invalid Date"
     ) {
-      alert('All fields are required.');
+      alert("All fields are required.");
       return;
     }
 
