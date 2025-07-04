@@ -1,6 +1,6 @@
 import { Restaurant } from "../models/restaurant.model";
 
-const API_URL = "http://localhost:48696/api/restaurants";
+const API_URL = "http://localhost:5105/api/restaurants";
 
 export class RestaurantService {
   createRestaurant(restaurant: Restaurant): Promise<Restaurant> {
@@ -23,8 +23,12 @@ export class RestaurantService {
       });
   }
   getMyRestaurants(ownerId: number): Promise<Restaurant[]> {
+    console.log("Pozivam API sa ownerId:", ownerId);
+
     return fetch(`${API_URL}?ownerId=${ownerId}`)
       .then((response) => {
+        console.log("Response status:", response.status);
+
         if (!response.ok) {
           throw new Error("Greska prilikom dobavljanja restorana.");
         }
