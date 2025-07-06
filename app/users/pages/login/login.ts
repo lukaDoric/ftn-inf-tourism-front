@@ -29,7 +29,8 @@ function handleLogin(event: Event) {
       localStorage.setItem("userId", user.id.toString());
       localStorage.setItem("username", user.username);
       localStorage.setItem("role", user.role);
-      window.location.href = "../../../restaurants/pages/myRestaurant.html";
+      window.location.href =
+        "../../../restaurants/pages/list/myRestaurant.html";
       setUserLoginState(true);
     })
     .catch((error) => {

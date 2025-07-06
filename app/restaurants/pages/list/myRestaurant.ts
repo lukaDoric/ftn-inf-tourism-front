@@ -1,5 +1,13 @@
-import { RestaurantService } from "../services/restaurant.service.js";
-import { Restaurant } from "../models/restaurant.model";
+import { RestaurantService } from "../../services/restaurant.service.js";
+import { Restaurant } from "../../models/restaurant.model.js";
+import { checkLoginStatus, handleLogout } from "../../../users/service/auth.js";
+
+checkLoginStatus();
+
+const logoutLink = document.getElementById("logout");
+if (logoutLink) {
+  logoutLink.addEventListener("click", handleLogout);
+}
 
 const restaurantService = new RestaurantService();
 const tbody = document.getElementById(
@@ -9,7 +17,7 @@ const ownerId = parseInt(localStorage.getItem("userId")!);
 console.log("OwnerId iz localStorage:", ownerId);
 
 restaurantService
-  .getMyRestaurants(ownerId)
+  .getByOwner(ownerId)
   .then((restaurants: Restaurant[]) => {
     console.log("Dohvaceni restorani:", restaurants);
     restaurants.forEach((restaurant) => {
@@ -31,10 +39,34 @@ restaurantService
 
       const editBtn = document.createElement("button");
       editBtn.textContent = "Izmeni";
+
+      editBtn.addEventListener("click", () => {
+        window.location.href =
+          "../../../restaurants/pages/form/restaurantForm.html?id=" +
+          restaurant.id;
+      });
+
       tdActions.appendChild(editBtn);
 
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "Obrisi";
+      deleteBtn.addEventListener("click", () => {
+        if (
+          confirm(
+            `Da li ste sigurni da zelite da obrisete restoran ${restaurant.name}?`
+          )
+        ) {
+          restaurantService
+            .deleteRestaurant(restaurant.id)
+            .then(() => {
+              alert("Restoran uspesno obrisan.");
+              tr.remove(); // uklanja red iz tabele bez reload
+            })
+            .catch((error) => {
+              alert("Greska prilikom brisanja restorana: " + error.message);
+            });
+        }
+      });
       tdActions.appendChild(deleteBtn);
 
       tr.appendChild(tdActions);

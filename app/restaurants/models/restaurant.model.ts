@@ -3,7 +3,7 @@ export interface Restaurant {
   name: string;
   description: string;
   capacity: number;
-  images: string[]; //url slike enterijera ili specijaliteta
+  imageUrl: string; //url slike enterijera ili specijaliteta
   latitude: number;
   longitude: number;
   status?: string; //u pripremi ili otvoren

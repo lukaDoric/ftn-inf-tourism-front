@@ -22,7 +22,7 @@ export class RestaurantService {
         throw error;
       });
   }
-  getMyRestaurants(ownerId: number): Promise<Restaurant[]> {
+  getByOwner(ownerId: number): Promise<Restaurant[]> {
     console.log("Pozivam API sa ownerId:", ownerId);
 
     return fetch(`${API_URL}?ownerId=${ownerId}`)
@@ -40,6 +40,7 @@ export class RestaurantService {
       });
   }
   updateRestaurant(restaurant: Restaurant): Promise<Restaurant> {
+    console.log("Saljem update za restoran:", restaurant);
     return fetch(`${API_URL}/${restaurant.id}`, {
       method: "PUT",
       headers: {
@@ -69,6 +70,20 @@ export class RestaurantService {
       })
       .catch((error) => {
         console.error("Greska u deleteRestaurant:", error);
+        throw error;
+      });
+  }
+
+  getById(id: number): Promise<Restaurant> {
+    return fetch(`${API_URL}/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Greska prilikom dobavljanja restorana.");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Greska u getById:", error);
         throw error;
       });
   }
