@@ -1,20 +1,122 @@
 @import '../../../styles/global.scss';
 
+b {
+    margin-right: 50px;
+}
+
 .tours-container{
     margin-top: 50px;
     display: flex;
-    .tour-card {
-        margin-left: 5px;
-        border: 1px solid black;
-        width: 20%;
-        text-align: center;
-        button {
-            margin-left: 10px;
-        }
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    .tour-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  min-width: 40%;
+  max-width: 40%;
+  margin: auto;
+}
+
+.tour-card {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 16px;
+
+  p {
+    margin-top: 40px;
+  }
+
+    .tourName {
+        align-self: center;
+        font-size: 20px;
     }
+}
+
+.tour-description {
+  position: relative;
+  flex: 1;
+  padding-left: 1rem;
+  border-left: 1px solid #ddd;
+  font-size: 14px;
+  line-height: 1.5;
+
+  .tourStatus {
+    font-size: 17px;
+    margin-top: 0;
+  }
+}
 }
 
 .button-wrapper {
     margin-top: 20px;
     text-align: center;
+}
+
+.status-wrapper {
+    display: flex;
+}
+
+
+.settings-div {
+    margin-left: auto;
+    .settings-icon {
+  cursor: pointer;
+  color: #555;
+  font-size: 18px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $button-color;
+    transform: scale(1.1);
+    }
+  }
+}
+
+.settings-menu {
+  display: none;
+  position: absolute;
+  width: 100px;
+  top: 25px;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.settings-menu button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 10px 15px;
+  color: #6e6e6e;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.settings-menu #editBtn:hover {
+  background-color: #d6d6d6;
+  color: $primary-color;
+}
+.settings-menu #deleteBtn:hover {
+  background-color: $warn-color;
+  color: $primary-color;
+}
+
+.settings-menu.active {
+  display: flex;
+  flex-direction: column;
 }
