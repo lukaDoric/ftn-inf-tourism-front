@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dodaj restoran</title>
+<link rel="stylesheet" href="../../../../dist/restaurants/pages/form/restaurantForm.css">
+</head>
+<body>
+
+ <nav class="navbar">
+    <ul class="nav-list">
+      <li class="nav-item"><a href="../../../index.html">Home</a></li>
+      <li class="nav-item" id="myRestaurants"><a href="../list/myRestaurant.html">Moji restorani</a></li>      <li class="nav-item" id="logout"><a href="../../../index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <h1>Dodaj novi restoran</h1>
+  
+  <form id="restaurantForm">
+    <label>Naziv:</label>
+    <input type="text" id="name" required />
+
+    <label>Opis:</label>
+    <textarea id="description" required></textarea>
+
+    <label>Kapacitet:</label>
+    <input type="number" id="capacity" required />
+
+    <label>Slike (URL, odvojene zarezom):</label>
+    <input type="text" id="images" />
+
+    <label>Geografska sirina:</label>
+    <input type="number" step="any" id="latitude" required />
+
+    <label>Geografska duzina:</label>
+    <input type="number" step="any" id="longitude" required />
+
+    <button type="submit">Sacuvaj</button>
+  </form>
+
+<script type="module" src="../../../../dist/restaurants/pages/form/restaurantForm.js"></script>
+</body>
+</html>
