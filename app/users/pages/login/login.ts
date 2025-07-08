@@ -25,9 +25,18 @@ function handleLogin(event: Event) {
 
     userService.login(username, password)
         .then((user) => {
+
+            localStorage.setItem('userId', user.id.toString());
             localStorage.setItem('username', user.username);
             localStorage.setItem('role', user.role);
             setUserLoginState(true);
+
+            if (user.role === 'vodic') {
+                window.location.href = "../../../tours/pages/guide-tours/guide-tours.html";
+            }
+            else{
+                window.location.href = "../../../index.html";
+            }
         })
         .catch((error) => {
             console.error('Login failed', error.message);
