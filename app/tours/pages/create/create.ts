@@ -23,7 +23,7 @@ submitBtn.addEventListener("click", (event: Event) => {
     tourService.createTour(tourData)
         .then(() => {
             alert("Tour created!");
-            // window.location.href = DOPUNITI PREBACIVANJE NA STRANICU SA SVIM TURAMA
+            window.location.href = './pages/guide-tours/guide-tours.html'
         })
         .catch(err => {
             alert("Error: " + err.message);
