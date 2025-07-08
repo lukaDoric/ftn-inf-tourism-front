@@ -1,5 +1,5 @@
-import { TourService } from "../../services/tour.service";
-import { Tour } from "../../model/tour.model";
+import { TourService } from "../../service/tour.service.js";
+import { Tour } from "../../model/tour.model.js";
 
 const tourService = new TourService();
 const toursList = document.getElementById("toursList")!;
@@ -24,36 +24,12 @@ function renderTours(tours: Tour[]) {
             </div>
         </div>
     `).join("");
-
-
-    document.querySelectorAll(".edit-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const id = (btn as HTMLElement).getAttribute("data-id");
-            window.location.href = `./form.html?id=${id}`;
-        });
-    });
-
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.addEventListener("click", (event) => {
-            const id = Number((btn as HTMLElement).getAttribute("data-id"));
-            const confirmed = confirm("Are you sure you want to delete this tour?");
-            if (confirmed) {
-                tourService.removeTourById(id)
-                    .then(() => {
-                        loadTours();
-                    })
-                    .catch(err => {
-                        alert("Error deleting tour: " + err.message);
-                    });
-            }
-        });
-    });
 }
 
 function loadTours() {
     tourService.getAllByGuide(guideId)
         .then(result => {
-            renderTours(result.data);
+            renderTours(result);
         })
         .catch(err => {
             toursList.innerHTML = `<p class="error">Error loading tours: ${err.message}</p>`;
