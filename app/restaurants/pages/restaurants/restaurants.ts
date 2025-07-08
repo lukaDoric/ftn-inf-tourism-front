@@ -1,4 +1,5 @@
 
+import { Restaurant } from "../../models/restaurant.model.js";
 import { RestaurantsServices } from "../../services/restaurant.services.js"
 
 const restaurantsServices = new RestaurantsServices();
@@ -17,7 +18,7 @@ logout.addEventListener('click', function () {
 
 function renderData(): void {
     const id = localStorage.getItem("id");
-    restaurantsServices.getAll(id)
+    restaurantsServices.getAllByOwnerId(id)
         .then(restaurants => {
             for (let i = 0; i < restaurants.length; i++) {
                 const resturantContainer = document.querySelector('.restaurant-container');
@@ -99,13 +100,7 @@ function renderData(): void {
                 deleteBtn.classList.add("button");
                 deleteBtn.id = ("deleteBtn");
                 deleteBtn.onclick = function () {
-                    restaurantsServices.delete(restaurants[i]['id'].toString())
-                        .then(() => {
-                            window.location.reload()
-                        })
-                        .catch(error => {
-                            console.log(`Error: `, error.status);
-                        })
+                    deleteRestaurant(restaurants, i);
                 }
 
                 buttonDiv.appendChild(deleteBtn);
@@ -115,6 +110,15 @@ function renderData(): void {
                 resturantContainer.appendChild(restaurantCard);
             }
         })
+}
+function deleteRestaurant(restaurants: Restaurant[], i: number) {
+    restaurantsServices.delete(restaurants[i]['id'].toString())
+        .then(() => {
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log(`Error: `, error.status);
+        });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,3 +1,5 @@
+import { Meal } from "./meal.model";
+
 export interface Restaurant {
     id: number;
     name: string;
@@ -6,6 +8,7 @@ export interface Restaurant {
     imageUrl: string;
     latitude: number;
     longitude: number;
-    status: string;
+    status?: string;
     ownerId: number;
+    meals?: Meal[];
 }

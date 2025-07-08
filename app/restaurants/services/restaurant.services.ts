@@ -9,8 +9,8 @@ export class RestaurantsServices {
         this.apiUrl = "http://localhost:5105/api/restaurants";
     }
 
-    getAll(id: string): Promise<Restaurant[]> {
-        return fetch(`${this.apiUrl}?ownerId=${id}`)
+    getAllByOwnerId(ownerId: string): Promise<Restaurant[]> {
+        return fetch(`${this.apiUrl}?ownerId=${ownerId}`)
             .then(response => {
                 if (!response.ok) {
                     throw { status: response.status, message: response.text }

@@ -1,8 +1,8 @@
-$primary-color: #007bff;
+$primary-color: #EAEAEA;
 $accent-color: #ff5733;
 $warn-color: #d9534f; 
-$button-color: #28a745; 
-
+$button-color: #217BA2; 
+$label-color: #333;
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -13,13 +13,13 @@ form {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 200px;
+    width: 500px;
     margin: 20px auto;
 }
 
 label {
     font-size: 14px;
-    color: $primary-color;
+    color: $label-color;
 }
 
 input{
@@ -35,6 +35,15 @@ button {
     border: none;
     border-radius: 4px;
     font-size: 16px;
+}
+.deleteBtn{
+    padding: 10px 15px;
+    background-color: $warn-color;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    overflow-wrap: normal
 }
 
 .navbar {
@@ -52,7 +61,7 @@ button {
         margin-right: 15px;
 
         a,b {
-            color: white;
+            color:black;
             text-decoration: none;
         }
     }
