@@ -501,9 +501,18 @@ function GetKeyPointFormData(): KeyPointFormData {
       document.querySelector("#KPLongitudeInput") as HTMLInputElement
     ).value;
 
+    const orderIds:number [] = []; 
+
+    for (const keypoint of currentTour.keyPoints){
+      console.log(keypoint);
+      orderIds.push(keypoint.order);
+    }
+    const orderId = getMaxId(orderIds);
+
     const formData: KeyPointFormData = {
       name: keyPointName,
       description: keyPointDescription,
+      order: orderId,
       imageUrl: keyPointImage,
       latitude: keyPointLatitude,
       longtitude: keyPointLongitude,
@@ -633,6 +642,17 @@ function validateInput(
   }
 
   return { valid: true, message: '' };
+}
+
+function getMaxId(numbers: number []): number {
+  let maxId = 0;
+
+  for (let i = 0; i < numbers.length; i++) {
+    if (numbers[i] > maxId) {
+      maxId = numbers[i];
+    }
+  }
+  return maxId + 1;
 }
 
 document.addEventListener("DOMContentLoaded", Initialize);
