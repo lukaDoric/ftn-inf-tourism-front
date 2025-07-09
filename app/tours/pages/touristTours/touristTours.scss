@@ -1,0 +1,65 @@
+@import '../../../styles/global.scss';
+
+.container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filters {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+
+    label {
+        font-size: 15px;
+    }
+    select {
+        font-size: 15px;
+        border: none;
+        border-bottom: 1px solid black;
+    }
+    #sortDropdown {
+        margin-right: 20px;
+    }
+}
+
+hr {
+    width: 50%;
+    opacity: 0.3;
+}
+
+.tours-container {
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+
+    .tour-card {
+        text-align: center;
+        width: 50%;
+        border: 1px solid black;
+        border-radius: 10px;
+
+        #tourName {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+}
+
+.pageButtons {
+    display: flex;
+
+    button {
+        all: unset;
+        padding: 15px 20px;
+        color: $button-color;
+        font-size: 20px;
+    }
+}

@@ -2,6 +2,7 @@ const loginLink = document.querySelector('#login') as HTMLElement;
 const logoutLink = document.querySelector('#logout') as HTMLElement;
 const restaurantsLink = document.querySelector('#restaurants') as HTMLElement;
 const toursLink = document.querySelector('#tours') as HTMLElement;
+const touristToursLink = document.querySelector('#tourist-tours') as HTMLElement;
 
 function setUserLoginState(isLoggedIn: boolean) {
     if (isLoggedIn) {
@@ -11,10 +12,16 @@ function setUserLoginState(isLoggedIn: boolean) {
         if(userRole.trim()==="vlasnik"){
             restaurantsLink.style.display = 'block';
             toursLink.style.display = 'none';
+            touristToursLink.style.display = 'none';
         }
         if(userRole.trim()==="vodic"){
             restaurantsLink.style.display = 'none';
             toursLink.style.display = 'block';
+            touristToursLink.style.display = 'none';
+        } else {
+            restaurantsLink.style.display = 'none';
+            toursLink.style.display = 'none';
+            touristToursLink.style.display = 'block';
         }
     } else {
         loginLink.style.display = 'block';

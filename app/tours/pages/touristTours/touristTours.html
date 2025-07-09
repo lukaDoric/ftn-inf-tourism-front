@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Tour</title>
+    <link
+      rel="stylesheet"
+      href="../../../../dist/tours/pages/touristTours/touristTours.css"
+    />
+    <script
+      type="module"
+      src="../../../../dist/tours/pages/touristTours/touristTours.js"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/5f9b15613a.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="../../../index.html">Home</a></li>
+        <li class="nav-item">
+          <a><strong>Tours</strong></a>
+        </li>
+        <li class="nav-item" id="logout">
+          <a href="../../../index.html">Logout</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="filters">
+        <div class="pageSize">
+          <label for="pageSize">Tours per page:</label>
+          <select id="pageSize">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+
+        <div class="sort-order">
+          <label for="sortDropdown">Sort by:</label>
+          <select id="sortDropdown">
+            <option value="Name">Name</option>
+            <option value="DateTime">Date</option>
+            <option value="MaxGuests">Max Guests</option>
+          </select>
+
+          <label for="orderDropdown">Order:</label>
+          <select id="orderDropdown">
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+          </select>
+        </div>
+      </div>
+      <hr>
+      <div class="tours-container"></div>
+      <div class="pageButtons">
+        <button id="prevPage" disabled>
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <p class="current-page"></p>
+        <button id="nextPage" disabled>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

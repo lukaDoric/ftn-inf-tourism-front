@@ -1,0 +1,118 @@
+import { TourService } from "../../../../dist/tours/service/tour.service.js";
+import { TourResults } from "../../model/TourResults.js";
+
+const tourService = new TourService();
+
+function Initialize(): void {
+  InitializeLogout();
+  InitializeFilters();
+  RenderTours();
+}
+
+function InitializeLogout(): void {
+  const logoutElement = document.querySelector("#logout");
+  if (logoutElement) {
+    logoutElement.addEventListener("click", function () {
+      localStorage.removeItem("id");
+      localStorage.removeItem("username");
+      localStorage.removeItem("role");
+    });
+  }
+}
+
+function InitializeFilters(): void {
+  const sortDropdown = document.querySelector(
+    "#sortDropdown"
+  ) as HTMLSelectElement;
+  const orderDropdown = document.querySelector(
+    "#orderDropdown"
+  ) as HTMLSelectElement;
+
+  sortDropdown.addEventListener("change", () => {
+    RenderTours(sortDropdown.value, orderDropdown.value);
+  });
+
+  orderDropdown.addEventListener("change", () => {
+    RenderTours(sortDropdown.value, orderDropdown.value);
+  });
+
+  const pageSizeDropdown = document.querySelector('#pageSize') as HTMLSelectElement;
+  pageSizeDropdown.addEventListener("change", () => {
+    RenderTours(sortDropdown.value, orderDropdown.value, currentPage, parseInt(pageSizeDropdown.value));
+  })
+
+  const prevPageButton = document.getElementById(
+    "prevPage"
+  ) as HTMLButtonElement;
+  const nextPageButton = document.getElementById(
+    "nextPage"
+  ) as HTMLButtonElement;
+
+  let currentPage = 1;
+
+  prevPageButton.addEventListener("click", () => {
+    currentPage--;
+    RenderTours(sortDropdown.value, orderDropdown.value, currentPage, parseInt(pageSizeDropdown.value));
+  });
+
+  nextPageButton.addEventListener("click", () => {
+    currentPage++;
+    RenderTours(sortDropdown.value, orderDropdown.value, currentPage, parseInt(pageSizeDropdown.value));
+  });
+
+
+}
+
+function RenderTours(
+  orderBy: string = "Name",
+  orderDirection: string = "asc",
+  currentPage: number = 1,
+  pageSize: number = 10
+): void {
+  const tourContainer = document.querySelector(".tours-container");
+  const prevPageButton = document.getElementById("prevPage") as HTMLButtonElement;
+  const nextPageButton = document.getElementById("nextPage") as HTMLButtonElement;
+  tourContainer.innerHTML = "";
+  tourService.getAllPublished(orderBy, orderDirection, currentPage, pageSize).then((tourData: TourResults) => {
+
+    let totalPages = 1;
+    const totalCount = tourData.totalCount;
+    totalPages = Math.ceil(totalCount / pageSize);
+
+    const showCurrentPage = document.querySelector('.current-page');
+    showCurrentPage.textContent = `${currentPage.toString()} of ${totalPages}`;
+
+    prevPageButton.disabled = currentPage === 1; 
+    nextPageButton.disabled = currentPage === totalPages;
+
+    for (const tour of tourData.data) {
+        const tourCard = document.createElement("div");
+        tourCard.className = "tour-card";
+
+        const tourName = document.createElement("p");
+        tourName.id = "tourName";
+        tourName.textContent = tour.name;
+        tourCard.appendChild(tourName);
+
+        const tourDesc = document.createElement("p");
+        if (tour.description.length > 250) {
+          tourDesc.textContent = tour.description.slice(0, 250) + "...";
+        } else {
+          tourDesc.textContent = tour.description;
+        }
+        tourCard.appendChild(tourDesc);
+
+        const tourStart = document.createElement("p");
+        tourStart.textContent = new Date(tour.dateTime).toLocaleString("sv-SE");
+        tourCard.appendChild(tourStart);
+
+        const tourMaxGuests = document.createElement("p");
+        tourMaxGuests.textContent = tour.maxGuests.toString();
+        tourCard.appendChild(tourMaxGuests);
+
+        tourContainer.appendChild(tourCard);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", Initialize);
