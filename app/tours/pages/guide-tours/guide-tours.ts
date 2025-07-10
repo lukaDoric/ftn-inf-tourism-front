@@ -28,6 +28,29 @@ function renderTours(tours: Tour[]) {
             </div>
         </div>
     `).join("");
+
+
+    const editBtn = document.querySelector(".edit-btn")
+    editBtn.addEventListener("click", () => {
+            const id = (editBtn as HTMLElement).getAttribute("data-id");
+            window.location.href = `./form.html?id=${id}`;
+        });
+        
+    const deleteBtn = document.querySelector(".delete-btn")
+    deleteBtn.addEventListener("click", () => {
+            const id = Number((deleteBtn as HTMLElement).getAttribute("data-id"));
+            const confirmed = confirm("Are you sure you want to delete this tour?");
+            if (confirmed) {
+                tourService.removeTourById(id)
+                    .then(() => {
+                        loadTours();
+                    })
+                    .catch(err => {
+                        alert("Error deleting tour: " + err.message);
+                    });
+            }
+        });
+    
 }
 
 function loadTours() {
