@@ -5,6 +5,10 @@ const tourService = new TourService();
 const toursList = document.getElementById("toursList")!;
 const guideId = Number(localStorage.getItem("userId"));
 
+document.getElementById("createTourBtn").addEventListener("click", () => {
+    window.location.href = "/app/tours/pages/create/create.html";
+});
+
 function renderTours(tours: Tour[]) {
     if (tours.length === 0) {
         toursList.innerHTML = "<p>No tours found.</p>";

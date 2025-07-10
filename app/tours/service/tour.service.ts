@@ -38,18 +38,6 @@ export class TourService {
         });
     }
 
-    // Dobavljanje tura za vodiča
-    // getAllByGuide(guideId: number): Promise<TourResults> {
-    //     const url = `${this.apiUrl}?guideId=${guideId}`;
-    //     return fetch(url)
-    //         .then(response => handleResponse<TourResults>(response))
-    //         .then(result => result)
-    //         .catch(error => {
-    //             console.error("Error fetching tours:", error.message);
-    //             throw error;
-    //         });
-    // }
-
     getAllByGuide(guideId: number): Promise<Tour[]> {
     const url = `${this.apiUrl}?guideId=${guideId}`;
     return fetch(url)
