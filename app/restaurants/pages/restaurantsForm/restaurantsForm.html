@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>restaurant form page</title>
     <link rel="stylesheet" href='../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.css'>
+    <script src="https://kit.fontawesome.com/b89b4860cf.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="nav-item"><a href="../../../index.html">GastroApp</a></li>
+            <li class="nav-item"><a href="../../../index.html"><strong>GastroApp</strong></a></li>
             <li class="nav-item" id="restaurants"><a
                     href="../../../restaurants/pages/restaurants/restaurants.html">Restaurants</a></li>
             <li class="nav-item" id="logout"><a href="../../../users/pages/login/login.html">Logout</a></li>
         </ul>
     </nav>
 
-    <h1 id="form-title"></h1>
+    <!-- <h1 id="form-title"></h1> -->
 
     <div id="form-container">
         <div class="step-container">
@@ -38,7 +39,7 @@
                 <span class="error-message" id="name-errorMessage"></span>
                 <br>
 
-                <label for="description">Descritpion:</label>
+                <label for="description">Description:</label>
                 <textarea name="description" id="description" rows="4" required></textarea>
                 <span class="error-message" id="description-errorMessage"></span>
                 <br>
@@ -48,8 +49,8 @@
                 <span class="error-message" id="capacity-errorMessage"></span>
                 <br>
 
-                <label for="imageUrl">Image URL:</label>
-                <input type="text" name="imageUrl" id="imageUrl" required />
+                <label for="restaurnatImageUrl">Image URL:</label>
+                <input type="text" name="restaurnatImageUrl" id="restaurnatImageUrl" required />
                 <span class="error-message" id="imageUrl-errorMessage"></span>
                 <br>
 
@@ -63,9 +64,8 @@
                 <span class="error-message" id="longitude-errorMessage"></span>
                 <br>
                 <div class="button">
-                    <button type="button" id="cancelBtn">Cancel</button>
-                    <button type="button" id="saveBtnRestaurant" >Save &#x1F4BE</button>
-                    <button type="button" id="nextBtnRestaurant" >Next ></button>
+                    <button type="button" id="saveBtnRestaurant">Save &#x1F4BE</button>
+                    <button type="button" id="nextBtnRestaurant">Next ></button>
                 </div>
             </div>
         </form>
@@ -73,9 +73,35 @@
 
             <div id="meals-container">
 
-                <div id="meal-input-section">
+                <div id="meal-form-container">
+                    <h1>Add new meal</h1>
 
-                    <div id="meals-table-container">
+                    <label for="meal-name">Name</label>
+                    <input type="text" name="meal-name" id="meal-name" required />
+                    <span class="error-message" id="meal-name-errorMessage"></span>
+
+
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" required />
+                    <span class="error-message" id="name-errorMessage"></span>
+
+
+                    <label for="ingredients">Ingredients</label>
+                    <textarea name="ingredients" id="ingredients"></textarea>
+
+
+                    <label for="meal-imageUrl">Image URL:</label>
+                    <input type="text" name="meal-imageUrl" id="meal-imageUrl" />
+                    <br>
+                    <div class="button" id="meal-saveBtn">
+                        <button type="button" id="saveBtnMeal">+ Meal</button>
+                    </div>
+
+                </div>
+
+                <div id="meals-table-container">
+                    <h2>Meals</h2>
+                    <div id="table-scroll">
                         <table id="meals">
                             <thead>
                                 <tr>
@@ -83,52 +109,23 @@
                                     <th>Price</th>
                                     <th>Ingredients</th>
                                     <th>Image URL</th>
-                                    <th></th>
+                                    <th></i></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
 
                             </tbody>
                         </table>
-                        <br>
-                        <div id="addBtn-container">
-                            <button type="button" id="addBtn">+</button>
                         </div>
-                        <div id="meal-navigationBtn">
-                            <button type="button" id="backBtn">Back</button>
-                            <button type="button" id="nextBtnMeal">Next ></button>
-                        </div>
-
-                    </div>
-
-                    <div id="meal-form-container">
-                        <h1>Add new resturant meal</h1>
-
-                        <label for="meal-name">Name</label>
-                        <input type="text" name="meal-name" id="meal-name" required />
-                        <span class="error-message" id="meal-name-errorMessage"></span>
-                        <br>
-
-                        <label for="price">Price</label>
-                        <input type="number" name="price" id="price" required />
-                         <span class="error-message" id="name-errorMessage"></span>
-                        <br>
-
-                        <label for="ingredients">Ingredients</label>
-                        <textarea type="text" name="ingredients" id="ingredients"></textarea>
-                        <br>
-
-                        <label for="meal-imageUrl">Image URL:</label>
-                        <input type="text" name="meal-imageUrl" id="meal-imageUrl" />
-                        <br>
-                        <div class="button" id="meal-saveBtn">
-                            <button type="button" id="saveBtnMeal" >+ Meal</button>
-                        </div>
-
-                    </div>
-                </div>
-
+                    <br>
+            <div id="meal-tableBtn">
+                <button type="button" id="backBtn">Back</button>
+                <button type="button" id="nextBtnMeal">Next ></button>
             </div>
+                </div>
+            </div>
+
+            
         </form>
         <form class="tab">
             <div id="publish-container">
