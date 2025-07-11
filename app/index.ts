@@ -17,7 +17,7 @@ function handleLogout() {
     setUserLoginState(false);
 }
 
-function checkLoginStatus() {
+export function checkLoginStatus() {
     const username = localStorage.getItem('username');
     if (username) {
         setUserLoginState(true);

@@ -12,7 +12,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8f9fa; // svetla siva pozadina za kontrast
+  background-color: #f8f9fa; 
   padding: 20px;
 }
 
@@ -85,3 +85,10 @@ body {
   margin-bottom: 6px;
 }
 
+input.invalid, textarea.invalid {
+    border: 1px solid red;
+}
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+}
