@@ -86,7 +86,6 @@ function initializationUpdateRestaurantForm(): void {
     })
 }
 
-
 function initializationMealForm(): void {
 
     checkMealInputValidity()
@@ -122,10 +121,9 @@ async function validationMealNextBtn(): Promise<void> {
     }
 }
 
-
 function initializationPublishForm(): void {
 
-    formTitle.textContent = "Publishing";
+    restaurantFormHeadings.textContent = "Publishing";
     tabs[2].style.display = "flex";
     probgresBar.style.width = "100%";
     step[0].classList.add('active');
@@ -134,6 +132,8 @@ function initializationPublishForm(): void {
     restaurantFormHeadings.textContent = "";
 
 }
+
+//RESTAURANT FORM
 
 function submitRestaurant(): void {
 
@@ -303,6 +303,69 @@ function checkRestaurantValidity() {
     }
 }
 
+//MEAL FORM
+
+function mealFormHandler(): void {
+    initializationMealForm()
+    updateMealTable()
+    checkMealInputValidity()
+}
+
+function renderMeals(meals: Meal[], restaurant: Restaurant) {
+    const table = document.querySelector('table tbody');
+    table.innerHTML = '';
+    restaurant.meals.forEach(meal => {
+        const tableRow = document.createElement('tr')
+
+        const name = document.createElement('td')
+        name.textContent = meal.name;
+        tableRow.appendChild(name);
+
+        const price = document.createElement('td')
+        price.textContent = meal.price.toString();
+        tableRow.appendChild(price);
+
+        const ingredients = document.createElement('td')
+        ingredients.textContent = meal.ingredients;
+        tableRow.appendChild(ingredients);
+
+        const imageUrl = document.createElement('td')
+        imageUrl.textContent = meal.imageUrl;
+        tableRow.appendChild(imageUrl);
+
+        const buttonCell1 = document.createElement('td')
+        const deleteBtn = document.createElement('td')
+        deleteBtn.classList.add("deleteBtn")
+        deleteBtn.innerHTML = "<i class=\"fa-solid fa-trash\">";
+        deleteBtn.onclick = function () {
+            deleteMeal(restaurant, meal);
+        }
+        buttonCell1.appendChild(deleteBtn)
+        tableRow.appendChild(buttonCell1)
+
+
+        table.appendChild(tableRow);
+    })
+}
+
+function updateMealTable() {
+    const urlParams = new URLSearchParams(window.location.search)
+    const id = urlParams.get('id')
+
+    restaurantServices.getById(id)
+        .then((restaurant: Restaurant) => {
+            if (!restaurant.meals || restaurant.meals.length === 0) {
+                createNoDataMessage()
+                checkMealInputValidity()
+            } else {
+                renderMeals(restaurant.meals, restaurant)
+            }
+        })
+        .catch(error => {
+            console.log(`Error: `, error.status)
+        });
+}
+
 function createMealFormData(): MealFormData {
     const name = (document.querySelector('#meal-name') as HTMLInputElement).value;
     const price = parseFloat((document.querySelector('#price') as HTMLInputElement).value);
@@ -329,29 +392,16 @@ function submitMeal(): void {
         })
 }
 
-function mealFormHandler(): void {
-    initializationMealForm()
-    updateMealTable()
-    checkMealInputValidity()
-}
-
-function updateMealTable() {
-    const urlParams = new URLSearchParams(window.location.search)
-    const id = urlParams.get('id')
-
-    restaurantServices.getById(id)
-        .then((restaurant: Restaurant) => {
-            if (!restaurant.meals || restaurant.meals.length === 0) {
-                createNoDataMessage()
-                checkMealInputValidity()
-            } else {
-                renderMeals(restaurant.meals, restaurant)
-            }
+function deleteMeal(restaurant: Restaurant, meal: Meal) {
+    mealService.delete(restaurant.id.toString(), meal.id.toString())
+        .then(() => {
+            mealFormHandler();
         })
         .catch(error => {
-            console.log(`Error: `, error.status)
+            console.log(`Error:`, error.status);
         });
 }
+
 
 async function counterMeals(): Promise<number> {
     const urlParams = new URLSearchParams(window.location.search);
@@ -365,8 +415,8 @@ async function counterMeals(): Promise<number> {
     }
 
 }
-console.log(counterMeals())
 
+//VALIDACIJA JELA
 const mealNameInputElement = (document.querySelector('#meal-name') as HTMLInputElement);
 const priceInputElement = (document.querySelector('#price') as HTMLInputElement);
 const ingredientsInputElement = (document.querySelector('#ingredients') as HTMLInputElement);
@@ -458,57 +508,120 @@ function createNoDataMessage(): void {
     table.appendChild(tableRow);
 }
 
-
-function renderMeals(meals: Meal[], restaurant: Restaurant) {
-    const table = document.querySelector('table tbody');
-    table.innerHTML = '';
-    restaurant.meals.forEach(meal => {
-        const tableRow = document.createElement('tr')
-
-        const name = document.createElement('td')
-        name.textContent = meal.name;
-        tableRow.appendChild(name);
-
-        const price = document.createElement('td')
-        price.textContent = meal.price.toString();
-        tableRow.appendChild(price);
-
-        const ingredients = document.createElement('td')
-        ingredients.textContent = meal.ingredients;
-        tableRow.appendChild(ingredients);
-
-        const imageUrl = document.createElement('td')
-        imageUrl.textContent = meal.imageUrl;
-        tableRow.appendChild(imageUrl);
-
-        const buttonCell1 = document.createElement('td')
-        const deleteBtn = document.createElement('td')
-        deleteBtn.classList.add("deleteBtn")
-        deleteBtn.innerHTML = "<i class=\"fa-solid fa-trash-can\">";
-        deleteBtn.onclick = function () {
-            deleteMeal(restaurant, meal);
-        }
-        buttonCell1.appendChild(deleteBtn)
-        tableRow.appendChild(buttonCell1)
+//PUBLISH FORM
 
 
-        table.appendChild(tableRow);
-    })
-}
-
-function deleteMeal(restaurant: Restaurant, meal: Meal) {
-    mealService.delete(restaurant.id.toString(), meal.id.toString())
-        .then(() => {
-            mealFormHandler();
-        })
-        .catch(error => {
-            console.log(`Error:`, error.status);
-        });
-}
 
 function publishingFromHandler() {
     initializationPublishForm()
+    renderRestaurant()
+    renderMeals()
 }
+
+
+function renderRestaurant(): void {
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const id = urlParams.get('id');
+
+    restaurantServices.getById(id)
+        .then(restaurant => {
+            const resturantContainer = document.querySelector('#restaurant-card');
+
+            const restaurantCard = document.createElement('div');
+            restaurantCard.classList.add('restaurant-card');
+
+            const pictureDiv = document.createElement('div');
+            pictureDiv.id = 'card-pictureSection';
+
+            const imgElement = document.createElement('img');
+            imgElement.src = `${restaurant["imageUrl"]}`;
+            imgElement.alt = 'slika restorana';
+            pictureDiv.appendChild(imgElement);
+            restaurantCard.appendChild(pictureDiv);
+
+            const mainSectionDiv = document.createElement('div');
+            mainSectionDiv.id = 'card-mainSection';
+
+            const p1 = document.createElement('p');
+            p1.id = 'restaurantName';
+            const strong1 = document.createElement('strong');
+            strong1.textContent = 'Name: ';
+            p1.appendChild(strong1);
+            p1.innerHTML += restaurant['name'];
+            mainSectionDiv.appendChild(p1);
+
+            const p2 = document.createElement('p');
+            const strong2 = document.createElement('strong');
+            strong2.textContent = 'Description: ';
+            p2.appendChild(strong2);
+            p2.innerHTML += restaurant['description'];
+            mainSectionDiv.appendChild(p2);
+
+            const p3 = document.createElement('p');
+            const strong3 = document.createElement('strong');
+            strong3.textContent = 'Capacity: ';
+            p3.appendChild(strong3);
+            p3.innerHTML += restaurant['capacity'];
+            mainSectionDiv.appendChild(p3);
+
+            const p4 = document.createElement('p');
+            const strong4 = document.createElement('strong');
+            strong4.textContent = 'Latitude: ';
+            p4.appendChild(strong4);
+            p4.innerHTML += restaurant['latitude'];
+            mainSectionDiv.appendChild(p4);
+
+            const p5 = document.createElement('p');
+            const strong5 = document.createElement('strong');
+            strong5.textContent = 'Longitude: ';
+            p5.appendChild(strong5);
+            p5.innerHTML += restaurant['longitude'];
+            mainSectionDiv.appendChild(p5);
+
+            const p6 = document.createElement('p');
+            const strong6 = document.createElement('strong');
+            strong6.textContent = 'Status: ';
+            p6.appendChild(strong6);
+            p6.innerHTML += restaurant['status'];
+            mainSectionDiv.appendChild(p6);
+
+            restaurantCard.appendChild(mainSectionDiv);
+            resturantContainer.appendChild(restaurantCard);
+
+
+            const table = document.querySelector('#publish-meals-table tbody');
+                table.innerHTML = '';
+                restaurant.meals.forEach(meal => {
+                    const tableRow = document.createElement('tr')
+
+                    const name = document.createElement('td')
+                    name.textContent = meal.name;
+                    tableRow.appendChild(name);
+
+                    const price = document.createElement('td')
+                    price.textContent = meal.price.toString();
+                    tableRow.appendChild(price);
+
+                    const ingredients = document.createElement('td')
+                    ingredients.textContent = meal.ingredients;
+                    tableRow.appendChild(ingredients);
+
+                    const imageUrl = document.createElement('td')
+                    imageUrl.textContent = meal.imageUrl;
+                    tableRow.appendChild(imageUrl);
+
+                    table.appendChild(tableRow);
+                })
+
+        })
+        
+
+                
+
+}
+
+
 
 const logout = document.querySelector('#logout');
 function handleLogout() {
