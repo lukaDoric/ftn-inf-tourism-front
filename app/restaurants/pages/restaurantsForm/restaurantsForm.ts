@@ -89,24 +89,36 @@ function initializationUpdateRestaurantForm(): void {
 
 function initializationMealForm(): void {
 
-    checkMealValidity()
+    checkMealInputValidity()
     tabs[1].style.display = "flex";
     probgresBar.style.width = "50%";
     step[0].classList.add('active');
     step[1].classList.add('active');
     restaurantFormHeadings.textContent = "Enter new meal data";
+    validationMealNextBtn()
     nextMealBtn.onclick = function () {
         tabs[1].style.display = 'none';
+        validationMealNextBtn()
         publishingFromHandler()
     }
     saveMealBtn.onclick = function () {
-        checkMealValidity()
+        checkMealInputValidity()
         submitMeal()
-        // mealForm.reset()
+        const mealForm = tabs[1] as HTMLFormElement;
+        mealForm.reset()
     }
     backBtn.onclick = function () {
         tabs[1].style.display = 'none';
         tabs[0].style.display = 'flex';
+    }
+}
+
+async function validationMealNextBtn(): Promise<void> {
+    const mealCount = await counterMeals();
+    if (mealCount < 5) {
+        nextMealBtn.disabled = true;
+    } else {
+        nextMealBtn.disabled = false;
     }
 }
 
@@ -310,7 +322,7 @@ function submitMeal(): void {
     mealService.create(id, reqBody)
         .then(() => {
             mealFormHandler()
-            checkMealValidity()
+            checkMealInputValidity()
         })
         .catch(error => {
             console.log(`Error:`, error.status)
@@ -320,7 +332,7 @@ function submitMeal(): void {
 function mealFormHandler(): void {
     initializationMealForm()
     updateMealTable()
-    checkMealValidity()
+    checkMealInputValidity()
 }
 
 function updateMealTable() {
@@ -331,7 +343,7 @@ function updateMealTable() {
         .then((restaurant: Restaurant) => {
             if (!restaurant.meals || restaurant.meals.length === 0) {
                 createNoDataMessage()
-                checkMealValidity()
+                checkMealInputValidity()
             } else {
                 renderMeals(restaurant.meals, restaurant)
             }
@@ -344,7 +356,7 @@ function updateMealTable() {
 async function counterMeals(): Promise<number> {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-   try {
+    try {
         const restaurantData: Restaurant = await restaurantServices.getById(id);
         return restaurantData.meals.length;
     } catch (error) {
@@ -373,19 +385,16 @@ function isIngredientsValid(ingredientsInputElement: HTMLInputElement): boolean 
     return ingredientsInputElement.value.trim().length > 0;
 }
 
-async function checkMealValidity() {
+
+function checkMealInputValidity() {
     const isValid = isMealNameValid(mealNameInputElement) &&
         isPriceValid(priceInputElement) &&
         isIngredientsValid(ingredientsInputElement);
 
     if (isValid) {
         saveMealBtn.disabled = false;
-        const mealCount = await counterMeals();
-        nextMealBtn.disabled =  mealCount < 5;
-
     } else {
         saveMealBtn.disabled = true;
-        nextMealBtn.disabled = true;
     }
 }
 console.log(nextMealBtn.disabled)
@@ -399,12 +408,12 @@ function intializeMealValidationListeners(): void {
             mealNameErrorMessage.textContent = 'Name must be atleast 2 caracter log.';
             mealNameErrorMessage.style.color = warnColor;
             mealNameInputElement.classList.add('error')
-            checkMealValidity()
+            checkMealInputValidity()
         } else {
             const mealNameErrorMessage = document.querySelector('#meal-name-errorMessage') as HTMLSpanElement;
             mealNameErrorMessage.textContent = '';
             mealNameInputElement.classList.remove('error')
-            checkMealValidity()
+            checkMealInputValidity()
         }
     })
     priceInputElement.addEventListener('blur', () => {
@@ -413,12 +422,12 @@ function intializeMealValidationListeners(): void {
             priceErrorMessage.textContent = 'Field is required.';
             priceErrorMessage.style.color = warnColor;
             priceInputElement.classList.add('error')
-            checkMealValidity()
+            checkMealInputValidity()
         } else {
             const priceErrorMessage = document.querySelector('#price-errorMessage') as HTMLSpanElement;
             priceErrorMessage.textContent = '';
             priceInputElement.classList.remove('error')
-            checkMealValidity()
+            checkMealInputValidity()
         }
     })
     ingredientsInputElement.addEventListener('blur', () => {
@@ -427,12 +436,12 @@ function intializeMealValidationListeners(): void {
             ingredientsErrorMessage.textContent = 'Field is required.';
             ingredientsErrorMessage.style.color = warnColor;
             ingredientsInputElement.classList.add('error')
-            checkMealValidity()
+            checkMealInputValidity()
         } else {
             const ingredientsErrorMessage = document.querySelector('#ingredients-errorMessage') as HTMLTextAreaElement;
             ingredientsErrorMessage.textContent = '';
             ingredientsInputElement.classList.remove('error')
-            checkMealValidity()
+            checkMealInputValidity()
         }
     })
 }
@@ -486,7 +495,6 @@ function renderMeals(meals: Meal[], restaurant: Restaurant) {
         table.appendChild(tableRow);
     })
 }
-
 
 function deleteMeal(restaurant: Restaurant, meal: Meal) {
     mealService.delete(restaurant.id.toString(), meal.id.toString())
