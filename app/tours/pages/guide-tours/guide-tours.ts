@@ -1,6 +1,6 @@
 import { TourService } from "../../service/tour.service.js";
 import { Tour } from "../../model/tour.model.js";
-import { checkLoginStatus } from "../../../index.js";
+import { checkLoginStatus } from "../../../users/service/auth.js";
 checkLoginStatus();
 const tourService = new TourService();
 const toursList = document.getElementById("toursList")!;
