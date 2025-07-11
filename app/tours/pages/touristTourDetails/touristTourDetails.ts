@@ -63,11 +63,16 @@ function DisplayKeyPointDetails(keyPoints: Keypoint[]): void {
     card.className = 'keypoint-card';
     
     const image = document.createElement('img') as HTMLImageElement;
-    image.src = 'https://bookaweb.s3.eu-central-1.amazonaws.com/media/33111/beograd-feature.jpg'
+    image.src = keypoint.imageUrl;
     card.appendChild(image);
 
     const descriptionDiv = document.createElement('div');
     descriptionDiv.className = 'keypoint-desc-container';
+
+    const name = document.createElement('h3');
+    name.textContent = keypoint.name;
+    descriptionDiv.appendChild(name);
+
     const description = document.createElement('p');
     description.textContent = keypoint.description;
     descriptionDiv.appendChild(description);

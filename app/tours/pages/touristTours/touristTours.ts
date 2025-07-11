@@ -89,10 +89,16 @@ function RenderTours(
         const tourCard = document.createElement("div");
         tourCard.className = "tour-card";
 
-        const tourName = document.createElement("p");
+        const leftSide = document.createElement("div");
+        leftSide.className = "tour-card-left";
+
+        const rightSide = document.createElement("div");
+        rightSide.className = "tour-card-right";
+
+        const tourName = document.createElement("h2");
         tourName.id = "tourName";
         tourName.textContent = tour.name;
-        tourCard.appendChild(tourName);
+        leftSide.appendChild(tourName);
 
         const tourDesc = document.createElement("p");
         if (tour.description.length > 250) {
@@ -100,15 +106,18 @@ function RenderTours(
         } else {
           tourDesc.textContent = tour.description;
         }
-        tourCard.appendChild(tourDesc);
+        rightSide.appendChild(tourDesc);
 
         const tourStart = document.createElement("p");
-        tourStart.textContent = new Date(tour.dateTime).toLocaleString("sv-SE");
-        tourCard.appendChild(tourStart);
+        tourStart.innerHTML = `<i class="fa-solid fa-clock"></i> ${new Date(tour.dateTime).toLocaleString("sv-SE")}`;
+        leftSide.appendChild(tourStart);
 
         const tourMaxGuests = document.createElement("p");
-        tourMaxGuests.textContent = tour.maxGuests.toString();
-        tourCard.appendChild(tourMaxGuests);
+        tourMaxGuests.innerHTML = `<i class="fa-solid fa-person"></i> ${tour.maxGuests.toString()}`;
+        leftSide.appendChild(tourMaxGuests);
+
+        tourCard.appendChild(leftSide);
+        tourCard.appendChild(rightSide);
 
         attachTourCardClickListener(tourCard, tour.id)
 

@@ -1,6 +1,6 @@
 @import '../../../styles/global.scss';
-
 .container {
+    background-color: $primary-color;
     margin-top: 5%;
     margin-bottom: 5%;
     display: flex;
@@ -14,12 +14,17 @@
     justify-content: space-between;
 
     label {
-        font-size: 15px;
+        font-size: 17px;
+        color: gray;    
     }
     select {
         font-size: 15px;
         border: none;
         border-bottom: 1px solid black;
+        background-color: $button-color;
+        border-radius: 5px;
+        padding: 5px 10px;
+        color: white;
     }
     #sortDropdown {
         margin-right: 20px;
@@ -41,14 +46,51 @@ hr {
     align-items: center;
 
     .tour-card {
-        text-align: center;
+        background-color: white;
         width: 50%;
-        border: 1px solid black;
+        min-height: 200px;
+        max-height: 200px;
         border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: flex;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+
+        p {
+            margin-top: 10%;
+        }
 
         #tourName {
-            font-size: 20px;
+            text-align: unset;
+            margin-right: 40%;
+            font-size: 25px;
             font-weight: bold;
+        }
+
+        .tour-card-left {
+            text-align: center;
+            width: 50%;
+            position: relative;
+            
+            &::after {
+                content: '';
+                position: absolute;
+                top: 15px;         
+                bottom: 15px;      
+                right: 0;          
+                width: 1px;
+                background-color: #ccc;
+            }
+        }
+
+        .tour-card-right {
+            margin: auto;
+            width: 40%;
         }
     }
 }
@@ -60,6 +102,25 @@ hr {
         all: unset;
         padding: 15px 20px;
         color: $button-color;
-        font-size: 20px;
+        font-size: 25px;
+        cursor: pointer;
+        transition: transform 0.3;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+        
+        &:disabled {
+            background-color: #F8F8F8;
+            color: #E2E2E2;
+
+            &:hover {
+            cursor: not-allowed;
+            }
+        }
     }
+}
+
+.current-page {
+    font-size: 20px;
 }
