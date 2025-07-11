@@ -28,6 +28,8 @@ const restaurantFormHeadings = document.querySelector('#restaurant-headings');
 const formTitle = document.querySelector('#form-title');
 
 function initializationForm(): void {
+    intializeRestaurantValidationListeners()
+    intializeMealValidationListeners()
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
     if (id) {
@@ -51,7 +53,7 @@ function initializationForm(): void {
 }
 
 function initializationAddRestaurantForm(): void {
-    restaurantValidation()
+    checkRestaurantValidity()
     tabs[0].style.display = "flex";
     probgresBar.style.width = "0%";
     step[0].classList.add('active');
@@ -68,7 +70,7 @@ function initializationAddRestaurantForm(): void {
 }
 
 function initializationUpdateRestaurantForm(): void {
-    restaurantValidation()
+    checkRestaurantValidity()
     tabs[0].style.display = "flex";
     probgresBar.style.width = "0%";
     step[0].classList.add('active');
@@ -87,7 +89,7 @@ function initializationUpdateRestaurantForm(): void {
 
 function initializationMealForm(): void {
 
-    mealValidation()
+    checkMealValidity()
     tabs[1].style.display = "flex";
     probgresBar.style.width = "50%";
     step[0].classList.add('active');
@@ -98,16 +100,16 @@ function initializationMealForm(): void {
         publishingFromHandler()
     }
     saveMealBtn.onclick = function () {
-        mealValidation()
+        checkMealValidity()
         submitMeal()
-        const mealForm = tabs[1] as HTMLFormElement;
-        mealForm.reset()
+        // mealForm.reset()
     }
     backBtn.onclick = function () {
         tabs[1].style.display = 'none';
         tabs[0].style.display = 'flex';
     }
 }
+
 
 function initializationPublishForm(): void {
 
@@ -158,51 +160,14 @@ function submitRestaurant(): void {
     }
 }
 
+const nameInputElement = (document.querySelector('#name') as HTMLInputElement)
+const descriptionInputElement = (document.querySelector('#description') as HTMLInputElement)
+const capacityInputElement = (document.querySelector('#capacity') as HTMLInputElement)
+const restaurantImageUrlInputElement = (document.querySelector('#restaurantImageUrl') as HTMLInputElement)
+const latitudeInputElement = (document.querySelector('#latitude') as HTMLInputElement)
+const longitudeInputElement = (document.querySelector('#longitude') as HTMLInputElement)
 
-function restaurantValidation(): void {
-
-    const nameInputElement = (document.querySelector('#name') as HTMLInputElement)
-    const descriptionInputElement = (document.querySelector('#description') as HTMLInputElement)
-    const capacityInputElement = (document.querySelector('#capacity') as HTMLInputElement)
-    const restaurantImageUrlInputElement = (document.querySelector('#restaurantImageUrl') as HTMLInputElement)
-    const latitudeInputElement = (document.querySelector('#latitude') as HTMLInputElement)
-    const longitudeInputElement = (document.querySelector('#longitude') as HTMLInputElement)
-
-    function isNameValid(nameInputElement: HTMLInputElement): boolean {
-        return nameInputElement.value.trim().length >= 2;
-    }
-    function isDescriptionValid(descriptionInputElement: HTMLInputElement): boolean {
-        return descriptionInputElement.value.trim().length >= 2;
-    }
-
-    function isCapacityValid(capacityInputElement: HTMLInputElement): boolean {
-        return capacityInputElement.value.trim().length > 0;
-    }
-    function isRestaurantImageUrlValid(restaurantImageUrlInputElement: HTMLInputElement): boolean {
-        return restaurantImageUrlInputElement.value.trim().length >= 5;
-    }
-    function isLatitudeValid(latitudeInputElement: HTMLInputElement): boolean {
-        return latitudeInputElement.value.trim().length > 0;
-    }
-    function isLongitudeValid(longitudeInputElement: HTMLInputElement): boolean {
-        return longitudeInputElement.value.trim().length > 0;
-    }
-
-    const inputFields: HTMLInputElement[] = [nameInputElement, descriptionInputElement, capacityInputElement, latitudeInputElement, longitudeInputElement, restaurantImageUrlInputElement]
-    inputFields.forEach(input => {
-        input.addEventListener('input', checkValidity)
-    })
-
-    function checkValidity() {
-        if (isNameValid(nameInputElement) && isDescriptionValid(descriptionInputElement) && isCapacityValid(capacityInputElement)
-            && isRestaurantImageUrlValid(restaurantImageUrlInputElement) && isLatitudeValid(latitudeInputElement) && isLongitudeValid(longitudeInputElement)) {
-            saveRestaurantBtn.disabled = false;
-            nextRestaurantBtn.disabled = false;
-        } else {
-            saveRestaurantBtn.disabled = true;
-            nextRestaurantBtn.disabled = true;
-        }
-    }
+function intializeRestaurantValidationListeners(): void {
 
     const warnColor = '#d9534f';
     nameInputElement.addEventListener('blur', () => {
@@ -211,12 +176,12 @@ function restaurantValidation(): void {
             nameErrorMessage.textContent = 'Field is required.';
             nameErrorMessage.style.color = warnColor;
             nameInputElement.classList.add('error')
-            checkValidity()
+            checkRestaurantValidity()
         } else {
             const nameErrorMessage = document.querySelector('#name-errorMessage') as HTMLSpanElement;
             nameErrorMessage.textContent = '';
             nameInputElement.classList.remove('error')
-            checkValidity()
+            checkRestaurantValidity()
         }
     })
     descriptionInputElement.addEventListener('blur', () => {
@@ -225,12 +190,12 @@ function restaurantValidation(): void {
             descriptionErrorMessage.textContent = 'Field is required.';
             descriptionErrorMessage.style.color = warnColor;
             descriptionInputElement.classList.add('error')
-            checkValidity()
+            checkRestaurantValidity()
         } else {
             const descriptionErrorMessage = document.querySelector('#description-errorMessage') as HTMLSpanElement;
             descriptionErrorMessage.textContent = '';
             descriptionInputElement.classList.remove('error')
-            checkValidity()
+            checkRestaurantValidity()
         }
     })
     capacityInputElement.addEventListener('blur', () => {
@@ -239,13 +204,13 @@ function restaurantValidation(): void {
             capacityErrorMessage.textContent = 'Field is required.';
             capacityErrorMessage.style.color = warnColor;
             capacityInputElement.classList.add('error')
-            checkValidity()
+            checkRestaurantValidity()
 
         } else {
             const capacityErrorMessage = document.querySelector('#capacity-errorMessage') as HTMLSpanElement;
             capacityErrorMessage.textContent = '';
             capacityInputElement.classList.remove('error')
-            checkValidity()
+            checkRestaurantValidity()
         }
     })
     restaurantImageUrlInputElement.addEventListener('blur', () => {
@@ -254,13 +219,13 @@ function restaurantValidation(): void {
             restaurantImageUrlErrorMessage.textContent = 'Field is required.';
             restaurantImageUrlErrorMessage.style.color = warnColor;
             restaurantImageUrlInputElement.classList.add('error')
-            checkValidity()
+            checkRestaurantValidity()
 
         } else {
             const restaurantImageUrlErrorMessage = document.querySelector('#restaurantImageUrl-errorMessage') as HTMLSpanElement;
             restaurantImageUrlErrorMessage.textContent = '';
             restaurantImageUrlInputElement.classList.remove('error')
-            checkValidity()
+            checkRestaurantValidity()
         }
     })
     latitudeInputElement.addEventListener('blur', () => {
@@ -269,13 +234,13 @@ function restaurantValidation(): void {
             latitudeUrlErrorMessage.textContent = 'Field is required.';
             latitudeUrlErrorMessage.style.color = warnColor;
             latitudeInputElement.classList.add('error')
-            checkValidity()
+            checkRestaurantValidity()
 
         } else {
             const latitudeImageUrlErrorMessage = document.querySelector('#latitude-errorMessage') as HTMLSpanElement;
             latitudeImageUrlErrorMessage.textContent = '';
             latitudeInputElement.classList.remove('error')
-            checkValidity()
+            checkRestaurantValidity()
         }
     })
     longitudeInputElement.addEventListener('blur', () => {
@@ -284,16 +249,46 @@ function restaurantValidation(): void {
             longitudeUrlErrorMessage.textContent = 'Field is required.';
             longitudeUrlErrorMessage.style.color = warnColor;
             longitudeInputElement.classList.add('error')
-            checkValidity()
+            checkRestaurantValidity()
 
         } else {
             const longitudeImageUrlErrorMessage = document.querySelector('#longitude-errorMessage') as HTMLSpanElement;
             longitudeImageUrlErrorMessage.textContent = '';
             longitudeInputElement.classList.remove('error')
-            checkValidity()
+            checkRestaurantValidity()
         }
     })
-    checkValidity()
+}
+
+function isNameValid(nameInputElement: HTMLInputElement): boolean {
+    return nameInputElement.value.trim().length >= 2;
+}
+function isDescriptionValid(descriptionInputElement: HTMLInputElement): boolean {
+    return descriptionInputElement.value.trim().length >= 2;
+}
+
+function isCapacityValid(capacityInputElement: HTMLInputElement): boolean {
+    return capacityInputElement.value.trim().length > 0;
+}
+function isRestaurantImageUrlValid(restaurantImageUrlInputElement: HTMLInputElement): boolean {
+    return restaurantImageUrlInputElement.value.trim().length >= 5;
+}
+function isLatitudeValid(latitudeInputElement: HTMLInputElement): boolean {
+    return latitudeInputElement.value.trim().length > 0;
+}
+function isLongitudeValid(longitudeInputElement: HTMLInputElement): boolean {
+    return longitudeInputElement.value.trim().length > 0;
+}
+
+function checkRestaurantValidity() {
+    if (isNameValid(nameInputElement) && isDescriptionValid(descriptionInputElement) && isCapacityValid(capacityInputElement)
+        && isRestaurantImageUrlValid(restaurantImageUrlInputElement) && isLatitudeValid(latitudeInputElement) && isLongitudeValid(longitudeInputElement)) {
+        saveRestaurantBtn.disabled = false;
+        nextRestaurantBtn.disabled = false;
+    } else {
+        saveRestaurantBtn.disabled = true;
+        nextRestaurantBtn.disabled = true;
+    }
 }
 
 function createMealFormData(): MealFormData {
@@ -315,7 +310,7 @@ function submitMeal(): void {
     mealService.create(id, reqBody)
         .then(() => {
             mealFormHandler()
-            mealValidation()
+            checkMealValidity()
         })
         .catch(error => {
             console.log(`Error:`, error.status)
@@ -324,7 +319,11 @@ function submitMeal(): void {
 
 function mealFormHandler(): void {
     initializationMealForm()
+    updateMealTable()
+    checkMealValidity()
+}
 
+function updateMealTable() {
     const urlParams = new URLSearchParams(window.location.search)
     const id = urlParams.get('id')
 
@@ -332,7 +331,7 @@ function mealFormHandler(): void {
         .then((restaurant: Restaurant) => {
             if (!restaurant.meals || restaurant.meals.length === 0) {
                 createNoDataMessage()
-                mealValidation()
+                checkMealValidity()
             } else {
                 renderMeals(restaurant.meals, restaurant)
             }
@@ -341,68 +340,71 @@ function mealFormHandler(): void {
             console.log(`Error: `, error.status)
         });
 }
-function counterMeals(): number {
+
+async function counterMeals(): Promise<number> {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    let mealCount = 0;
-    restaurantServices.getById(id)
-        .then((restaurantData: Restaurant) => {
-            mealCount = restaurantData.meals.length
-        })
-    console.log(mealCount)
-    return mealCount
+   try {
+        const restaurantData: Restaurant = await restaurantServices.getById(id);
+        return restaurantData.meals.length;
+    } catch (error) {
+        console.error("Error while counting meals:", error);
+        return 0;
+    }
 
 }
 console.log(counterMeals())
 
-function mealValidation(): void {
-    const mealNameInputElement = (document.querySelector('#meal-name') as HTMLInputElement);
-    const priceInputElement = (document.querySelector('#price') as HTMLInputElement);
-    const ingredientsInputElement = (document.querySelector('#ingredients') as HTMLInputElement);
+const mealNameInputElement = (document.querySelector('#meal-name') as HTMLInputElement);
+const priceInputElement = (document.querySelector('#price') as HTMLInputElement);
+const ingredientsInputElement = (document.querySelector('#ingredients') as HTMLInputElement);
 
+function isMealNameValid(mealNameInputElement: HTMLInputElement): boolean {
+    console.log(`Name: ${mealNameInputElement.value}`)
+    return mealNameInputElement.value.trim().length >= 2;
+}
+function isPriceValid(priceInputElement: HTMLInputElement): boolean {
+    console.log(`Price: ${priceInputElement.value}`)
+    return priceInputElement.value.trim().length > 0;
+}
 
-    function isMealNameValid(mealNameInputElement: HTMLInputElement): boolean {
-        return mealNameInputElement.value.trim().length >= 2;
+function isIngredientsValid(ingredientsInputElement: HTMLInputElement): boolean {
+    console.log(`Ingridients: ${ingredientsInputElement.value}`)
+    return ingredientsInputElement.value.trim().length > 0;
+}
+
+async function checkMealValidity() {
+    const isValid = isMealNameValid(mealNameInputElement) &&
+        isPriceValid(priceInputElement) &&
+        isIngredientsValid(ingredientsInputElement);
+
+    if (isValid) {
+        saveMealBtn.disabled = false;
+        const mealCount = await counterMeals();
+        nextMealBtn.disabled =  mealCount < 5;
+
+    } else {
+        saveMealBtn.disabled = true;
+        nextMealBtn.disabled = true;
     }
-    function isPriceValid(priceInputElement: HTMLInputElement): boolean {
-        return priceInputElement.value.trim().length > 0;
-    }
+}
+console.log(nextMealBtn.disabled)
 
-    function isingredientsValid(ingredientsInputElement: HTMLInputElement): boolean {
-        return ingredientsInputElement.value.trim().length > 0;
-    }
-
-    function checkValidity() {
-        const isValid = isMealNameValid(mealNameInputElement) &&
-            isPriceValid(priceInputElement) &&
-            isingredientsValid(ingredientsInputElement);
-
-        if (isValid) {
-            saveMealBtn.disabled = false;
-            const mealCount = counterMeals();
-            nextMealBtn.disabled = !(mealCount >= 5);
-
-        } else {
-            saveMealBtn.disabled = true;
-            nextMealBtn.disabled = true;
-        }
-    }
-    console.log(nextMealBtn.disabled)
-
-
+function intializeMealValidationListeners(): void {
     const warnColor = '#d9534f';
+
     mealNameInputElement.addEventListener('blur', () => {
         if (!isMealNameValid(mealNameInputElement)) {
             const mealNameErrorMessage = document.querySelector('#meal-name-errorMessage') as HTMLSpanElement;
             mealNameErrorMessage.textContent = 'Name must be atleast 2 caracter log.';
             mealNameErrorMessage.style.color = warnColor;
             mealNameInputElement.classList.add('error')
-            checkValidity()
+            checkMealValidity()
         } else {
             const mealNameErrorMessage = document.querySelector('#meal-name-errorMessage') as HTMLSpanElement;
             mealNameErrorMessage.textContent = '';
             mealNameInputElement.classList.remove('error')
-            checkValidity()
+            checkMealValidity()
         }
     })
     priceInputElement.addEventListener('blur', () => {
@@ -411,26 +413,26 @@ function mealValidation(): void {
             priceErrorMessage.textContent = 'Field is required.';
             priceErrorMessage.style.color = warnColor;
             priceInputElement.classList.add('error')
-            checkValidity()
+            checkMealValidity()
         } else {
             const priceErrorMessage = document.querySelector('#price-errorMessage') as HTMLSpanElement;
             priceErrorMessage.textContent = '';
             priceInputElement.classList.remove('error')
-            checkValidity()
+            checkMealValidity()
         }
     })
     ingredientsInputElement.addEventListener('blur', () => {
-        if (!isingredientsValid(ingredientsInputElement)) {
+        if (!isIngredientsValid(ingredientsInputElement)) {
             const ingredientsErrorMessage = document.querySelector('#ingredients-errorMessage') as HTMLTextAreaElement;
             ingredientsErrorMessage.textContent = 'Field is required.';
             ingredientsErrorMessage.style.color = warnColor;
             ingredientsInputElement.classList.add('error')
-            checkValidity()
+            checkMealValidity()
         } else {
             const ingredientsErrorMessage = document.querySelector('#ingredients-errorMessage') as HTMLTextAreaElement;
             ingredientsErrorMessage.textContent = '';
             ingredientsInputElement.classList.remove('error')
-            checkValidity()
+            checkMealValidity()
         }
     })
 }
@@ -458,7 +460,6 @@ function renderMeals(meals: Meal[], restaurant: Restaurant) {
         name.textContent = meal.name;
         tableRow.appendChild(name);
 
-
         const price = document.createElement('td')
         price.textContent = meal.price.toString();
         tableRow.appendChild(price);
@@ -484,7 +485,6 @@ function renderMeals(meals: Meal[], restaurant: Restaurant) {
 
         table.appendChild(tableRow);
     })
-
 }
 
 
@@ -502,7 +502,6 @@ function publishingFromHandler() {
     initializationPublishForm()
 }
 
-
 const logout = document.querySelector('#logout');
 function handleLogout() {
     localStorage.removeItem('username');
@@ -515,8 +514,6 @@ logout.addEventListener('click', function () {
     window.location.href = "../../../users/pages/login/login.html";
 })
 
-
 document.addEventListener('DOMContentLoaded', function () {
     initializationForm()
-
 })
