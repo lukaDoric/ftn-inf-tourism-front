@@ -127,6 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = "../restaurantsForm/restaurantsForm.html"
     });    
     renderData();
-    const restaurantMainPageTitle = document.querySelector('#restaurantMainPage-title');
-    restaurantMainPageTitle.textContent = `Restaurants preview for the admin: ${localStorage.getItem('username')}`
+    const restaurantMainPageTitle = document.querySelector('#user') as HTMLLinkElement;
+    restaurantMainPageTitle.textContent = `${localStorage.getItem('username')}`
 })

@@ -12,11 +12,11 @@ const tabs = Array.from(document.querySelectorAll('.tab')) as HTMLElement[];
 const step = Array.from(document.querySelectorAll('.step')) as HTMLElement[];
 const probgresBar = document.querySelector('.progress') as HTMLElement;
 
-const saveBtnRestaurant = document.querySelector('#saveBtnRestaurant') as HTMLButtonElement;
-const saveBtnMeal = document.querySelector('#saveBtnMeal') as HTMLButtonElement;
+const saveRestaurantBtn = document.querySelector('#saveBtnRestaurant') as HTMLButtonElement;
+const saveMealBtn = document.querySelector('#saveBtnMeal') as HTMLButtonElement;
 
-const nextBtnRestaurant = document.querySelector('#nextBtnRestaurant') as HTMLButtonElement;
-const nextBtnMeal = document.querySelector('#nextBtnMeal') as HTMLButtonElement;
+const nextRestaurantBtn = document.querySelector('#nextBtnRestaurant') as HTMLButtonElement;
+const nextMealBtn = document.querySelector('#nextBtnMeal') as HTMLButtonElement;
 
 const publishBtn = document.querySelector('#publishBtn') as HTMLButtonElement;
 const backBtn = document.querySelector('#backBtn') as HTMLButtonElement;
@@ -36,11 +36,13 @@ function initializationForm(): void {
                 (document.querySelector('#name') as HTMLInputElement).value = restaurant.name;
                 (document.querySelector('#description') as HTMLInputElement).value = restaurant.description;
                 (document.querySelector('#capacity') as HTMLInputElement).value = restaurant.capacity.toString();
-                (document.querySelector('#imageUrl') as HTMLInputElement).value = restaurant.imageUrl;
+                (document.querySelector('#restaurantImageUrl') as HTMLInputElement).value = restaurant.imageUrl;
                 (document.querySelector('#latitude') as HTMLInputElement).value = restaurant.latitude.toString();
                 (document.querySelector('#longitude') as HTMLInputElement).value = restaurant.longitude.toString();
+
+                initializationUpdateRestaurantForm()
             })
-        initializationUpdateRestaurantForm()
+
 
     } else {
 
@@ -49,36 +51,34 @@ function initializationForm(): void {
 }
 
 function initializationAddRestaurantForm(): void {
-
+    restaurantValidation()
     tabs[0].style.display = "flex";
     probgresBar.style.width = "0%";
     step[0].classList.add('active');
     restaurantFormHeadings.textContent = "Enter new restaurant data";
-    restaurantValidation()
-    nextBtnRestaurant.addEventListener('click', function () {
+    nextRestaurantBtn.addEventListener('click', function () {
         submitRestaurant();
         tabs[0].style.display = 'none';
         mealFormHandler()
     })
-    saveBtnRestaurant.addEventListener('click', function () {
+    saveRestaurantBtn.addEventListener('click', function () {
         submitRestaurant();
         window.location.href = '../restaurants/restaurants.html';
     })
 }
 
 function initializationUpdateRestaurantForm(): void {
-
+    restaurantValidation()
     tabs[0].style.display = "flex";
     probgresBar.style.width = "0%";
     step[0].classList.add('active');
     restaurantFormHeadings.textContent = "Update restaurant data"
-    restaurantValidation()
-    nextBtnRestaurant.onclick = function () {
+    nextRestaurantBtn.onclick = function () {
         submitRestaurant();
         tabs[0].style.display = 'none';
         mealFormHandler()
     }
-    saveBtnRestaurant.addEventListener('click', function () {
+    saveRestaurantBtn.addEventListener('click', function () {
         submitRestaurant();
         window.location.href = '../restaurants/restaurants.html';
     })
@@ -87,16 +87,18 @@ function initializationUpdateRestaurantForm(): void {
 
 function initializationMealForm(): void {
 
+    mealValidation()
     tabs[1].style.display = "flex";
     probgresBar.style.width = "50%";
     step[0].classList.add('active');
     step[1].classList.add('active');
     restaurantFormHeadings.textContent = "Enter new meal data";
-    nextBtnMeal.onclick = function () {
+    nextMealBtn.onclick = function () {
         tabs[1].style.display = 'none';
         publishingFromHandler()
     }
-    saveBtnMeal.onclick = function () {
+    saveMealBtn.onclick = function () {
+        mealValidation()
         submitMeal()
         const mealForm = tabs[1] as HTMLFormElement;
         mealForm.reset()
@@ -124,17 +126,11 @@ function submitRestaurant(): void {
     const name = (document.querySelector('#name') as HTMLInputElement).value;
     const description = (document.querySelector('#description') as HTMLInputElement).value;
     const capacity = (document.querySelector('#capacity') as HTMLInputElement).value;
-    const restaurantImageUrl = (document.querySelector('#restaurnatImageUrl') as HTMLInputElement).value;
+    const restaurantImageUrl = (document.querySelector('#restaurantImageUrl') as HTMLInputElement).value;
     const latitude = parseFloat((document.querySelector('#latitude') as HTMLInputElement).value);
     const longitude = parseFloat((document.querySelector('#longitude') as HTMLInputElement).value);
     const ownerId = parseInt(localStorage.getItem('id'));
 
-    // if (!name || !description || !capacity || !imageUrl || !latitude || !longitude || !ownerId) {
-    //     alert("All feilds are required!")
-    //     return
-    // }
-
-    restaurantValidation()
 
     const reqBody: RestaurantFormData = { name, description, capacity, imageUrl: restaurantImageUrl, latitude, longitude, ownerId }
 
@@ -162,15 +158,16 @@ function submitRestaurant(): void {
     }
 }
 
-function restaurantValidation() {
-    const nameInputElement = (document.querySelector('#name') as HTMLInputElement)
-const descriptionInputElement  = (document.querySelector('#description') as HTMLInputElement)
-const capacityInputElement  = (document.querySelector('#capacity') as HTMLInputElement)
-const restaurantImageUrlInputElement  = (document.querySelector('#restaurnatImageUrl') as HTMLInputElement)
-const latitudeInputElement  = (document.querySelector('#latitude') as HTMLInputElement)
-const longitudeInputElement  = (document.querySelector('#longitude') as HTMLInputElement)
 
-    
+function restaurantValidation(): void {
+
+    const nameInputElement = (document.querySelector('#name') as HTMLInputElement)
+    const descriptionInputElement = (document.querySelector('#description') as HTMLInputElement)
+    const capacityInputElement = (document.querySelector('#capacity') as HTMLInputElement)
+    const restaurantImageUrlInputElement = (document.querySelector('#restaurantImageUrl') as HTMLInputElement)
+    const latitudeInputElement = (document.querySelector('#latitude') as HTMLInputElement)
+    const longitudeInputElement = (document.querySelector('#longitude') as HTMLInputElement)
+
     function isNameValid(nameInputElement: HTMLInputElement): boolean {
         return nameInputElement.value.trim().length >= 2;
     }
@@ -191,16 +188,22 @@ const longitudeInputElement  = (document.querySelector('#longitude') as HTMLInpu
         return longitudeInputElement.value.trim().length > 0;
     }
 
+    const inputFields: HTMLInputElement[] = [nameInputElement, descriptionInputElement, capacityInputElement, latitudeInputElement, longitudeInputElement, restaurantImageUrlInputElement]
+    inputFields.forEach(input => {
+        input.addEventListener('input', checkValidity)
+    })
+
     function checkValidity() {
         if (isNameValid(nameInputElement) && isDescriptionValid(descriptionInputElement) && isCapacityValid(capacityInputElement)
             && isRestaurantImageUrlValid(restaurantImageUrlInputElement) && isLatitudeValid(latitudeInputElement) && isLongitudeValid(longitudeInputElement)) {
-            saveBtnRestaurant.disabled = false;
-            nextBtnRestaurant.disabled = false;
+            saveRestaurantBtn.disabled = false;
+            nextRestaurantBtn.disabled = false;
         } else {
-            saveBtnRestaurant.disabled = true;
-            nextBtnRestaurant.disabled = true;
+            saveRestaurantBtn.disabled = true;
+            nextRestaurantBtn.disabled = true;
         }
     }
+
     const warnColor = '#d9534f';
     nameInputElement.addEventListener('blur', () => {
         if (!isNameValid(nameInputElement)) {
@@ -209,10 +212,11 @@ const longitudeInputElement  = (document.querySelector('#longitude') as HTMLInpu
             nameErrorMessage.style.color = warnColor;
             nameInputElement.classList.add('error')
             checkValidity()
-        }else{
+        } else {
             const nameErrorMessage = document.querySelector('#name-errorMessage') as HTMLSpanElement;
             nameErrorMessage.textContent = '';
             nameInputElement.classList.remove('error')
+            checkValidity()
         }
     })
     descriptionInputElement.addEventListener('blur', () => {
@@ -220,88 +224,102 @@ const longitudeInputElement  = (document.querySelector('#longitude') as HTMLInpu
             const descriptionErrorMessage = document.querySelector('#description-errorMessage') as HTMLSpanElement;
             descriptionErrorMessage.textContent = 'Field is required.';
             descriptionErrorMessage.style.color = warnColor;
-            descriptionInputElement.style.borderColor = warnColor
+            descriptionInputElement.classList.add('error')
+            checkValidity()
+        } else {
+            const descriptionErrorMessage = document.querySelector('#description-errorMessage') as HTMLSpanElement;
+            descriptionErrorMessage.textContent = '';
+            descriptionInputElement.classList.remove('error')
             checkValidity()
         }
     })
     capacityInputElement.addEventListener('blur', () => {
         if (!isCapacityValid(capacityInputElement)) {
-            capacityInputElement.style.borderColor = warnColor;
             const capacityErrorMessage = document.querySelector('#capacity-errorMessage') as HTMLSpanElement;
             capacityErrorMessage.textContent = 'Field is required.';
             capacityErrorMessage.style.color = warnColor;
+            capacityInputElement.classList.add('error')
             checkValidity()
 
+        } else {
+            const capacityErrorMessage = document.querySelector('#capacity-errorMessage') as HTMLSpanElement;
+            capacityErrorMessage.textContent = '';
+            capacityInputElement.classList.remove('error')
+            checkValidity()
         }
     })
     restaurantImageUrlInputElement.addEventListener('blur', () => {
         if (!isRestaurantImageUrlValid(restaurantImageUrlInputElement)) {
-            restaurantImageUrlInputElement.style.borderColor = warnColor;
-            const restaurantImageUrlErrorMessage = document.querySelector('#restaurnatImageUrl') as HTMLSpanElement;
+            const restaurantImageUrlErrorMessage = document.querySelector('#restaurantImageUrl-errorMessage') as HTMLSpanElement;
             restaurantImageUrlErrorMessage.textContent = 'Field is required.';
             restaurantImageUrlErrorMessage.style.color = warnColor;
+            restaurantImageUrlInputElement.classList.add('error')
             checkValidity()
 
+        } else {
+            const restaurantImageUrlErrorMessage = document.querySelector('#restaurantImageUrl-errorMessage') as HTMLSpanElement;
+            restaurantImageUrlErrorMessage.textContent = '';
+            restaurantImageUrlInputElement.classList.remove('error')
+            checkValidity()
         }
     })
     latitudeInputElement.addEventListener('blur', () => {
         if (!isLatitudeValid(latitudeInputElement)) {
-            latitudeInputElement.style.borderColor = warnColor;
             const latitudeUrlErrorMessage = document.querySelector('#latitude-errorMessage') as HTMLSpanElement;
             latitudeUrlErrorMessage.textContent = 'Field is required.';
             latitudeUrlErrorMessage.style.color = warnColor;
+            latitudeInputElement.classList.add('error')
+            checkValidity()
+
+        } else {
+            const latitudeImageUrlErrorMessage = document.querySelector('#latitude-errorMessage') as HTMLSpanElement;
+            latitudeImageUrlErrorMessage.textContent = '';
+            latitudeInputElement.classList.remove('error')
             checkValidity()
         }
     })
     longitudeInputElement.addEventListener('blur', () => {
-        if (!isLatitudeValid(longitudeInputElement)) {
-            longitudeInputElement.style.borderColor = warnColor;
+        if (!isLongitudeValid(longitudeInputElement)) {
             const longitudeUrlErrorMessage = document.querySelector('#longitude-errorMessage') as HTMLSpanElement;
             longitudeUrlErrorMessage.textContent = 'Field is required.';
             longitudeUrlErrorMessage.style.color = warnColor;
+            longitudeInputElement.classList.add('error')
+            checkValidity()
+
+        } else {
+            const longitudeImageUrlErrorMessage = document.querySelector('#longitude-errorMessage') as HTMLSpanElement;
+            longitudeImageUrlErrorMessage.textContent = '';
+            longitudeInputElement.classList.remove('error')
             checkValidity()
         }
     })
-
-
+    checkValidity()
 }
 
-
-
-
-
-
-function submitMeal(): void {
+function createMealFormData(): MealFormData {
     const name = (document.querySelector('#meal-name') as HTMLInputElement).value;
     const price = parseFloat((document.querySelector('#price') as HTMLInputElement).value);
     const ingredients = (document.querySelector('#ingredients') as HTMLInputElement).value;
     const imageUrl = (document.querySelector('#meal-imageUrl') as HTMLInputElement).value ?? '';
 
-    // TO DO: treba postaviti validaciju u CSS da ne moze biti 
-    // razno polje pri povlacenju iz frome.
-
     const reqBody: MealFormData = { name, price, ingredients, imageUrl }
+    return reqBody
+}
+
+function submitMeal(): void {
+
+    const reqBody: MealFormData = createMealFormData()
 
     const urlParams = new URLSearchParams(window.location.search);
-    let id = urlParams.get('id');
-    if (id) {
-        mealService.create(id, reqBody)
-            .then(() => {
-                mealFormHandler()
-            })
-            .catch(error => {
-                console.log(`Error:`, error.status)
-            })
-    } else {
-        id = localStorage.getItem('restaurantId');
-        mealService.create(id, reqBody)
-            .then(() => {
-                mealFormHandler()
-            })
-            .catch(error => {
-                console.log(`Error:`, error.status)
-            })
-    }
+    const id = urlParams.get('id');
+    mealService.create(id, reqBody)
+        .then(() => {
+            mealFormHandler()
+            mealValidation()
+        })
+        .catch(error => {
+            console.log(`Error:`, error.status)
+        })
 }
 
 function mealFormHandler(): void {
@@ -313,17 +331,113 @@ function mealFormHandler(): void {
     restaurantServices.getById(id)
         .then((restaurant: Restaurant) => {
             if (!restaurant.meals || restaurant.meals.length === 0) {
-                //    const mealsTableContainer = document.querySelector('#meals-table-container') as HTMLDivElement;
-                //    mealsTableContainer.textContent= "NO DATA TO DISPLAY";
                 createNoDataMessage()
+                mealValidation()
             } else {
                 renderMeals(restaurant.meals, restaurant)
             }
         })
+        .catch(error => {
+            console.log(`Error: `, error.status)
+        });
+}
+function counterMeals(): number {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    let mealCount = 0;
+    restaurantServices.getById(id)
+        .then((restaurantData: Restaurant) => {
+            mealCount = restaurantData.meals.length
+        })
+    console.log(mealCount)
+    return mealCount
+
+}
+console.log(counterMeals())
+
+function mealValidation(): void {
+    const mealNameInputElement = (document.querySelector('#meal-name') as HTMLInputElement);
+    const priceInputElement = (document.querySelector('#price') as HTMLInputElement);
+    const ingredientsInputElement = (document.querySelector('#ingredients') as HTMLInputElement);
+
+
+    function isMealNameValid(mealNameInputElement: HTMLInputElement): boolean {
+        return mealNameInputElement.value.trim().length >= 2;
+    }
+    function isPriceValid(priceInputElement: HTMLInputElement): boolean {
+        return priceInputElement.value.trim().length > 0;
+    }
+
+    function isingredientsValid(ingredientsInputElement: HTMLInputElement): boolean {
+        return ingredientsInputElement.value.trim().length > 0;
+    }
+
+    function checkValidity() {
+        const isValid = isMealNameValid(mealNameInputElement) &&
+            isPriceValid(priceInputElement) &&
+            isingredientsValid(ingredientsInputElement);
+
+        if (isValid) {
+            saveMealBtn.disabled = false;
+            const mealCount = counterMeals();
+            nextMealBtn.disabled = !(mealCount >= 5);
+
+        } else {
+            saveMealBtn.disabled = true;
+            nextMealBtn.disabled = true;
+        }
+    }
+    console.log(nextMealBtn.disabled)
+
+
+    const warnColor = '#d9534f';
+    mealNameInputElement.addEventListener('blur', () => {
+        if (!isMealNameValid(mealNameInputElement)) {
+            const mealNameErrorMessage = document.querySelector('#meal-name-errorMessage') as HTMLSpanElement;
+            mealNameErrorMessage.textContent = 'Name must be atleast 2 caracter log.';
+            mealNameErrorMessage.style.color = warnColor;
+            mealNameInputElement.classList.add('error')
+            checkValidity()
+        } else {
+            const mealNameErrorMessage = document.querySelector('#meal-name-errorMessage') as HTMLSpanElement;
+            mealNameErrorMessage.textContent = '';
+            mealNameInputElement.classList.remove('error')
+            checkValidity()
+        }
+    })
+    priceInputElement.addEventListener('blur', () => {
+        if (!isPriceValid(priceInputElement)) {
+            const priceErrorMessage = document.querySelector('#price-errorMessage') as HTMLSpanElement;
+            priceErrorMessage.textContent = 'Field is required.';
+            priceErrorMessage.style.color = warnColor;
+            priceInputElement.classList.add('error')
+            checkValidity()
+        } else {
+            const priceErrorMessage = document.querySelector('#price-errorMessage') as HTMLSpanElement;
+            priceErrorMessage.textContent = '';
+            priceInputElement.classList.remove('error')
+            checkValidity()
+        }
+    })
+    ingredientsInputElement.addEventListener('blur', () => {
+        if (!isingredientsValid(ingredientsInputElement)) {
+            const ingredientsErrorMessage = document.querySelector('#ingredients-errorMessage') as HTMLTextAreaElement;
+            ingredientsErrorMessage.textContent = 'Field is required.';
+            ingredientsErrorMessage.style.color = warnColor;
+            ingredientsInputElement.classList.add('error')
+            checkValidity()
+        } else {
+            const ingredientsErrorMessage = document.querySelector('#ingredients-errorMessage') as HTMLTextAreaElement;
+            ingredientsErrorMessage.textContent = '';
+            ingredientsInputElement.classList.remove('error')
+            checkValidity()
+        }
+    })
 }
 
 function createNoDataMessage(): void {
     const table = document.querySelector('table tbody');
+    table.innerHTML = "";
     const tableRow = document.createElement('tr')
     const tableCell = document.createElement('td')
     tableCell.colSpan = 5;
