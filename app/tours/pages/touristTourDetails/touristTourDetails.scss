@@ -1,0 +1,56 @@
+@use '../../../styles/global.scss';
+
+.container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .tour-details {
+        width: 100%;
+        .tour-header {
+            width: 60%;
+            margin-right: 30%;
+            margin-left: 5%;
+            h1 {
+                font-size: 50px;
+            }
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .startTime-maxGuests {
+                display: flex;
+                flex-direction: column;
+                
+            }
+        }
+        .tour-description {
+                width: 100%;
+                text-align: center;
+            }
+    }
+
+    .keypoint-details {
+        margin-top: 5%;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        .keypoint-card {
+            background-color: #a5a5a5;
+            display: flex;
+            border-bottom-left-radius: 30%;
+            img {
+                width: 30%;
+                border-bottom-left-radius: 30%;
+            }
+            .keypoint-desc-container {
+                width: 70%;
+                text-align: center;
+            }
+        }
+    }
+}

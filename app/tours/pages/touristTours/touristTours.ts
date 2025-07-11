@@ -1,4 +1,4 @@
-import { TourService } from "../../../../dist/tours/service/tour.service.js";
+import { TourService } from "../../service/tour.service.js";
 import { TourResults } from "../../model/TourResults.js";
 
 const tourService = new TourService();
@@ -110,9 +110,17 @@ function RenderTours(
         tourMaxGuests.textContent = tour.maxGuests.toString();
         tourCard.appendChild(tourMaxGuests);
 
+        attachTourCardClickListener(tourCard, tour.id)
+
         tourContainer.appendChild(tourCard);
     }
   });
+}
+
+function attachTourCardClickListener(tourCard, tourId){
+  tourCard.addEventListener('click', () => {
+    window.location.href = `../touristTourDetails/touristTourDetails.html?id=${tourId}`;
+  })
 }
 
 document.addEventListener("DOMContentLoaded", Initialize);
