@@ -16,10 +16,9 @@
             <li class="nav-item" id="restaurants"><a
                     href="../../../restaurants/pages/restaurants/restaurants.html">Restaurants</a></li>
             <li class="nav-item" id="logout"><a href="../../../users/pages/login/login.html">Logout</a></li>
+            <li class="nav-item" id="user"></li>
         </ul>
     </nav>
-
-    <!-- <h1 id="form-title"></h1> -->
 
     <div id="form-container">
         <div class="step-container">
@@ -65,8 +64,10 @@
                 <br>
                 <div class="button">
                     <button type="button" id="saveBtnRestaurant">Save <i class="fa-regular fa-floppy-disk"></i></button>
-                    <button type="button" id="nextBtnRestaurant">Next ></button>
-                    <span class="tooltiptext">All fields are required</span>
+                    <div class="tooltip-wrapper">
+                        <button type="button" id="nextBtnRestaurant">Next ></button>
+                        <span class="tooltiptext">All fields are required</span>
+                    </div>
                 </div>
             </div>
         </form>
@@ -121,7 +122,12 @@
                     <br>
                     <div id="meal-tableBtn">
                         <button type="button" id="backBtn">Back</button>
-                        <button type="button" id="nextBtnMeal">Next ></button>
+                        <div class="tooltip-wrapper">
+                            <button type="button" id="nextBtnMeal">Next ></button>
+                            <span class="tooltiptext">To be published on the website,
+                                a restaurant must have atleast five meals and one picture of the interior.</span>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -135,13 +141,19 @@
                 </div>
 
                 <div id="meal-table">
-                    <table id="publish-meals-table">
-                        <tr>
+                    <table id="#publish-meals-table tbody">
+                        <thead>
+                            <tr>
                             <th>Name</th>
                             <th>Price</th>
                             <th>Ingredients</th>
                             <th>Image URL</th>
                         </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                        
                     </table>
 
                 </div>

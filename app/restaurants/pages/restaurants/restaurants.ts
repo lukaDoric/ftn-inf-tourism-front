@@ -42,8 +42,10 @@ function renderData(): void {
 
                 const buttonDiv = document.createElement('div');
                 buttonDiv.id = 'button-container';
+
                 const wheelBtn = document.createElement('button')
                 wheelBtn.innerHTML = "<i class=\"fa-solid fa-gear\"></i>"
+                wheelBtn.id ='wheelBtn';
                 wheelBtn.onclick= function(){
                     hiddenButtonDiv.style.display =
                     hiddenButtonDiv.style.display === "flex" ? "none" : "flex";
@@ -58,7 +60,7 @@ function renderData(): void {
                 editBtn.textContent = "Edit";
                 editBtn.classList.add("button");
                 editBtn.classList.add('editBtn')
-                editBtn.id = ("editBtn");
+                editBtn.id = "editBtn";
 
                 editBtn.onclick = function () {
                     window.location.href = `../restaurantsForm/restaurantsForm.html?id=${restaurants[i]["id"]}`;

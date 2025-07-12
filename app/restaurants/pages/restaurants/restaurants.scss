@@ -1,10 +1,9 @@
 @use"../../../styles/global.scss" as*;
 
 .restaurant-container {
-    // background-color: white;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 
     .restaurant-card {
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
@@ -53,7 +52,7 @@
                 display: flex;
                 justify-content: flex-end;
                 position: relative;
-                
+
 
                 .button {
                     width: 100px;
@@ -84,31 +83,52 @@ h1 {
     text-align: center;
 }
 
-#hidden-button-container{
-     display: none;
-    // display: flex;
+#hidden-button-container {
+    display: none;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
     position: absolute;
     top: 100%;
-     right: 0;
-     background: $primary-color;
-     border-radius: 10px;
-     box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
-     padding: 10px 0;
-     min-width: 100px;
-     z-index: 10;
+    right: 0;
+    background: $primary-color;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    min-width: 100px;
+    z-index: 10;
 }
 
 #button-container #hidden-button-container #editBtn,
-#button-container #hidden-button-container #deleteBtn{
+#button-container #hidden-button-container #deleteBtn {
     width: 100%;
     margin: 0;
-color: #333;
-background-color: $primary-color;
-border-radius: 0;
+    color: #333;
+    background-color: $primary-color;
+    cursor: pointer;
+
 }
-#button-container #hidden-button-container #deleteBtn{
+
+#button-container #hidden-button-container #editBtn {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#button-container #hidden-button-container #deleteBtn {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#button-container #hidden-button-container #deleteBtn:hover {
     background-color: $warn-color;
+    color: white;
+}
+
+#button-container #hidden-button-container #editBtn:hover {
+    background-color: gray;
+    color: white;
+}
+
+#button-container #wheelBtn {
+    background-color: $primary-color;
+    color: #333;
+    cursor: pointer;
 }

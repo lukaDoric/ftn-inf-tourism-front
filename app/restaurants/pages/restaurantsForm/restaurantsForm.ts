@@ -162,8 +162,11 @@ function submitRestaurant(): void {
     } else {
         restaurantServices.create(reqBody)
             .then((restaurant) => {
-                const paht: string = `http://127.0.0.1:5500/app/restaurants/pages/restaurantsForm/restaurantsForm.html?id=${restaurant.id}`
-                window.history.pushState({}, "", paht);
+                const url = new URL (window.location.search);
+                const params = url.searchParams;
+                params.append('id', restaurant.id.toString())
+                // const path: string = `http://127.0.0.1:5500/app/restaurants/pages/restaurantsForm/restaurantsForm.html?id=${restaurant.id}`
+                history.replaceState(null, "", url);
             })
             .catch(error => {
                 console.log(`Error: `, error.status);
@@ -513,12 +516,11 @@ function createNoDataMessage(): void {
 
 function publishingFromHandler() {
     initializationPublishForm()
-    renderRestaurant()
-    renderMeals()
+    renderRestaurantAndMels()
 }
 
 
-function renderRestaurant(): void {
+function renderRestaurantAndMels(): void {
 
     const urlParams = new URLSearchParams(window.location.search)
     const id = urlParams.get('id');
