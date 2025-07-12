@@ -2,12 +2,39 @@ import { Keypoint } from "../model/keyPoint.model";
 import { Tour } from "../model/tour.model";
 import { TourFormData } from "../model/tourFormData.model";
 import { KeyPointFormData } from "../model/keyPointFormData.model";
+import { TourResults } from "../model/TourResults";
 
 export class TourService {
   private apiUrl: string;
 
   constructor() {
     this.apiUrl = "http://localhost:5105/api/tours";
+  }
+
+  getAllPublished(orderBy: string = 'Name', orderDirection: string = 'ASC', currentPage: number = 1, toursSize: number = 10): Promise<TourResults> {
+    const queryParams = new URLSearchParams({
+      orderBy: orderBy,
+      orderDirection: orderDirection,
+      page: currentPage.toString(),
+      pageSize: toursSize.toString()
+    });
+
+    const url = `${this.apiUrl}?${queryParams.toString()}`;
+
+    return fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw {status: response.status, message: response.text};
+          }
+          return response.json();
+        })
+        .then((tours: TourResults) => {
+          return tours;
+        })
+        .catch(error => {
+          console.error ('Error:', error.status);
+          throw error;
+        })
   }
 
   getAllByGuideId(id: number): Promise<Tour[]> {
