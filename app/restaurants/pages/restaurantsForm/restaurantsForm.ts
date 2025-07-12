@@ -58,8 +58,8 @@ function initializationAddRestaurantForm(): void {
     probgresBar.style.width = "0%";
     step[0].classList.add('active');
     restaurantFormHeadings.textContent = "Enter new restaurant data";
-    nextRestaurantBtn.addEventListener('click', function () {
-        submitRestaurant();
+    nextRestaurantBtn.addEventListener('click', async function () {
+         await submitRestaurant();
         tabs[0].style.display = 'none';
         mealFormHandler()
     })
@@ -113,7 +113,7 @@ function initializationMealForm(): void {
 
 async function validationMealNextBtn(): Promise<void> {
     const mealCount = await counterMeals();
-    if (mealCount < 5) {
+    if (mealCount === 0 || mealCount < 5) {
         nextMealBtn.disabled = true;
     } else {
         nextMealBtn.disabled = false;
@@ -134,7 +134,7 @@ function initializationPublishForm(): void {
 
 //RESTAURANT FORM
 
-function submitRestaurant(): void {
+async function submitRestaurant(): Promise<void> {
 
     const name = (document.querySelector('#name') as HTMLInputElement).value;
     const description = (document.querySelector('#description') as HTMLInputElement).value;
@@ -149,28 +149,17 @@ function submitRestaurant(): void {
 
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
-
-    if (id) {
-        restaurantServices.update(id, reqBody)
-            .then(() => {
-
-            })
-            .catch(error => {
-                console.log(`Error: `, error.status);
-            })
-
-    } else {
-        restaurantServices.create(reqBody)
-            .then((restaurant) => {
-                const url = new URL (window.location.search);
-                const params = url.searchParams;
-                params.append('id', restaurant.id.toString())
-                // const path: string = `http://127.0.0.1:5500/app/restaurants/pages/restaurantsForm/restaurantsForm.html?id=${restaurant.id}`
-                history.replaceState(null, "", url);
-            })
-            .catch(error => {
-                console.log(`Error: `, error.status);
-            })
+try {
+        if (id) {
+            await restaurantServices.update(id, reqBody);
+        } else {
+            const restaurant = await restaurantServices.create(reqBody);
+            const url = new URL(window.location.href);
+            url.searchParams.set('id', restaurant.id.toString());
+            history.replaceState(null, "", url.toString());
+        }
+    } catch (error) {
+        console.log("Error:", error.status || error);
     }
 }
 
@@ -410,7 +399,11 @@ async function counterMeals(): Promise<number> {
     const id = urlParams.get('id');
     try {
         const restaurantData: Restaurant = await restaurantServices.getById(id);
-        return restaurantData.meals.length;
+        if (restaurantData.meals &&  Array.isArray(restaurantData.meals)) {
+            return restaurantData.meals.length;
+        } else {
+            return 0
+        }
     } catch (error) {
         console.error("Error while counting meals:", error);
         return 0;
@@ -592,34 +585,29 @@ function renderRestaurantAndMels(): void {
 
 
             const table = document.querySelector('#publish-meals-table tbody');
-                table.innerHTML = '';
-                restaurant.meals.forEach(meal => {
-                    const tableRow = document.createElement('tr')
+            table.innerHTML = '';
+            restaurant.meals.forEach(meal => {
+                const tableRow = document.createElement('tr')
 
-                    const name = document.createElement('td')
-                    name.textContent = meal.name;
-                    tableRow.appendChild(name);
+                const name = document.createElement('td')
+                name.textContent = meal.name;
+                tableRow.appendChild(name);
 
-                    const price = document.createElement('td')
-                    price.textContent = meal.price.toString();
-                    tableRow.appendChild(price);
+                const price = document.createElement('td')
+                price.textContent = meal.price.toString();
+                tableRow.appendChild(price);
 
-                    const ingredients = document.createElement('td')
-                    ingredients.textContent = meal.ingredients;
-                    tableRow.appendChild(ingredients);
+                const ingredients = document.createElement('td')
+                ingredients.textContent = meal.ingredients;
+                tableRow.appendChild(ingredients);
 
-                    const imageUrl = document.createElement('td')
-                    imageUrl.textContent = meal.imageUrl;
-                    tableRow.appendChild(imageUrl);
+                const imageUrl = document.createElement('td')
+                imageUrl.textContent = meal.imageUrl;
+                tableRow.appendChild(imageUrl);
 
-                    table.appendChild(tableRow);
-                })
-
+                table.appendChild(tableRow);
+            })
         })
-        
-
-                
-
 }
 
 
