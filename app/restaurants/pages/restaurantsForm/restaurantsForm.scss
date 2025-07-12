@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-h1 {
+h1,
+h2 {
 
   font-family: 'Segoe UI', sans-serif;
   font-size: 28px;
@@ -46,7 +47,6 @@ form .tab:nth-child(2) {
 
 #meals-container {
   margin: 20px auto;
-
   display: flex;
   justify-content: space-around;
 }
@@ -96,7 +96,10 @@ form .tab:nth-child(2) {
   }
 
   thead tr {
+    position: sticky;
+    top: 0;
     background-color: #D9D9D9;
+    z-index: 2;
   }
 
   #meals td,
@@ -155,6 +158,11 @@ form .tab:nth-child(2) {
   .deleteBtn {
     padding: 6px;
     width: 5px;
+    font-size: 14px;
+
+    &:hover {
+      transform: scale(1.30);
+    }
   }
 
 }
@@ -163,7 +171,7 @@ form .tab:nth-child(2) {
   width: 25%;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -183,19 +191,57 @@ form .tab:nth-child(2) {
   }
 }
 
-
 form #restaurant-from {
   display: flex;
   flex-direction: column;
-  width: 600px;
+  width: 450px;
   margin: 50px auto;
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+
 }
 
+.tooltiptext {
+  bottom: 120%;
+  left: 90%;
+  transform: translateX(-50%);
+  width: max-content;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 6px 6px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out 0.5s;
+}
+
+#restaurant-from .button:hover .tooltiptext {
+  color: white;
+  opacity: 1;
+
+}
+
+#restaurant-from .button .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+  color: white;
+}
 
 .button {
   display: flex;
   justify-content: space-between;
   align-content: center;
+  position: relative;
 }
 
 .step-container {

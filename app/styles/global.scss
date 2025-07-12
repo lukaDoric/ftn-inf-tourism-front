@@ -32,7 +32,8 @@ textarea {
     font-size: 14px;
     border: 1px solid #cecece;
 }
-.error {
+input.error,
+input.error {
         border-color: $warn-color;
     }
 

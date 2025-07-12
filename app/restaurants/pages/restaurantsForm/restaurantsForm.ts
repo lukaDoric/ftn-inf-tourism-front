@@ -93,7 +93,6 @@ function initializationMealForm(): void {
     probgresBar.style.width = "50%";
     step[0].classList.add('active');
     step[1].classList.add('active');
-    restaurantFormHeadings.textContent = "Enter new meal data";
     validationMealNextBtn()
     nextMealBtn.onclick = function () {
         tabs[1].style.display = 'none';

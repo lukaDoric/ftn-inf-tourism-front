@@ -35,8 +35,48 @@ function renderData(): void {
                 pictureDiv.appendChild(imgElement);
                 restaurantCard.appendChild(pictureDiv);
 
+                
+
                 const mainSectionDiv = document.createElement('div');
                 mainSectionDiv.id = 'card-mainSection';
+
+                const buttonDiv = document.createElement('div');
+                buttonDiv.id = 'button-container';
+                const wheelBtn = document.createElement('button')
+                wheelBtn.innerHTML = "<i class=\"fa-solid fa-gear\"></i>"
+                wheelBtn.onclick= function(){
+                    hiddenButtonDiv.style.display =
+                    hiddenButtonDiv.style.display === "flex" ? "none" : "flex";
+                }
+                buttonDiv.appendChild(wheelBtn)
+                
+
+
+                const hiddenButtonDiv = document.createElement('div');
+                hiddenButtonDiv.id = 'hidden-button-container'
+                const editBtn = document.createElement('button');
+                editBtn.textContent = "Edit";
+                editBtn.classList.add("button");
+                editBtn.classList.add('editBtn')
+                editBtn.id = ("editBtn");
+
+                editBtn.onclick = function () {
+                    window.location.href = `../restaurantsForm/restaurantsForm.html?id=${restaurants[i]["id"]}`;
+                }
+                hiddenButtonDiv.appendChild(editBtn);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = "Delete";
+                deleteBtn.classList.add("button");
+                deleteBtn.classList.add('deleteBtn')
+                deleteBtn.id = ("deleteBtn");
+                deleteBtn.onclick = function () {
+                    deleteRestaurant(restaurants, i);
+                }
+
+                hiddenButtonDiv.appendChild(deleteBtn);
+                buttonDiv.appendChild(hiddenButtonDiv)
+                mainSectionDiv.appendChild(buttonDiv);
 
                 const p1 = document.createElement('p');
                 p1.id = 'restaurantName';
@@ -82,30 +122,7 @@ function renderData(): void {
                 p6.innerHTML += restaurants[i]['status'];
                 mainSectionDiv.appendChild(p6);
 
-                const buttonDiv = document.createElement('div');
-                buttonDiv.id = 'button-container';
-
-                const editBtn = document.createElement('button');
-                editBtn.textContent = "Edit";
-                editBtn.classList.add("button");
-                editBtn.id = ("editBtn");
-
-                editBtn.onclick = function () {
-                    window.location.href = `../restaurantsForm/restaurantsForm.html?id=${restaurants[i]["id"]}`;
-                }
-                buttonDiv.appendChild(editBtn);
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = "Delete";
-                deleteBtn.classList.add("button");
-                deleteBtn.id = ("deleteBtn");
-                deleteBtn.onclick = function () {
-                    deleteRestaurant(restaurants, i);
-                }
-
-                buttonDiv.appendChild(deleteBtn);
-
-                mainSectionDiv.appendChild(buttonDiv);
+                
                 restaurantCard.appendChild(mainSectionDiv);
                 resturantContainer.appendChild(restaurantCard);
             }
