@@ -34,7 +34,6 @@ function renderData(): void {
                 imgElement.alt = 'slika restorana';
                 pictureDiv.appendChild(imgElement);
                 restaurantCard.appendChild(pictureDiv);
-
                 
 
                 const mainSectionDiv = document.createElement('div');
@@ -46,13 +45,11 @@ function renderData(): void {
                 const wheelBtn = document.createElement('button')
                 wheelBtn.innerHTML = "<i class=\"fa-solid fa-gear\"></i>"
                 wheelBtn.id ='wheelBtn';
-                wheelBtn.onclick= function(){
-                    hiddenButtonDiv.style.display =
-                    hiddenButtonDiv.style.display === "flex" ? "none" : "flex";
-                }
-                buttonDiv.appendChild(wheelBtn)
-                
+                wheelBtn.onmouseenter= function(){hiddenButtonDiv.style.display ="flex"}
 
+                wheelBtn.onmouseleave= function(){hiddenButtonDiv.style.display ="none"}
+                buttonDiv.appendChild(wheelBtn)
+                               
 
                 const hiddenButtonDiv = document.createElement('div');
                 hiddenButtonDiv.id = 'hidden-button-container'
@@ -77,6 +74,11 @@ function renderData(): void {
                 }
 
                 hiddenButtonDiv.appendChild(deleteBtn);
+
+                hiddenButtonDiv.onmouseenter = function(){hiddenButtonDiv.style.display ="flex"}
+                hiddenButtonDiv.onmouseleave= function(){hiddenButtonDiv.style.display ="none"}
+                    
+
                 buttonDiv.appendChild(hiddenButtonDiv)
                 mainSectionDiv.appendChild(buttonDiv);
 

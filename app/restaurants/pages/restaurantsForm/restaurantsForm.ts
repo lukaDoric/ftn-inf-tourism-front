@@ -21,11 +21,12 @@ const nextMealBtn = document.querySelector('#nextBtnMeal') as HTMLButtonElement;
 const publishBtn = document.querySelector('#publishBtn') as HTMLButtonElement;
 const backBtn = document.querySelector('#backBtn') as HTMLButtonElement;
 
-const tableDiv = document.querySelector('#meals-table-container') as HTMLDivElement;
-const table = document.querySelector('#meals') as HTMLElement;
+// const tableDiv = document.querySelector('#meals-table-container') as HTMLDivElement;
+// const table = document.querySelector('#meals') as HTMLElement;
 
 const restaurantFormHeadings = document.querySelector('#restaurant-headings');
-const formTitle = document.querySelector('#form-title');
+
+let currentRestaurant: Restaurant = null;
 
 function initializationForm(): void {
     intializeRestaurantValidationListeners()
@@ -59,9 +60,9 @@ function initializationAddRestaurantForm(): void {
     step[0].classList.add('active');
     restaurantFormHeadings.textContent = "Enter new restaurant data";
     nextRestaurantBtn.addEventListener('click', async function () {
-         await submitRestaurant();
+        await submitRestaurant();
         tabs[0].style.display = 'none';
-        mealFormHandler()
+        setTimeout(mealFormHandler, 400)
     })
     saveRestaurantBtn.addEventListener('click', function () {
         submitRestaurant();
@@ -122,14 +123,14 @@ async function validationMealNextBtn(): Promise<void> {
 
 function initializationPublishForm(): void {
 
-    restaurantFormHeadings.textContent = "Publishing";
     tabs[2].style.display = "flex";
     probgresBar.style.width = "100%";
     step[0].classList.add('active');
     step[1].classList.add('active');
     step[2].classList.add('active');
-    restaurantFormHeadings.textContent = "";
-
+    publishBtn.onclick = function (){
+        publishRestaurant();
+    }
 }
 
 //RESTAURANT FORM
@@ -138,7 +139,7 @@ async function submitRestaurant(): Promise<void> {
 
     const name = (document.querySelector('#name') as HTMLInputElement).value;
     const description = (document.querySelector('#description') as HTMLInputElement).value;
-    const capacity = (document.querySelector('#capacity') as HTMLInputElement).value;
+    const capacity = parseInt((document.querySelector('#capacity') as HTMLInputElement).value);
     const restaurantImageUrl = (document.querySelector('#restaurantImageUrl') as HTMLInputElement).value;
     const latitude = parseFloat((document.querySelector('#latitude') as HTMLInputElement).value);
     const longitude = parseFloat((document.querySelector('#longitude') as HTMLInputElement).value);
@@ -149,7 +150,7 @@ async function submitRestaurant(): Promise<void> {
 
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
-try {
+    try {
         if (id) {
             await restaurantServices.update(id, reqBody);
         } else {
@@ -399,7 +400,7 @@ async function counterMeals(): Promise<number> {
     const id = urlParams.get('id');
     try {
         const restaurantData: Restaurant = await restaurantServices.getById(id);
-        if (restaurantData.meals &&  Array.isArray(restaurantData.meals)) {
+        if (restaurantData.meals && Array.isArray(restaurantData.meals)) {
             return restaurantData.meals.length;
         } else {
             return 0
@@ -508,19 +509,31 @@ function createNoDataMessage(): void {
 
 
 function publishingFromHandler() {
+    renderRestaurantAndMeals()
+    setTimeout(()=>{validationPublishBtn(currentRestaurant)},400)
     initializationPublishForm()
-    renderRestaurantAndMels()
+    
+    
+}
+
+function validationPublishBtn(currentRestaurant: Restaurant) :void{
+    if(currentRestaurant.status.trim() !== "u pripremi")
+    {
+        publishBtn.disabled = true;
+    }
+
 }
 
 
-function renderRestaurantAndMels(): void {
+function renderRestaurantAndMeals(): void {
 
     const urlParams = new URLSearchParams(window.location.search)
     const id = urlParams.get('id');
 
     restaurantServices.getById(id)
         .then(restaurant => {
-            const resturantContainer = document.querySelector('#restaurant-card');
+            currentRestaurant = restaurant
+            const resturantContainer = document.querySelector('#restaurant-card-container');
 
             const restaurantCard = document.createElement('div');
             restaurantCard.classList.add('restaurant-card');
@@ -542,74 +555,117 @@ function renderRestaurantAndMels(): void {
             const strong1 = document.createElement('strong');
             strong1.textContent = 'Name: ';
             p1.appendChild(strong1);
-            p1.innerHTML += restaurant['name'];
+            p1.append(restaurant['name']);
             mainSectionDiv.appendChild(p1);
 
             const p2 = document.createElement('p');
             const strong2 = document.createElement('strong');
             strong2.textContent = 'Description: ';
             p2.appendChild(strong2);
-            p2.innerHTML += restaurant['description'];
+            p2.append(restaurant['description']);
             mainSectionDiv.appendChild(p2);
 
             const p3 = document.createElement('p');
             const strong3 = document.createElement('strong');
             strong3.textContent = 'Capacity: ';
             p3.appendChild(strong3);
-            p3.innerHTML += restaurant['capacity'];
+            p3.append(restaurant['capacity'].toString());
             mainSectionDiv.appendChild(p3);
 
             const p4 = document.createElement('p');
             const strong4 = document.createElement('strong');
             strong4.textContent = 'Latitude: ';
             p4.appendChild(strong4);
-            p4.innerHTML += restaurant['latitude'];
+            p4.append(restaurant['latitude'].toString());
             mainSectionDiv.appendChild(p4);
 
             const p5 = document.createElement('p');
             const strong5 = document.createElement('strong');
             strong5.textContent = 'Longitude: ';
             p5.appendChild(strong5);
-            p5.innerHTML += restaurant['longitude'];
+            p5.append(restaurant['longitude'].toString());
             mainSectionDiv.appendChild(p5);
 
             const p6 = document.createElement('p');
             const strong6 = document.createElement('strong');
             strong6.textContent = 'Status: ';
             p6.appendChild(strong6);
-            p6.innerHTML += restaurant['status'];
+            p6.append(restaurant['status']);
             mainSectionDiv.appendChild(p6);
 
             restaurantCard.appendChild(mainSectionDiv);
             resturantContainer.appendChild(restaurantCard);
 
-
             const table = document.querySelector('#publish-meals-table tbody');
             table.innerHTML = '';
             restaurant.meals.forEach(meal => {
-                const tableRow = document.createElement('tr')
-
-                const name = document.createElement('td')
-                name.textContent = meal.name;
-                tableRow.appendChild(name);
-
-                const price = document.createElement('td')
-                price.textContent = meal.price.toString();
-                tableRow.appendChild(price);
-
-                const ingredients = document.createElement('td')
-                ingredients.textContent = meal.ingredients;
-                tableRow.appendChild(ingredients);
-
-                const imageUrl = document.createElement('td')
-                imageUrl.textContent = meal.imageUrl;
-                tableRow.appendChild(imageUrl);
-
-                table.appendChild(tableRow);
+                const row = document.createElement('tr')
+                const keys = ["name", "price", "ingredients", "imageUrl"]
+                keys.forEach(key => {
+                    const td = document.createElement('td')
+                    td.textContent = meal[key].toString()
+                    row.appendChild(td)
+                })
+                table.appendChild(row)
             })
         })
 }
 
+const loadingMessage = document.querySelector('#loading-message');
+const successMessage = document.querySelector('#success-message');
+
+function showLoadingMessage(): void{
+loadingMessage.classList.remove('hidden')
+}
+
+function showSucessMessage(): void {
+    loadingMessage.classList.add('hidden')
+    successMessage.classList.remove('hidden')
+}
+
+function createRestaurantReqBody(restaurant: Restaurant): RestaurantFormData{
+    const reqBody: RestaurantFormData = { 
+        name: (restaurant.name), 
+         description: (restaurant.description),  
+         capacity: (restaurant.capacity), 
+         imageUrl: (restaurant.imageUrl),  
+         latitude:(restaurant.latitude),  
+         longitude: (restaurant.longitude),  
+         ownerId: (restaurant.ownerId),  
+         status: (restaurant.status)
+    }
+    return reqBody
+}
+
+function publishRestaurant() :void{
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id')
+
+    try {
+        if (id) {
+            restaurantServices.getById(id)
+            .then(restaurant=>{
+                const reqData = createRestaurantReqBody(restaurant)
+                reqData.status="objavljeno"
+                return reqData
+            }).then(reqBody=>{
+                setTimeout(showLoadingMessage, 10000);
+            publishBtn.disabled = true;
+            restaurantServices.update(id, reqBody)
+            .then(()=>{
+                showSucessMessage()
+               setTimeout(()=>{window.location.href="../restaurants/restaurants.html"}, 5000) 
+            })
+
+            })
+            
+        }
+        
+    } catch (error) {
+        console.log("Error:", error.status || error);
+    }
+}
 
 
 const logout = document.querySelector('#logout');

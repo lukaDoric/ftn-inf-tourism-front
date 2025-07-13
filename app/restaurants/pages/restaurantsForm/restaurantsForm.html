@@ -136,12 +136,18 @@
         </form>
         <form class="tab">
             <div id="publish-container">
-                <div id="restaurant-card">
+                <div id="publish-data">
+
+               
+                <h2 id="publish-restaurant-title">Restaurant</h2>
+                <div id="restaurant-card-container">
 
                 </div>
 
                 <div id="meal-table">
-                    <table id="#publish-meals-table tbody">
+                    <h2>Meals</h2>
+                    <div id="table-scroll-meal">
+                    <table id="publish-meals-table">
                         <thead>
                             <tr>
                             <th>Name</th>
@@ -155,13 +161,17 @@
                         </tbody>
                         
                     </table>
-
+                    </div>
                 </div>
+
+                <div id="loading-message" class="hidden">Publising resturant, please wait...</div>
+                <div id="success-message" class="hidden">Restaurant is successfully Published.</div>
 
                 <div class="button">
                     <button type="button" id="publishBtn">Publish</button>
                 </div>
 
+             </div>
             </div>
 
 
