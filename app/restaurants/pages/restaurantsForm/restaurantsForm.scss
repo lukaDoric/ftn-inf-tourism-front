@@ -88,7 +88,7 @@ table {
 
 tr {
   font-size: 12px;
-  background-color: #f8f8f8;
+  background-color: $primary-color;
 }
 
 tbody {
@@ -387,7 +387,7 @@ form #restaurant-from {
   margin-top: 50px;
 
   &:disabled {
-    background-color: #F8F8F8;
+    background-color: $primary-color;
     color: #E2E2E2;
 
     &:hover {
@@ -448,7 +448,7 @@ form #restaurant-from {
 
 #success-message{
   margin-top: 20px;
-  color: #7dd8b5;
+  color: $okay-color;
   font-weight: bold;
   text-align: center;
   animation: fadeIn 0.3s ease-in-out;
