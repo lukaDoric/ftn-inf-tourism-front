@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Tour</title>
+    <link
+      rel="stylesheet"
+      href="../../../../dist/tours/pages/toursForm/toursForm.css"
+    />
+    <script
+      type="module"
+      src="../../../../dist/tours/pages/toursForm/toursForm.js"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/5f9b15613a.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="../../../index.html"><b>GastroTrip</b></a></li>
+        <li class="nav-item" id="logout">
+          <a href="../../../index.html">Logout</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="progress-container">
+      <div class="progress" id="progress"></div>
+      <div class="circle active">1</div>
+      <div class="circle" id="circle2">2</div>
+      <div class="circle" id="circle3">3</div>
+    </div>
+
+    <div class="container">
+      <div class="step1">
+        <h2>Enter tour details below</h2>
+        <form class="form1" id="form1" action="#">
+        <label for="nameInput">Name:</label>
+        <input type="text" name="tourName" id="nameInput"/>
+        <span id="tourNameError"></span>
+        <label for="descriptionInput">Description:</label>
+        <textarea name="tourDescription" id="descriptionInput"></textarea>
+        <span id="tourDescError"></span>
+        <label for="startDateInput">Departure:</label>
+        <input type="datetime-local" name="tourStartDate" id="startDateInput" />
+        <span id="tourDateError"></span>
+        <label for="maxGuestsInput">Maximum guests:</label>
+        <input type="number" name="tourMaxGuests" id="maxGuestsInput" />
+        <span id="tourMaxGuestsError"></span>
+      </form>
+      <div class="buttons1">
+        <div class="tooltip-wrapper">
+           <button type="button" id="saveBtn1" disabled>
+            Save <i class="fa-solid fa-floppy-disk"></i>
+          </button>
+          <div class="tooltip">All fields are required.</div>
+        </div>
+        <div class="tooltip-wrapper">
+          <button type="button" id="nextBtn1" disabled>
+            Next <i class="fa-solid fa-chevron-right"></i>
+          </button>
+          <div class="tooltip">All fields are required.</div>
+        </div>
+          
+        </div>
+      </div>
+      
+      <!-- End of step 1 -->
+      <div class="step2 hidden">
+        <div class="step2-container">
+          <div class="form2-container">
+            <h2>Enter keypoint details below</h2>
+            <form id="form2" action="#">
+              <label for="KPNameInput">Keypoint name</label>
+              <input type="text" name="keyPointName" id="KPNameInput" />
+              <span id="keyPointNameError"></span>
+              <label for="KPDescriptionInput">Description</label>
+              <textarea
+                name="keyPointDescription"
+                id="KPDescriptionInput"
+              ></textarea>
+              <span id="keyPointDescError"></span>
+              <label for="KPImageInput">Image URL</label>
+              <input type="text" name="keyPointImage" id="KPImageInput" />
+              <span id="keyPointImageError"></span>
+              <div class="location">
+                <div class="location-input1">
+                  <label for="KPLatitudeInput">Latitude</label>
+                  <input
+                    type="number"
+                    name="keyPointLatitude"
+                    id="KPLatitudeInput"
+                  />
+                  <span id="keyPointLatitudeError"></span>
+                </div>
+                <div class="location-input2">
+                  <label for="KPLongitudeInput">Longtitude</label>
+                  <input
+                    type="number"
+                    name="keyPointLongitude"
+                    id="KPLongitudeInput"
+                  />
+                  <span id="keyPointLongitudeError"></span>
+                </div>
+              </div>
+            </form>
+            <div id="plusKPBtnTooltip" class="tooltip-wrapper">
+              <button type="button" id="plusKPBtn" disabled>+ Keypoint</button>
+              <div class="tooltip">All fields are required.</div>
+            </div>
+            
+          </div>
+                    <div class="keypoints">
+            <h2>Keypoints</h2>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Image URL</th>
+                  <th></th>
+                </thead>
+                <tbody id="keypoints-table"></tbody>
+              </table>
+              <p id="emptyTable1" class="hidden">There are no specific points of interest on this tour.</p>
+            </div>
+            <div class="buttons2">
+              <button type="button" id="backBtn1">
+                <i class="fa-solid fa-chevron-left"></i> Back
+              </button>
+              <div class="tooltip-wrapper">
+                <button type="button" id="nextBtn2" disabled>
+                  Next <i class="fa-solid fa-chevron-right"></i>
+                </button>
+              <div class="tooltip">In order to proceed, at least 1 Key Point required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of step 2 -->
+      <div class="step3 hidden">
+        <h1>Tour</h1>
+
+        <div class="tour">
+          <div class="data">
+           
+          </div>
+          <div class="description">
+            
+          </div>
+        </div>
+          <h1>Keypoints</h1>
+        <div id="table-wrapper-publish">
+          <table>
+            <thead>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Image URL</th>
+            </thead>
+            <tbody id="publish-table">
+            </tbody>
+          </table>
+        </div>
+        <span id="succesPublishSpan" class="hidden" style="color: #7dd8a0;">Tour successfully published. Redirecting...</span>
+        <p id="emptyTable2" class="hidden">There are no specific points of interest on this tour.</p>
+        <div class="buttons3">
+          <button type="button" id="backBtn2">
+          <i class="fa-solid fa-chevron-left"></i> Back
+        </button>
+          <button type="button" id="publishBtn" disabled>Publish</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
