@@ -65,10 +65,10 @@ export class RestaurantsServices {
             })
     }
 
-    update(id: string, reqBody: RestaurantFormData) {
+    update(id: string, reqBody: RestaurantFormData): Promise<Restaurant> {
         return fetch(`${this.apiUrl}/${id}`, {
             method: 'PUT',
-            headers: { 'Content-type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(reqBody)
         })
             .then(response => {
@@ -84,6 +84,27 @@ export class RestaurantsServices {
                 console.log(`Error: `, error.status)
                 throw error;
             })
+    }
+
+    publishRestaurant(id: string, restaurant: Restaurant): Promise<Restaurant>{
+        return fetch(`${this.apiUrl}/${id}`,{ 
+            method:'PUT',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(restaurant)
+        })
+        .then(response=>{
+            if(!response.ok){
+                throw{status: response.status, message:response.text}                
+            }
+            return response.json()
+        })
+        .then((updatedRestaurant:Restaurant)=>{
+            return updatedRestaurant
+        })
+        .catch(error=>{
+            console.log(`Error: `, error.status)
+            throw error
+        })
     }
     
     delete(id: string): Promise<void> {

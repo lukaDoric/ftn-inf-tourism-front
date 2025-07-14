@@ -128,7 +128,7 @@ function initializationPublishForm(): void {
     step[0].classList.add('active');
     step[1].classList.add('active');
     step[2].classList.add('active');
-    publishBtn.onclick = function (){
+    publishBtn.onclick = function () {
         publishRestaurant();
     }
 }
@@ -510,15 +510,14 @@ function createNoDataMessage(): void {
 
 function publishingFromHandler() {
     renderRestaurantAndMeals()
-    setTimeout(()=>{validationPublishBtn(currentRestaurant)},400)
+    setTimeout(() => { validationPublishBtn(currentRestaurant) }, 400)
     initializationPublishForm()
-    
-    
+
+
 }
 
-function validationPublishBtn(currentRestaurant: Restaurant) :void{
-    if(currentRestaurant.status.trim() !== "u pripremi")
-    {
+function validationPublishBtn(currentRestaurant: Restaurant): void {
+    if (currentRestaurant.status.trim() !== "u pripremi") {
         publishBtn.disabled = true;
     }
 
@@ -614,8 +613,8 @@ function renderRestaurantAndMeals(): void {
 const loadingMessage = document.querySelector('#loading-message');
 const successMessage = document.querySelector('#success-message');
 
-function showLoadingMessage(): void{
-loadingMessage.classList.remove('hidden')
+function showLoadingMessage(): void {
+    loadingMessage.classList.remove('hidden')
 }
 
 function showSucessMessage(): void {
@@ -623,21 +622,8 @@ function showSucessMessage(): void {
     successMessage.classList.remove('hidden')
 }
 
-function createRestaurantReqBody(restaurant: Restaurant): RestaurantFormData{
-    const reqBody: RestaurantFormData = { 
-        name: (restaurant.name), 
-         description: (restaurant.description),  
-         capacity: (restaurant.capacity), 
-         imageUrl: (restaurant.imageUrl),  
-         latitude:(restaurant.latitude),  
-         longitude: (restaurant.longitude),  
-         ownerId: (restaurant.ownerId),  
-         status: (restaurant.status)
-    }
-    return reqBody
-}
 
-function publishRestaurant() :void{
+function publishRestaurant(): void {
 
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
@@ -645,23 +631,20 @@ function publishRestaurant() :void{
     try {
         if (id) {
             restaurantServices.getById(id)
-            .then(restaurant=>{
-                const reqData = createRestaurantReqBody(restaurant)
-                reqData.status="objavljeno"
-                return reqData
-            }).then(reqBody=>{
-                setTimeout(showLoadingMessage, 10000);
-            publishBtn.disabled = true;
-            restaurantServices.update(id, reqBody)
-            .then(()=>{
-                showSucessMessage()
-               setTimeout(()=>{window.location.href="../restaurants/restaurants.html"}, 5000) 
-            })
+                .then(restaurant => {
+                    restaurant.status = "objavljeno"
+                    // setTimeout(showLoadingMessage, 10000);
+                    publishBtn.disabled = true;
+                    restaurantServices.publishRestaurant(id, restaurant)
+                        .then(() => {
+                            showSucessMessage()
+                            setTimeout(() => { window.location.href = "../restaurants/restaurants.html" }, 5000)
+                        })
 
-            })
-            
+                })
+
         }
-        
+
     } catch (error) {
         console.log("Error:", error.status || error);
     }

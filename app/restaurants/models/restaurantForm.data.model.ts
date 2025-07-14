@@ -6,5 +6,5 @@ export interface RestaurantFormData{
     latitude: number;
     longitude: number;
     ownerId: number;
-    status?: string;
+
 }
