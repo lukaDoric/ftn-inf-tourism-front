@@ -106,8 +106,10 @@ function initializationMealForm(): void {
         mealForm.reset()
     }
     backBtn.onclick = function () {
+        step[1].classList.remove('active');
         tabs[1].style.display = 'none';
         tabs[0].style.display = 'flex';
+        probgresBar.style.width = "0%";
     }
 }
 
