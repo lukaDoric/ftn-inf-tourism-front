@@ -86,7 +86,7 @@ export class RestaurantsServices {
             })
     }
 
-    publishRestaurant(id: string, restaurant: Restaurant): Promise<Restaurant>{
+    updateWithStatus(id: string, restaurant: Restaurant): Promise<Restaurant>{
         return fetch(`${this.apiUrl}/${id}`,{ 
             method:'PUT',
             headers:{'Content-Type':'application/json'},

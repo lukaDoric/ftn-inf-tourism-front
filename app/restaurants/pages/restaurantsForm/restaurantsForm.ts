@@ -21,9 +21,6 @@ const nextMealBtn = document.querySelector('#nextBtnMeal') as HTMLButtonElement;
 const publishBtn = document.querySelector('#publishBtn') as HTMLButtonElement;
 const backBtn = document.querySelector('#backBtn') as HTMLButtonElement;
 
-// const tableDiv = document.querySelector('#meals-table-container') as HTMLDivElement;
-// const table = document.querySelector('#meals') as HTMLElement;
-
 const restaurantFormHeadings = document.querySelector('#restaurant-headings');
 
 let currentRestaurant: Restaurant = null;
@@ -33,18 +30,20 @@ function initializationForm(): void {
     intializeMealValidationListeners()
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
+
     if (id) {
         restaurantServices.getById(id)
             .then(restaurant => {
+                currentRestaurant = restaurant;
                 (document.querySelector('#name') as HTMLInputElement).value = restaurant.name;
                 (document.querySelector('#description') as HTMLInputElement).value = restaurant.description;
                 (document.querySelector('#capacity') as HTMLInputElement).value = restaurant.capacity.toString();
                 (document.querySelector('#restaurantImageUrl') as HTMLInputElement).value = restaurant.imageUrl;
                 (document.querySelector('#latitude') as HTMLInputElement).value = restaurant.latitude.toString();
                 (document.querySelector('#longitude') as HTMLInputElement).value = restaurant.longitude.toString();
-
                 initializationUpdateRestaurantForm()
             })
+
 
 
     } else {
@@ -152,9 +151,23 @@ async function submitRestaurant(): Promise<void> {
     const id = urlParams.get('id')
     try {
         if (id) {
-            await restaurantServices.update(id, reqBody);
+
+            if (!currentRestaurant) {
+                currentRestaurant = await restaurantServices.getById(id);
+            }
+            console.log("currentRestaurant:", currentRestaurant);
+            console.log("currentRestaurant.status:", currentRestaurant.status);
+
+            if (currentRestaurant.status && currentRestaurant.status.trim() === "objavljeno") {
+                await restaurantServices.updateWithStatus(id, currentRestaurant);
+            }
+            else {
+                await restaurantServices.update(id, reqBody);
+            }
+
         } else {
             const restaurant = await restaurantServices.create(reqBody);
+            currentRestaurant=restaurant;
             const url = new URL(window.location.href);
             url.searchParams.set('id', restaurant.id.toString());
             history.replaceState(null, "", url.toString());
@@ -177,7 +190,7 @@ function intializeRestaurantValidationListeners(): void {
     nameInputElement.addEventListener('blur', () => {
         if (!isNameValid(nameInputElement)) {
             const nameErrorMessage = document.querySelector('#name-errorMessage') as HTMLSpanElement;
-            nameErrorMessage.textContent = 'Field is required.';
+            nameErrorMessage.textContent = 'Field is required. Name must be atleast 2 caracter log.';
             nameErrorMessage.style.color = warnColor;
             nameInputElement.classList.add('error')
             checkRestaurantValidity()
@@ -191,7 +204,7 @@ function intializeRestaurantValidationListeners(): void {
     descriptionInputElement.addEventListener('blur', () => {
         if (!isDescriptionValid(descriptionInputElement)) {
             const descriptionErrorMessage = document.querySelector('#description-errorMessage') as HTMLSpanElement;
-            descriptionErrorMessage.textContent = 'Field is required.';
+            descriptionErrorMessage.textContent = 'Field is required, cannot be empty.';
             descriptionErrorMessage.style.color = warnColor;
             descriptionInputElement.classList.add('error')
             checkRestaurantValidity()
@@ -205,7 +218,7 @@ function intializeRestaurantValidationListeners(): void {
     capacityInputElement.addEventListener('blur', () => {
         if (!isCapacityValid(capacityInputElement)) {
             const capacityErrorMessage = document.querySelector('#capacity-errorMessage') as HTMLSpanElement;
-            capacityErrorMessage.textContent = 'Field is required.';
+            capacityErrorMessage.textContent = 'Field is required. Capacity cannot be empty.';
             capacityErrorMessage.style.color = warnColor;
             capacityInputElement.classList.add('error')
             checkRestaurantValidity()
@@ -220,7 +233,7 @@ function intializeRestaurantValidationListeners(): void {
     restaurantImageUrlInputElement.addEventListener('blur', () => {
         if (!isRestaurantImageUrlValid(restaurantImageUrlInputElement)) {
             const restaurantImageUrlErrorMessage = document.querySelector('#restaurantImageUrl-errorMessage') as HTMLSpanElement;
-            restaurantImageUrlErrorMessage.textContent = 'Field is required.';
+            restaurantImageUrlErrorMessage.textContent = 'Restaurant image is required, cannot be empty.';
             restaurantImageUrlErrorMessage.style.color = warnColor;
             restaurantImageUrlInputElement.classList.add('error')
             checkRestaurantValidity()
@@ -235,7 +248,7 @@ function intializeRestaurantValidationListeners(): void {
     latitudeInputElement.addEventListener('blur', () => {
         if (!isLatitudeValid(latitudeInputElement)) {
             const latitudeUrlErrorMessage = document.querySelector('#latitude-errorMessage') as HTMLSpanElement;
-            latitudeUrlErrorMessage.textContent = 'Field is required.';
+            latitudeUrlErrorMessage.textContent = 'Field is required, Latitude cannot be empty.';
             latitudeUrlErrorMessage.style.color = warnColor;
             latitudeInputElement.classList.add('error')
             checkRestaurantValidity()
@@ -250,7 +263,7 @@ function intializeRestaurantValidationListeners(): void {
     longitudeInputElement.addEventListener('blur', () => {
         if (!isLongitudeValid(longitudeInputElement)) {
             const longitudeUrlErrorMessage = document.querySelector('#longitude-errorMessage') as HTMLSpanElement;
-            longitudeUrlErrorMessage.textContent = 'Field is required.';
+            longitudeUrlErrorMessage.textContent = 'Field is required, Longitude cannot be empty.';
             longitudeUrlErrorMessage.style.color = warnColor;
             longitudeInputElement.classList.add('error')
             checkRestaurantValidity()
@@ -428,7 +441,7 @@ function isPriceValid(priceInputElement: HTMLInputElement): boolean {
 
 function isIngredientsValid(ingredientsInputElement: HTMLInputElement): boolean {
     console.log(`Ingridients: ${ingredientsInputElement.value}`)
-    return ingredientsInputElement.value.trim().length > 0;
+    return ingredientsInputElement.value.trim().length > 5;
 }
 
 
@@ -451,7 +464,7 @@ function intializeMealValidationListeners(): void {
     mealNameInputElement.addEventListener('blur', () => {
         if (!isMealNameValid(mealNameInputElement)) {
             const mealNameErrorMessage = document.querySelector('#meal-name-errorMessage') as HTMLSpanElement;
-            mealNameErrorMessage.textContent = 'Name must be atleast 2 caracter log.';
+            mealNameErrorMessage.textContent = 'Field is required. Name must be atleast 2 caracter log.';
             mealNameErrorMessage.style.color = warnColor;
             mealNameInputElement.classList.add('error')
             checkMealInputValidity()
@@ -465,7 +478,7 @@ function intializeMealValidationListeners(): void {
     priceInputElement.addEventListener('blur', () => {
         if (!isPriceValid(priceInputElement)) {
             const priceErrorMessage = document.querySelector('#price-errorMessage') as HTMLSpanElement;
-            priceErrorMessage.textContent = 'Field is required.';
+            priceErrorMessage.textContent = 'Field is required, Price cannot be empty.';
             priceErrorMessage.style.color = warnColor;
             priceInputElement.classList.add('error')
             checkMealInputValidity()
@@ -479,7 +492,7 @@ function intializeMealValidationListeners(): void {
     ingredientsInputElement.addEventListener('blur', () => {
         if (!isIngredientsValid(ingredientsInputElement)) {
             const ingredientsErrorMessage = document.querySelector('#ingredients-errorMessage') as HTMLTextAreaElement;
-            ingredientsErrorMessage.textContent = 'Field is required.';
+            ingredientsErrorMessage.textContent = 'Field is required, ingredients must be at least 5 characters long.';
             ingredientsErrorMessage.style.color = warnColor;
             ingredientsInputElement.classList.add('error')
             checkMealInputValidity()
@@ -507,20 +520,16 @@ function createNoDataMessage(): void {
 //PUBLISH FORM
 
 
-
 function publishingFromHandler() {
     renderRestaurantAndMeals()
-    setTimeout(() => { validationPublishBtn(currentRestaurant) }, 400)
+    validationPublishBtn(currentRestaurant)
     initializationPublishForm()
-
-
 }
 
 function validationPublishBtn(currentRestaurant: Restaurant): void {
     if (currentRestaurant.status.trim() !== "u pripremi") {
         publishBtn.disabled = true;
     }
-
 }
 
 
@@ -616,6 +625,9 @@ const successMessage = document.querySelector('#success-message');
 function showLoadingMessage(): void {
     loadingMessage.classList.remove('hidden')
 }
+function hideLoadingMessage(): void {
+    loadingMessage.classList.add('hidden')
+}
 
 function showSucessMessage(): void {
     loadingMessage.classList.add('hidden')
@@ -633,23 +645,37 @@ function publishRestaurant(): void {
             restaurantServices.getById(id)
                 .then(restaurant => {
                     restaurant.status = "objavljeno"
-                    // setTimeout(showLoadingMessage, 10000);
-                    publishBtn.disabled = true;
-                    restaurantServices.publishRestaurant(id, restaurant)
-                        .then(() => {
-                            showSucessMessage()
-                            setTimeout(() => { window.location.href = "../restaurants/restaurants.html" }, 5000)
-                        })
+                    showLoadingMessage();
+                    setTimeout(() => {
+                        if (publishBtn) {
+                            publishBtn.disabled = true;
+                        }
+                        restaurantServices.updateWithStatus(id, restaurant)
+                            .then(() => {
+                                hideLoadingMessage();
+                                showSucessMessage();
+                                setTimeout(() => { window.location.href = "../restaurants/restaurants.html" }, 2000)
+                            })
+                            .catch(error => {
+                                hideLoadingMessage();
+                                console.log("Error during update:", error.status || error);
+                                if (publishBtn) {
+                                    publishBtn.disabled = false;
+                                }
+                            });
+
+                    }, 2000);
 
                 })
-
+                .catch(error => {
+                    console.log("Error getting restaurant:", error.status || error);
+                });
         }
 
     } catch (error) {
         console.log("Error:", error.status || error);
     }
 }
-
 
 const logout = document.querySelector('#logout');
 function handleLogout() {
