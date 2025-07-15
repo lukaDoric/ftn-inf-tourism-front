@@ -201,4 +201,33 @@ export class TourService {
         console.error(`Error: ${error.message}  Status: ${error.status}`);
       });
   }
+
+  createReservation(userId: number, guestsCount: number, tourId: number) {
+    const data = {
+      tourId: tourId,
+      touristId: userId,
+      guests: guestsCount
+    };
+    return fetch(`${this.apiUrl}/reservations`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw { status: response.status, message: response.text() };
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Error: " + error.status);
+      if (error.status && error.status === 400) {
+        return error.message;
+      } else {
+        console.error(
+          "An error occured while creating keypoint. Please try again"
+        );
+      }
+    })
+  }
 }
