@@ -1,11 +1,14 @@
+import { Meal } from "./meal.model";
+
 export interface Restaurant {
   id: number;
   name: string;
   description: string;
   capacity: number;
-  imageUrl: string; //url slike enterijera ili specijaliteta
+  imageUrl: string;
   latitude: number;
   longitude: number;
-  status?: string; //u pripremi ili otvoren
+  status?: string;
   ownerId: number;
+  meals?: Meal[];
 }

@@ -10,46 +10,49 @@ if (logoutLink) {
 }
 
 const restaurantService = new RestaurantService();
-const tbody = document.getElementById(
-  "restaurantsBody"
-) as HTMLTableSectionElement;
+const container = document.getElementById(
+  "restaurantsContainer"
+) as HTMLDivElement;
 const ownerId = parseInt(localStorage.getItem("userId")!);
-console.log("OwnerId iz localStorage:", ownerId);
 
 restaurantService
   .getByOwner(ownerId)
   .then((restaurants: Restaurant[]) => {
     console.log("Dohvaceni restorani:", restaurants);
     restaurants.forEach((restaurant) => {
-      const tr = document.createElement("tr");
+      console.log("📦 RESTORAN:", restaurant);
+      const card = document.createElement("div");
+      card.className = "restaurant-card";
 
-      const tdName = document.createElement("td");
-      tdName.textContent = restaurant.name;
-      tr.appendChild(tdName);
+      card.innerHTML = `
+        <img src="${
+          restaurant.imageUrl || "https://via.placeholder.com/300"
+        }" alt="Slika restorana" />
+        <div class="card-header">${restaurant.name}</div>
+        <p>${restaurant.description}</p>
+        <div class="card-status ${
+          restaurant.status === "objavljen"
+            ? "status-objavljen"
+            : "status-priprema"
+        }">
+          ${
+            restaurant.status?.toLowerCase() === "objavljen"
+              ? "Objavljen"
+              : "U pripremi"
+          }
+        </div>
+        <div class="card-buttons">
+          <button class="edit-btn">Izmeni</button>
+          <button class="delete-btn">Obriši</button>
+        </div>
+      `;
 
-      const tdDescription = document.createElement("td");
-      tdDescription.textContent = restaurant.description;
-      tr.appendChild(tdDescription);
-
-      const tdCapacity = document.createElement("td");
-      tdCapacity.textContent = restaurant.capacity.toString();
-      tr.appendChild(tdCapacity);
-
-      const tdActions = document.createElement("td");
-
-      const editBtn = document.createElement("button");
-      editBtn.textContent = "Izmeni";
-
+      const editBtn = card.querySelector(".edit-btn")!;
       editBtn.addEventListener("click", () => {
-        window.location.href =
-          "../../../restaurants/pages/form/restaurantForm.html?id=" +
-          restaurant.id;
+        window.location.href = `../../../restaurants/pages/form/restaurantForm.html?id=${restaurant.id}`;
       });
 
-      tdActions.appendChild(editBtn);
-
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Obrisi";
+      const deleteBtn = card.querySelector(".delete-btn");
       deleteBtn.addEventListener("click", () => {
         if (
           confirm(
@@ -57,20 +60,17 @@ restaurantService
           )
         ) {
           restaurantService
-            .deleteRestaurant(restaurant.id)
+            .delete(restaurant.id)
             .then(() => {
               alert("Restoran uspesno obrisan.");
-              tr.remove(); // uklanja red iz tabele bez reload
+              card.remove(); // uklanja red iz tabele bez reload
             })
             .catch((error) => {
               alert("Greska prilikom brisanja restorana: " + error.message);
             });
         }
       });
-      tdActions.appendChild(deleteBtn);
-
-      tr.appendChild(tdActions);
-      tbody.appendChild(tr);
+      container.appendChild(card);
     });
   })
   .catch((error) => {
