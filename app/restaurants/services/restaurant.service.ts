@@ -3,7 +3,7 @@ import { Restaurant } from "../models/restaurant.model";
 const API_URL = "http://localhost:5105/api/restaurants";
 
 export class RestaurantService {
-  createRestaurant(restaurant: Restaurant): Promise<Restaurant> {
+  create(restaurant: Restaurant): Promise<Restaurant> {
     return fetch(API_URL, {
       method: "POST",
       headers: {
@@ -23,12 +23,8 @@ export class RestaurantService {
       });
   }
   getByOwner(ownerId: number): Promise<Restaurant[]> {
-    console.log("Pozivam API sa ownerId:", ownerId);
-
     return fetch(`${API_URL}?ownerId=${ownerId}`)
       .then((response) => {
-        console.log("Response status:", response.status);
-
         if (!response.ok) {
           throw new Error("Greska prilikom dobavljanja restorana.");
         }
@@ -39,8 +35,7 @@ export class RestaurantService {
         throw error;
       });
   }
-  updateRestaurant(restaurant: Restaurant): Promise<Restaurant> {
-    console.log("Saljem update za restoran:", restaurant);
+  update(restaurant: Restaurant): Promise<Restaurant> {
     return fetch(`${API_URL}/${restaurant.id}`, {
       method: "PUT",
       headers: {
@@ -54,12 +49,16 @@ export class RestaurantService {
         }
         return response.json();
       })
+      .then((data) => {
+        console.log("Backend vratio:", data);
+        return data;
+      })
       .catch((error) => {
         console.error("Greska u updateRestaurant:", error);
         throw error;
       });
   }
-  deleteRestaurant(id: number): Promise<void> {
+  delete(id: number): Promise<void> {
     return fetch(`${API_URL}/${id}`, {
       method: "DELETE",
     })

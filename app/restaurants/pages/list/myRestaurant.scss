@@ -12,29 +12,58 @@ h1 {
   color: #333;
 }
 
-table {
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.restaurant-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 300px;
+  background: white;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+}
+
+.restaurant-card img {
   width: 100%;
-  border-collapse: collapse;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
 
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-  }
+.card-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
 
-  thead {
-    background-color: #007BFF;
-    color: #fff;
-  }
+.card-status {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  display: inline-block;
+}
 
-  tr {
-    border-bottom: 1px solid #ddd;
+.status-priprema {
+  background-color: #eee;
+  color: #555;
+}
 
-    &:hover {
-      background-color: #f1f1f1;
-    }
-  }
+.status-objavljen {
+  background-color: #c7f7c3;
+  color: #006400;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
 
   button {
     margin-right: 10px;
@@ -56,7 +85,7 @@ table {
       opacity: 0.8;
     }
   }
-}
+
 .navbar {
   background-color: #007bff;
   padding: 10px;
