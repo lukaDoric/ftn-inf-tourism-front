@@ -1,54 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>restaurant form page</title>
     <link rel="stylesheet" href='../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.css'>
-    
+    <script src="https://kit.fontawesome.com/b89b4860cf.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="nav-item"><a href="../../../index.html">Home</a></li>
-            <li class="nav-item" id="restaurants"><a 
-                href="../../../restaurants/pages/restaurants/restaurants.html">Restaurants</a></li>
+            <li class="nav-item"><a href="../../../index.html"><b>GastroTrip</b></a></li>
+            <li class="nav-item" id="restaurants"><a
+                    href="../../../restaurants/pages/restaurants/restaurants.html">Restaurants</a></li>
             <li class="nav-item" id="logout"><a href="../../../users/pages/login/login.html">Logout</a></li>
+            <li class="nav-item" id="user"></li>
         </ul>
-        </nav>
-        <h1 id="form-title"></h1>
-        <div id="form-container">
-            <form id="form-restaurant">
-                
+    </nav>
+
+    <div id="form-container">
+        <div class="step-container">
+            <div class="progress"></div>
+            <div class="step" id="1">1</div>
+            <div class="step" id="2">2</div>
+            <div class="step" id="3">3</div>
+        </div>
+        <form class="tab">
+
+            <div id="restaurant-from">
+
+                <h1 id="restaurant-headings"></h1>
+                <br>
                 <label for="name">Name:</label>
-                <input type="text" name="name" id="name" required/>
+                <input type="text" name="name" id="name" required />
+                <span class="error-message" id="name-errorMessage"></span>
                 <br>
 
-                <label for="description">Descritpion:</label>
+                <label for="description">Description:</label>
                 <textarea name="description" id="description" rows="4" required></textarea>
-                <!-- <input type="text" name="description" id="description" required/> -->
+                <span class="error-message" id="description-errorMessage"></span>
                 <br>
 
                 <label for="capacity">Capacity:</label>
-                <input type="number" name="capacity" id="capacity" required/>
+                <input type="number" name="capacity" id="capacity" required />
+                <span class="error-message" id="capacity-errorMessage"></span>
                 <br>
 
-                <label for="imageUrl">Image URL:</label>
-                <input type="text" name="imageUrl" id="imageUrl" required/>
+                <label for="restaurnatImageUrl">Image URL:</label>
+                <input type="text" name="restaurantImageUrl" id="restaurantImageUrl" required />
+                <span class="error-message" id="restaurantImageUrl-errorMessage"></span>
                 <br>
 
                 <label for="latitude">Latitude:</label>
-                <input type="number" name="latitude" id="latitude" required/>
+                <input type="number" name="latitude" id="latitude" required />
+                <span class="error-message" id="latitude-errorMessage"></span>
                 <br>
 
                 <label for="longitude">Longitude:</label>
-                <input type="number" name="longitude" id="longitude" required/>
+                <input type="number" name="longitude" id="longitude" required />
+                <span class="error-message" id="longitude-errorMessage"></span>
                 <br>
+                <div class="button">
+                    <button type="button" id="saveBtnRestaurant">Save <i class="fa-regular fa-floppy-disk"></i></button>
+                    <div class="tooltip-wrapper">
+                        <button type="button" id="nextBtnRestaurant">Next ></button>
+                        <span class="tooltiptext">All fields are required</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form class="tab">
 
-                <button type="button" id="submitBtn">Submit</button>
-            </form>
+            <div id="meals-container">
 
-        </div>
+                <div id="meal-form-container">
+                    <h1>Add new meal</h1>
+
+                    <label for="meal-name">Name</label>
+                    <input type="text" name="meal-name" id="meal-name" required />
+                    <span class="error-message" id="meal-name-errorMessage"></span>
+
+
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" required />
+                    <span class="error-message" id="price-errorMessage"></span>
+
+
+                    <label for="ingredients">Ingredients</label>
+                    <textarea name="ingredients" id="ingredients"></textarea>
+                    <span class="error-message" id="ingredients-errorMessage"></span>
+
+                    <label for="meal-imageUrl">Image URL:</label>
+                    <input type="text" name="meal-imageUrl" id="meal-imageUrl" />
+                    <br>
+                    <div class="button" id="meal-saveBtn">
+                        <button type="button" id="saveBtnMeal">+ Meal</button>
+                    </div>
+
+                </div>
+
+                <div id="meals-table-container">
+                    <h2>Meals</h2>
+                    <div id="table-scroll">
+                        <table id="meals">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Ingredients</th>
+                                    <th>Image URL</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div id="meal-tableBtn">
+                        <button type="button" id="backBtn">Back</button>
+                        <div class="tooltip-wrapper">
+                            <button type="button" id="nextBtnMeal">Next ></button>
+                            <span class="tooltiptext">To be published on the website,
+                                a restaurant must have atleast five meals and one picture of the interior.</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+        <form class="tab">
+            <div id="publish-container">
+                <div id="publish-data">
+
+               
+                <h2 id="publish-restaurant-title">Restaurant</h2>
+                <div id="restaurant-card-container">
+
+                </div>
+
+                <div id="meal-table">
+                    <h2>Meals</h2>
+                    <div id="table-scroll-meal">
+                    <table id="publish-meals-table">
+                        <thead>
+                            <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Ingredients</th>
+                            <th>Image URL</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                        
+                    </table>
+                    </div>
+                </div>
+
+                <div id="loading-message" class="hidden">Publising resturant, please wait...</div>
+                <div id="success-message" class="hidden">Restaurant is successfully Published.</div>
+
+                <div class="button">
+                    <button type="button" id="publishBtn">Publish</button>
+                </div>
+
+             </div>
+            </div>
+
+
+        </form>
+    </div>
+
     <script type="module" src="../../../../dist/restaurants/pages/restaurantsForm/restaurantsForm.js"></script>
+
 </body>
+
 </html>

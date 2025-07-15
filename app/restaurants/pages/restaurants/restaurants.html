@@ -6,19 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant home</title>
     <link rel="stylesheet" href="../../../../dist/restaurants/pages/restaurants/restaurants.css">
+    <script src="https://kit.fontawesome.com/b89b4860cf.js" crossorigin="anonymous"></script>
     <script type="module" src="../../../../dist/restaurants/pages/restaurants/restaurants.js"></script>
 </head>
 
 <body>
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="nav-item"><a href="../../../index.html">Home</a></li>
-            <li class="nav-item" id="restaurants"><b>Restaurants</b></li>
+            <li class="nav-item"><a href="../../../index.html"><b>GastroTrip</b></a></li>
+            <li class="nav-item" id="restaurants"><h4>Restaurants</h4></li>
             <li class="nav-item" id="logout"><a href="../../../users/pages/login/login.html">Logout</a></li>
+            <li class="nav-item" id="user"></li>
         </ul>
     </nav>
     <h1 id="restaurantMainPage-title"></h1>
-    <button class="button" id="addBtn">Add Restaurant</button>
+    <div id="addBtn-container">
+        <button class="button" id="addBtn">Add Restaurant</button>
+    </div>
+    
     <div class="restaurant-container">
 
     </div>

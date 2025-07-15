@@ -13,12 +13,11 @@ function setUserLoginState(isLoggedIn: boolean) {
             restaurantsLink.style.display = 'block';
             toursLink.style.display = 'none';
             touristToursLink.style.display = 'none';
-        }
-        if(userRole.trim()==="vodic"){
+        } else if(userRole.trim()==="vodic"){
             restaurantsLink.style.display = 'none';
             toursLink.style.display = 'block';
             touristToursLink.style.display = 'none';
-        } else {
+        }else if (userRole.trim()==='turista'){
             restaurantsLink.style.display = 'none';
             toursLink.style.display = 'none';
             touristToursLink.style.display = 'block';

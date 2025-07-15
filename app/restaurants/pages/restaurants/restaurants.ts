@@ -1,4 +1,5 @@
 
+import { Restaurant } from "../../models/restaurant.model.js";
 import { RestaurantsServices } from "../../services/restaurant.services.js"
 
 const restaurantsServices = new RestaurantsServices();
@@ -17,7 +18,7 @@ logout.addEventListener('click', function () {
 
 function renderData(): void {
     const id = localStorage.getItem("id");
-    restaurantsServices.getAll(id)
+    restaurantsServices.getAllByOwnerId(id)
         .then(restaurants => {
             for (let i = 0; i < restaurants.length; i++) {
                 const resturantContainer = document.querySelector('.restaurant-container');
@@ -33,9 +34,53 @@ function renderData(): void {
                 imgElement.alt = 'slika restorana';
                 pictureDiv.appendChild(imgElement);
                 restaurantCard.appendChild(pictureDiv);
+                
 
                 const mainSectionDiv = document.createElement('div');
                 mainSectionDiv.id = 'card-mainSection';
+
+                const buttonDiv = document.createElement('div');
+                buttonDiv.id = 'button-container';
+
+                const wheelBtn = document.createElement('button')
+                wheelBtn.innerHTML = "<i class=\"fa-solid fa-gear\"></i>"
+                wheelBtn.id ='wheelBtn';
+                wheelBtn.onmouseenter= function(){hiddenButtonDiv.style.display ="flex"}
+
+                wheelBtn.onmouseleave= function(){hiddenButtonDiv.style.display ="none"}
+                buttonDiv.appendChild(wheelBtn)
+                               
+
+                const hiddenButtonDiv = document.createElement('div');
+                hiddenButtonDiv.id = 'hidden-button-container'
+                const editBtn = document.createElement('button');
+                editBtn.textContent = "Edit";
+                editBtn.classList.add("button");
+                editBtn.classList.add('editBtn')
+                editBtn.id = "editBtn";
+
+                editBtn.onclick = function () {
+                    window.location.href = `../restaurantsForm/restaurantsForm.html?id=${restaurants[i]["id"]}`;
+                }
+                hiddenButtonDiv.appendChild(editBtn);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = "Delete";
+                deleteBtn.classList.add("button");
+                deleteBtn.classList.add('deleteBtn')
+                deleteBtn.id = ("deleteBtn");
+                deleteBtn.onclick = function () {
+                    deleteRestaurant(restaurants, i);
+                }
+
+                hiddenButtonDiv.appendChild(deleteBtn);
+
+                hiddenButtonDiv.onmouseenter = function(){hiddenButtonDiv.style.display ="flex"}
+                hiddenButtonDiv.onmouseleave= function(){hiddenButtonDiv.style.display ="none"}
+                    
+
+                buttonDiv.appendChild(hiddenButtonDiv)
+                mainSectionDiv.appendChild(buttonDiv);
 
                 const p1 = document.createElement('p');
                 p1.id = 'restaurantName';
@@ -81,40 +126,20 @@ function renderData(): void {
                 p6.innerHTML += restaurants[i]['status'];
                 mainSectionDiv.appendChild(p6);
 
-                const buttonDiv = document.createElement('div');
-                buttonDiv.id = 'button-container';
-
-                const editBtn = document.createElement('button');
-                editBtn.textContent = "Edit";
-                editBtn.classList.add("button");
-                editBtn.id = ("editBtn");
-
-                editBtn.onclick = function () {
-                    window.location.href = `../restaurantsForm/restaurantsForm.html?id=${restaurants[i]["id"]}`;
-                }
-                buttonDiv.appendChild(editBtn);
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = "Delete";
-                deleteBtn.classList.add("button");
-                deleteBtn.id = ("deleteBtn");
-                deleteBtn.onclick = function () {
-                    restaurantsServices.delete(restaurants[i]['id'].toString())
-                        .then(() => {
-                            window.location.reload()
-                        })
-                        .catch(error => {
-                            console.log(`Error: `, error.status);
-                        })
-                }
-
-                buttonDiv.appendChild(deleteBtn);
-
-                mainSectionDiv.appendChild(buttonDiv);
+                
                 restaurantCard.appendChild(mainSectionDiv);
                 resturantContainer.appendChild(restaurantCard);
             }
         })
+}
+function deleteRestaurant(restaurants: Restaurant[], i: number) {
+    restaurantsServices.delete(restaurants[i]['id'].toString())
+        .then(() => {
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log(`Error: `, error.status);
+        });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -123,6 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = "../restaurantsForm/restaurantsForm.html"
     });    
     renderData();
-    const restaurantMainPageTitle = document.querySelector('#restaurantMainPage-title');
-    restaurantMainPageTitle.textContent = `Restaurants preview for the admin: ${localStorage.getItem('username')}`
+    const restaurantMainPageTitle = document.querySelector('#user') as HTMLLinkElement;
+    restaurantMainPageTitle.textContent = `${localStorage.getItem('username')}`
 })

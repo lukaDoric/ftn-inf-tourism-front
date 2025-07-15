@@ -1,9 +1,10 @@
 export interface RestaurantFormData{
     name: string;
     description: string;
-    capacity: string;
+    capacity: number;
     imageUrl: string;
     latitude: number;
     longitude: number;
     ownerId: number;
+
 }
