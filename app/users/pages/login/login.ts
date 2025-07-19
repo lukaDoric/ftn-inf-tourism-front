@@ -1,61 +1,72 @@
-import { UserService } from "../../service/user.service.js";
-
+import { UserService } from "../../service/user.services.js";
 const userService = new UserService();
-const loginLink = document.querySelector('#login') as HTMLElement;
-const logoutLink = document.querySelector('#logout') as HTMLElement;
-const submitButton = document.querySelector("#submit") as HTMLElement;
-
-function setUserLoginState(isLoggedIn: boolean) {
-    if (isLoggedIn) {
-        loginLink.style.display = 'none';
-        logoutLink.style.display = 'block';
-    } else {
-        loginLink.style.display = 'block';
-        logoutLink.style.display = 'none';
-    }
-}
+let submitButton: HTMLButtonElement;
+document.addEventListener("DOMContentLoaded", () => {
+    submitButton = document.getElementById("submit-button") as HTMLButtonElement;
+    submitButton.addEventListener("click", (event) => {
+        handleLogin(event)
+    })
+})
 
 function handleLogin(event: Event) {
     event.preventDefault();
-    
-    const form = document.querySelector("form") as HTMLFormElement;
+
+    const form = document.getElementById("login-form") as HTMLFormElement;
     const formData = new FormData(form);
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
     userService.login(username, password)
         .then((user) => {
+            localStorage.setItem('id', String(user.id));
             localStorage.setItem('username', user.username);
             localStorage.setItem('role', user.role);
-            setUserLoginState(true);
+            localStorage.setItem('password', password);
+            localStorage.setItem('reservations', JSON.stringify(user.reservations))
+            window.location.href = "../../../index.html";
         })
         .catch((error) => {
             console.error('Login failed', error.message);
         });
 }
 
-function handleLogout() {
+export function handlePermission() {
+    const role = localStorage.getItem("role")
+    const loginButton = document.getElementById('login-button') as HTMLElement;
+    const logoutButton = document.getElementById('logout-button') as HTMLElement;
+
+    if (!role) {
+        loginButton.style.display = "flex"
+        logoutButton.style.display = "none"
+        return;
+    }
+
+    if (role == "turista") {
+        const toursLookupLink = document.getElementById("tours-lookup-link") as HTMLLIElement
+        toursLookupLink.style.display = "flex"
+        const restaurantsEndView = document.getElementById("restaurants-end-view") as HTMLLIElement
+        restaurantsEndView.style.display = "flex"
+    }
+    else if (role == "vodic") {
+        const toursOverviewLink = document.getElementById("toursOverview-link") as HTMLLIElement
+        toursOverviewLink.style.display = "flex"
+    }
+    else if (role == "vlasnik") {
+        const toursRestaurantsLink = document.getElementById("restaurants-link") as HTMLLIElement
+        toursRestaurantsLink.style.display = "flex"
+    }
+
+    loginButton.style.display = "none"
+    logoutButton.style.display = "flex"
+    logoutButton.addEventListener("click", () => handleLogout())
+}   
+
+
+export function handleLogout() {
+    localStorage.removeItem('id');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
-    setUserLoginState(false);
+    localStorage.removeItem('password');
+    localStorage.removeItem('reservations');
+    window.location.href = "../../../index.html";
 }
-
-function checkLoginStatus() {
-    const username = localStorage.getItem('username');
-    if (username) {
-        setUserLoginState(true);
-    } else {
-        setUserLoginState(false);
-    }
-}
-
-if (submitButton) {
-    submitButton.addEventListener("click", handleLogin);
-}
-
-const logoutElement = document.querySelector('#logout');
-if (logoutElement) {
-    logoutElement.addEventListener('click', handleLogout);
-}
-
-checkLoginStatus();

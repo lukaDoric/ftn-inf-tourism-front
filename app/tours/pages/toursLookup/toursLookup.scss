@@ -1,0 +1,112 @@
+@import "../../styles/tours.scss";
+
+main {
+    display: flex;
+
+    #tours-lookup-filter-main {
+        display: flex;
+        flex-direction: column;
+        width: 10%;
+        min-height: 100vh;
+        margin-right: 10px;
+        background-color: grey;
+        padding: 1%;
+        flex-shrink: 0;
+
+        p {
+            margin: 3px;
+        }
+
+        .tours-lookup-filter-section {
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+
+            .tours-lookup-filter-div {
+                display: flex;
+                flex-direction: column;
+                border: 2px black solid;
+                border-radius: 10px;
+                padding: 3%;
+
+                .tours-lookup-div {
+
+                    label {
+                        width: 40%;
+                    }
+
+                    input {
+                        padding: 0px;
+                        margin: 0px;
+                    }
+                }
+            }
+        }
+    }
+
+    #tours-lookup-main {
+        width: 30%;
+        margin: 10px;
+
+        #tours-lookup-template-handler,
+        #tours-reserved-template-handler {
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            padding: 10px;
+            gap: 10px;
+            border: 2px black solid;
+            flex-shrink: 0;
+
+            .background-image {
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                height: 100vh;
+            }
+
+            .tours-lookup-section {
+                border: 2px black solid;
+                height: 25vh;
+
+                .tours-info-div-title {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    p {
+                        margin: 10px;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        color: white;
+                    }
+                }
+
+                .tours-info-div-about {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+
+                    textarea {
+                        width: 60%;
+                    }
+                }
+            }
+
+            .tours-pages-section {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                p {
+                    visibility: visible;
+                }
+
+                .dots {
+                    display: none;
+                }
+            }
+        }
+    }
+}

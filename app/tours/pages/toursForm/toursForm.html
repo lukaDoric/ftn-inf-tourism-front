@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../../dist/tours/pages/toursForm/toursForm.css">
+    <title>Tours Form</title>
+    <script type="module" src="../../../../dist/tours/pages/toursForm/toursForm.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="../../../index.html">Home</a></li>
+            <li class="nav-item" id="toursOverview"><a
+                    href="../../pages/toursOverview/toursOverview.html">Tour Overview</a></li>
+            <li id="logout-button" class="nav-item push-right"><a href="../../../index.html">Logout</a></li>
+    </nav>
+
+    <main>
+        <section id="tour-create-main">
+            <section class="tour-create-section form-section">
+                <form>
+                    <h1>Create Tour</h1>
+                    <div class="tour-input-div">
+                        <label for="tour-create-name-input">Name</label>
+                        <input type="text" class="tour-create-name-input" name="tourName" placeholder="Tour Name" required>
+                    </div>
+
+                    <div class="tour-input-div">
+                        <label for="tour-create-description-input">Description</label>
+                        <textarea class="tour-create-description-input" name="tourDescription" rows="8"
+                            placeholder="Tour Description" required></textarea>
+                    </div>
+
+                    <div class="tour-input-div">
+                        <label for="tour-create-datetime-input">Date</label>
+                        <input type="datetime-local" class="tour-create-datetime-input" name="tourDateTime"
+                            placeholder="Tour Date" required>
+                    </div>
+
+                    <div class="tour-input-div">
+                        <label for="tour-create-maxguests-input">Guests(Max)</label>
+                        <input type="number" class="tour-create-maxguests-input" name="tourMaxGuests"
+                            placeholder="Tour Max Guests" required>
+                    </div>
+
+                    <div class="tour-mainbutton-div">
+                        <button type="button" class="cancel-button">Cancel</button>
+                        <button type="button" class="submit-button"disabled>Save
+                            Changes</button>
+                    </div>
+                </form>
+            </section>
+        </section>
+    </main>
+</body>
+
+</html>

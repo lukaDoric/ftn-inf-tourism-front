@@ -1,1 +1,25 @@
-@import './styles/global';
+@import '../app/styles/global.scss';
+
+#login-button {
+    display:flex;
+}
+
+#logout-button {
+    display:none;
+}
+
+#restaurants-link {
+    display:none;
+}
+
+#toursOverview-link {
+    display:none;
+}
+
+#tours-lookup-link {
+    display: none;
+}
+
+#restaurants-end-view {
+    display:none;
+}

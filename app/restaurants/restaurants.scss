@@ -1,0 +1,57 @@
+@import '../styles/global.scss';
+
+
+
+#container {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    margin: 20px;
+    padding-left: 30px;
+    gap: 20px; 
+
+    caption {
+        margin: 20px;
+        font-weight: bold;
+        border: 1px solid $primary-color;
+        padding: 30px;
+        background-color: $primary-color;
+        color: #f4f4f9;
+    }
+
+    table { 
+        flex: 1;
+        max-width: 50%;
+
+        border: 1px solid black;
+        padding: 10px;
+        
+        th{
+            background-color: $primary-color;
+            color: #f4f4f9;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        td{
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+    }
+}
+
+#Dodaj {
+    margin-top: 120px;
+    height: 200px;
+    margin-right:20px;
+    border: 1px solid $primary-color;
+    background-color: $primary-color;
+    color: #f4f4f9;
+  }
