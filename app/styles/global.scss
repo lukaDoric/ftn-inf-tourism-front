@@ -89,10 +89,11 @@ button {
 }
 
 button:disabled {
-    background-color: #F8F8F8;
-    color: #E2E2E2;
+    background-color: #F8F8F8 !important;
+    color: #E2E2E2 !important;
 
     &:hover {
         cursor: not-allowed;
+        transform: none !important;
     }
 }

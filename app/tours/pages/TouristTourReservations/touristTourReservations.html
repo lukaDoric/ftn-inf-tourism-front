@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Tour</title>
+    <link
+      rel="stylesheet"
+      href="../../../../dist/tours/pages/TouristTourReservations/touristTourReservations.css"
+    />
+    <script
+      type="module"
+      src="../../../../dist/tours/pages/TouristTourReservations/touristTourReservations.js"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/5f9b15613a.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="../../../index.html"><b>GastroTrip</b></a>
+        </li>
+        <li class="nav-item">
+          <a href="../touristTours/touristTours.html">Tours</a>
+        </li>
+        <li class="nav-item" id="logout">
+          <a href="../../../index.html">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <h1>My reservations</h2>
+    <div class="table-container">
+      <table class="clean-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Starting date</th>
+            <th>Number of guests</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </body>
+</html>
