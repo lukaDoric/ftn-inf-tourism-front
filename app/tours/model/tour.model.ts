@@ -12,3 +12,14 @@ export interface TourResults {
   data: Tour[];
   totalCount: number;
 }
+
+export type KeyPoint = {
+  id?: number;
+  order: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  latitude: number;
+  longitude: number;
+  tourId: number;
+};
