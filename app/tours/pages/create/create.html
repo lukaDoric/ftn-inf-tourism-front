@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Add New Tour</title>
         <link rel="stylesheet" href="/dist/tours/pages/create/create.css"/>
-        <script type="module" src="/dist/tours/pages/create/create.js"></script>
     </head>
     <body>
          <nav class="navbar">
@@ -37,6 +36,31 @@
                 <button type="submit" id="submitBtn">Submit</button>
             </form>
         </div>
+        <div id="step-keypoints">
+            <h2>Step 2: Add key-points</h2>
+
+            <ul id="keypoint-list"></ul>
+
+            <form id="keypoint-form">
+                <input type="text" id="keypoint-title" placeholder="Key-point name" required>
+                <textarea id="keypoint-description" placeholder="Key-point description" required></textarea>
+                <input type="text" id="keypoint-image" placeholder="Image URL" required>
+                <input type="number" id="keypoint-lat" placeholder="Latitude" required>
+                <input type="number" id="keypoint-lng" placeholder="Longitude" required>
+                <button type="submit">Add key-point</button>
+            </form>
+
+            <p id="keypoint-waening" style="color: red; display: none;">
+                You must add at least 2 key-points to continue!
+            </p>
+
+            <div class="buttons">
+                <button id="prev-button">Previous</button>
+                <button id="next-button" disabled>Next</button>
+            </div>
+        </div>
+
+        <script type="module" src="/dist/tours/pages/create/create.js"></script>
     </body>
 </html>
 
