@@ -14,7 +14,7 @@
                 <li class="nav-item" id="logout"><a href="../../../index.html">Logout</a></li>
             </ul>
         </nav>
-        <div id="form"> 
+        <div id="step1"> 
             <form id="newTourForm" novalidate>
                 <h3>Add New Tour</h3>
                 <label for="name">Tour name:</label>
@@ -33,10 +33,11 @@
                 <input type="number" id="maxGuests" name="maxGuests" placeholder="Max number of tourists" min="1" />
                 <span id="maxGuestsError" class="error-message"></span>
 
-                <button type="submit" id="submitBtn">Submit</button>
+                <button type="submit" id="submitBtn">Save draft</button>
+                <button id="nextBtn" type="button">Next</button>
             </form>
         </div>
-        <div id="step-keypoints">
+        <div id="step-keypoints" style="display: none">
             <h2>Step 2: Add key-points</h2>
 
             <ul id="keypoint-list"></ul>
@@ -50,7 +51,7 @@
                 <button type="submit">Add key-point</button>
             </form>
 
-            <p id="keypoint-waening" style="color: red; display: none;">
+            <p id="keypoint-warning" style="color: red; display: none;">
                 You must add at least 2 key-points to continue!
             </p>
 

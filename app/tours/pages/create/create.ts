@@ -1,6 +1,7 @@
 import { TourService } from "../../service/tour.service.js";
 import { Tour } from "../../model/tour.model.js";
 import { checkLoginStatus } from "../../../users/service/auth.js";
+import { KeyPointCode } from "./key-point.js";
 checkLoginStatus();
 
 const tourService = new TourService();
@@ -10,6 +11,11 @@ const requiredFields = form.querySelectorAll("input[required], textarea[required
 
 const parms = new URLSearchParams(window.location.search);
 const id = Number(parms.get('id'));
+
+let createdTourId: number | null = null;
+
+const nextBtn = document.querySelector("#nextBtn") as HTMLButtonElement;
+const keyPointSection = document.getElementById("step-keypoints") as HTMLDivElement;
 
 if(id){
     fillFormForEdit(id);
@@ -101,4 +107,38 @@ function createTour(tourData: Tour){
         });
 }
 
+function createAndStoreTour(): Promise<number> {
+    const tourData = getFormData();
+    return tourService.createTour(tourData)
+        .then(created => {
+            createdTourId = created.id!;
+            return created.id!;
+        });
+}
 
+nextBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (!isFormValid()) {
+        alert("Please fill in all required fields.");
+        return;
+    }
+
+    if (createdTourId) {
+        showKeyPointStep();
+    } else {
+        createAndStoreTour()
+            .then(() => {
+                showKeyPointStep();
+            })
+            .catch(error => {
+                alert("Error while creating tour: " + error.message);
+            });
+    }
+});
+
+function showKeyPointStep() {
+    (document.getElementById("step1") as HTMLDivElement).style.display = "none";
+    keyPointSection.style.display = "block";
+
+    KeyPointCode(createdTourId!);
+}
