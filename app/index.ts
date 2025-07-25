@@ -4,6 +4,7 @@ const username = document.querySelector('.username') as HTMLElement;
 const restaurantsLink = document.querySelector('#restaurants') as HTMLElement;
 const toursLink = document.querySelector('#tours') as HTMLElement;
 const touristToursLink = document.querySelector('#tourist-tours') as HTMLElement;
+const touristRestaurantLink = document.querySelector('#tourist-restaurants') as HTMLElement;
 const touristReservations = document.querySelector('#myReservations') as HTMLElement;
 
 function InitializeAvatarOptions(): void {
@@ -33,16 +34,19 @@ function setUserLoginState(isLoggedIn: boolean) {
             restaurantsLink.style.display = 'block';
             toursLink.style.display = 'none';
             touristToursLink.style.display = 'none';
+            touristRestaurantLink.style.display = 'none';
             touristReservations.style.display = 'none';
         } else if(userRole.trim()==="vodic"){
             restaurantsLink.style.display = 'none';
             toursLink.style.display = 'block';
             touristToursLink.style.display = 'none';
+            touristRestaurantLink.style.display = 'none';
             touristReservations.style.display = 'none';
         }else if (userRole.trim()==='turista'){
             restaurantsLink.style.display = 'none';
             toursLink.style.display = 'none';
             touristToursLink.style.display = 'block';
+            touristRestaurantLink.style.display = 'block';
         }
     } else {
         loginLink.style.display = 'block';
