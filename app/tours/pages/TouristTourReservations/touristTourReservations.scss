@@ -49,6 +49,7 @@ h1 {
     }
 
     button {
+        cursor: pointer;
         background-color: #DD5C5C;
         &:hover {
             transform: scale(1.03);

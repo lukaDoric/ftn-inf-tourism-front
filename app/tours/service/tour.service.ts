@@ -250,7 +250,7 @@ export class TourService {
   }
 
   cancelReservation(reservationId: number) {
-    return fetch(`${this.apiUrl}/reservations/${reservationId}`, { method: 'DELETE' })
+   return fetch(`${this.apiUrl}/reservations/${reservationId}`, { method: 'DELETE' })
       .then((response) => {
         if (!response.ok) {
           throw { status: response.status, message: response.text };

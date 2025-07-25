@@ -11,20 +11,41 @@ function Initialize(): void {
   let tourData: Tour = null;
   tourService.getById(id).then((tour: Tour) => {
     tourData = tour;
-    InitializeLogout();
+    InitializeAvatarOptions();
     RenderDetails(tourData);
   })
 }
 
-function InitializeLogout(): void {
-  const logoutElement = document.querySelector("#logout");
-  if (logoutElement) {
-    logoutElement.addEventListener("click", function () {
-      localStorage.removeItem("id");
-      localStorage.removeItem("username");
-      localStorage.removeItem("role");
+function InitializeAvatarOptions(): void {
+    const avatarBtn = document.getElementById('avatarBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const logoutElement = document.querySelector("#logoutBtn");
+    const touristReservations = document.querySelector('#myReservations') as HTMLElement;
+    const username = document.querySelector('.username') as HTMLElement;
+    username.textContent = localStorage.getItem('username');
+
+    if (localStorage.getItem('role').trim() != 'turista'){
+      touristReservations.style.display = 'none';
+    }
+
+    avatarBtn.addEventListener('click', () => {
+        dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
     });
-  }
+
+    document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (!avatarBtn.contains(target) && !dropdownMenu.contains(target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+
+    logoutElement.addEventListener("click", function (event) {
+        event.stopPropagation();
+        localStorage.removeItem("id");
+        localStorage.removeItem("username");
+        localStorage.removeItem("role");
+    });
+
 }
 
 function RenderDetails(tourData: Tour): void {
