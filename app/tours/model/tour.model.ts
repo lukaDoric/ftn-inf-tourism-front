@@ -6,6 +6,7 @@ export interface Tour{
     maxGuests: number
     status?: string
     guideId?: number
+    keyPoints?: KeyPoint[]
 }
 
 export interface TourResults {
