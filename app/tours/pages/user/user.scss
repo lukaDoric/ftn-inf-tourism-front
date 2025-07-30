@@ -164,41 +164,52 @@ body {
                     font-size: small;
                     margin: 15px;
                 }
+            }   
+        }
+    }  
+
+    .pagination {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+
+        button {
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+
+            &:disabled {
+                background-color: #eee;
+                cursor: not-allowed;
             }
-            
+
+            &:hover:not(:disabled) {
+                background-color: #f0f0f0;
+            }
         }
 
-   
+        #pageCount button {
+            margin: 0 4px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            order: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+        }
 
-        .pagination {
-            grid-column: 1 / -1;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
+        #pageCount button.active-page {
+            background-color: dodgerblue;
+            color: white;
+            font-weight: bold;
+        }
 
-            button {
-                padding: 8px 14px;
-                border-radius: 6px;
-                border: 1px solid #ccc;
-                background-color: white;
-                cursor: pointer;
-                font-weight: 500;
-                transition: background-color 0.2s;
-
-                &:disabled {
-                    background-color: #eee;
-                    cursor: not-allowed;
-                }
-
-                &:hover:not(:disabled) {
-                    background-color: #f0f0f0;
-                }
-                
-
-            }
-        }    
-    }  
+    }    
 }
 
 

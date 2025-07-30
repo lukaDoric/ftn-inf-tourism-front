@@ -16,10 +16,12 @@ export class TourService {
         this.apiUrl = "http://localhost:48696/api/tours";
     }
 
-    getAll(orderBy: string = "Name", orderDirection:string = "ACS"): Promise<TourResults> {
+    getAll(orderBy: string = "Name", orderDirection:string = "ACS", currentPage:number = 1, pageSize:number = 5): Promise<TourResults> {
         const qureyParms = new URLSearchParams({
             orderBy: orderBy,
-            orderDirection: orderDirection
+            orderDirection: orderDirection,
+            page: currentPage.toString(),
+            pageSize: pageSize.toString()
         });
 
         const url = `${this.apiUrl}?${qureyParms.toString()}`;

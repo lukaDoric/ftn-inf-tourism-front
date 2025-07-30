@@ -38,17 +38,19 @@
         <div class="top-bar">
             <label for="pageSize">Tours per page:</label>
             <select id="pageSize">
-                <option value="5">5</option>
-                <option value="10" selected>10</option>
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
                 <option value="20">20</option>
+                <option value="25">25</option>
             </select>
         </div>
 
-        <div class="card-grid">
-            <div class="pagination"> 
-                <button id="prevPage" disabled>Prethodna</button>
-                <button id="nextPage">Sledeca</button>
-            </div>
+        <div class="card-grid"></div>
+        <div class="pagination"> 
+                <button id="prevPage" disabled>Previous</button>
+                <div id="pageCount"></div>
+                <button id="nextPage">Next</button>
         </div>
     </section>
     </main>
