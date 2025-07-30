@@ -1,5 +1,5 @@
-import { TourResults } from "../../model/tour.model.js";
-import { TourService } from "../../service/tour.service.js";
+import { TourResults } from "../../../model/tour.model.js";
+import { TourService } from "../../../service/tour.service.js";
 const tourService = new TourService();
 const sortDropdown = document.getElementById("sortDropdown") as HTMLSelectElement;
 const orderDropdown = document.getElementById("orderDropdown") as HTMLSelectElement;
@@ -56,8 +56,8 @@ function renderData(orderBy: string = "Name", orderDirection: string = "ASC", pa
             renderTourCards(result);
         })
         .catch(error => {
-            console.error("Greška:", error);
-            alert("Došlo je do greške prilikom učitavanja podataka.");
+            console.error("Error:", error);
+            alert("Error occurred while loading tours.");
         });
 }
 
@@ -98,6 +98,7 @@ function renderTourCards(result: TourResults): void {
     result.data.forEach(tour => {
         const tourEl = document.createElement("div");
         tourEl.className = "tour-card";
+        tourEl.setAttribute("data-id", tour.id.toString());
         tourEl.innerHTML = `
             <div class='tour-cardFront'>
                 <img src="${imageUrl}" alt="${tour.name}" />
@@ -118,6 +119,14 @@ function renderTourCards(result: TourResults): void {
                 <p>${tour.description}</p>
             </div>`;
 
+            tourEl.addEventListener("click", () => {
+                const id = tourEl.getAttribute("data-id");
+                if(id){
+                    window.location.href = `../tour-details/tour-details.html?id=${id}`
+                }
+            })
+
         cardGrid.appendChild(tourEl);
     });
 }
+

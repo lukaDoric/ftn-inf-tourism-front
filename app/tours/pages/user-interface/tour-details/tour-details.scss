@@ -1,0 +1,145 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+
+    a,
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .sign-in {
+      color: #007bff;
+    }
+
+    .register {
+      background: black;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+  }
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  margin-top: 15px;
+
+    .tour-content{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            height: 60%;
+            width: 100%;
+
+        .tour-img{
+            background-color: transparent;
+            width: 40%;
+            border: 1px solid ;
+            border-radius: 20px;
+            margin: 5px;
+        }
+        .tour-details{
+            background-color: white;
+            width: 50%;
+            margin: 5px;
+            
+            .top{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin: 5px 15px;
+
+                h1{
+                    font-size: medium;
+                }
+
+                p{
+                    font-size: small;
+                }
+            }
+
+            .middle{
+                margin: 0px 15px;
+
+                #description{
+                    padding-top: 10px;
+                }
+            }
+
+            .bottom{
+                margin: 10px;
+                justify-self: start;
+                align-self: self-end;
+            }
+
+        }
+    }
+    
+    .key-point-content{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin: 15px 5px;
+
+        #key-point{
+            background-color: #ddd;
+            width: 300px;
+            height: 35vh;
+            border-radius: 15px;
+            padding: 5px 15px;
+
+            h1{
+                font-size: large;
+                margin-bottom: 0px;
+            }
+            p{
+                margin-top: 0px;
+                font-size: small;
+            }
+            #key-point-description{
+                font-size: medium;
+            }
+        }
+    }
+}
+
+
+
+    
+
+
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  padding: 2rem;
+  border-top: 1px solid #ddd;
+
+  .footer-column {
+    max-width: 300px;
+
+    p {
+      margin: 5px 0;
+    }
+  }
+}
