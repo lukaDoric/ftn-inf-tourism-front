@@ -1,4 +1,4 @@
-import { Tour, KeyPoint } from "../model/tour.model";
+import { Tour, KeyPoint, TourResults } from "../model/tour.model";
 
 function handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
@@ -14,6 +14,29 @@ export class TourService {
 
     constructor() {
         this.apiUrl = "http://localhost:48696/api/tours";
+    }
+
+    getAll(orderBy: string = "Name", orderDirection:string = "ACS"): Promise<TourResults> {
+        const qureyParms = new URLSearchParams({
+            orderBy: orderBy,
+            orderDirection: orderDirection
+        });
+
+        const url = `${this.apiUrl}?${qureyParms.toString()}`;
+        return fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw { status: response.status, message: response.text }
+                }
+                return response.json();
+            })
+            .then((tours: TourResults) => {
+                return tours;
+            })
+            .catch(error => {
+                console.error("Error while creating key-point: ", error.message);
+                throw error;
+            })
     }
 
     createKeyPoint(tourId: number, keyPoint: KeyPoint): Promise<KeyPoint>{
