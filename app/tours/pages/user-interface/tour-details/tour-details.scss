@@ -37,97 +37,6 @@ body {
   }
 }
 
-.main-layout {
-  display: flex;
-  flex-direction: column;
-  height: 600px;
-  margin-top: 15px;
-
-    .tour-content{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            height: 60%;
-            width: 100%;
-
-        .tour-img{
-            background-color: transparent;
-            width: 40%;
-            border: 1px solid ;
-            border-radius: 20px;
-            margin: 5px;
-        }
-        .tour-details{
-            background-color: white;
-            width: 50%;
-            margin: 5px;
-            
-            .top{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                margin: 5px 15px;
-
-                h1{
-                    font-size: medium;
-                }
-
-                p{
-                    font-size: small;
-                }
-            }
-
-            .middle{
-                margin: 0px 15px;
-
-                #description{
-                    padding-top: 10px;
-                }
-            }
-
-            .bottom{
-                margin: 10px;
-                justify-self: start;
-                align-self: self-end;
-            }
-
-        }
-    }
-    
-    .key-point-content{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        margin: 15px 5px;
-
-        #key-point{
-            background-color: #ddd;
-            width: 300px;
-            height: 35vh;
-            border-radius: 15px;
-            padding: 5px 15px;
-
-            h1{
-                font-size: large;
-                margin-bottom: 0px;
-            }
-            p{
-                margin-top: 0px;
-                font-size: small;
-            }
-            #key-point-description{
-                font-size: medium;
-            }
-        }
-    }
-}
-
-
-
-    
-
-
-
 .footer {
   display: flex;
   justify-content: space-around;
@@ -143,3 +52,145 @@ body {
     }
   }
 }
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 4rem;
+  gap: 3rem;
+
+  .tour-content {
+    display: flex;
+    gap: 2rem;
+
+    .tour-img {
+      flex: 0 0 420px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+    }
+
+    .tour-details {
+      flex: 1;
+      background-color: white;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 360px;
+
+      .top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 0px;
+        h1 {
+          margin: 0;
+          font-size: 1.5rem;
+        }
+
+        p {
+          margin-top: 0.4rem;
+          color: #777;
+        }
+      }
+
+      .middle {
+
+        #date {
+          font-weight: 600;
+          margin-bottom: 1rem;
+          color: #555;
+        }
+
+        #description {
+          font-size: 0.95rem;
+          color: #333;
+        }
+      }
+
+      .bottom {
+        margin-top: auto;
+
+        button {
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+
+          &:hover {
+            background-color: #333;
+          }
+        }
+      }
+    }
+  }
+
+  .key-point-content {
+    display: flex;
+    justify-content: space-around;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+
+    .key-point {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      min-width: 250px;
+      background-color: white;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      overflow: hidden;
+
+      .key-point-img {
+        width: 100%;
+        height: 160px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+      }
+
+      .key-point-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-height: 160px;
+        padding: 0px 15px;
+
+        h1 {
+          font-size: 1.1rem;
+        }
+
+        p {
+          font-size: 13px;
+          color: #444;
+        }
+
+        .key-point-description {
+          margin-top: 0.5rem;
+
+          p {
+            font-size: 0.85rem;
+            color: #555;
+          }
+        }
+      }
+    }
+  }
+}
+
+

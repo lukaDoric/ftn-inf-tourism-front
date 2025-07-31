@@ -41,7 +41,7 @@ function handleLogin(event: Event) {
                "../../../restaurants/pages/list/myRestaurant.html";
             }
             else if(user.role === 'turista'){
-              window.location.href = "../../../tours/pages/user-inerface/main-page/user.html";
+              window.location.href = "/app/tours/pages/user-interface/main-page/user.html";
             }
             else{
                 window.location.href = "../../../index.html";
