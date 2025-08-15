@@ -1,5 +1,6 @@
 import { RestaurantService } from "../../services/restaurant.service.js";
 import { Restaurant } from "../../models/restaurant.model";
+import { reservationHandler } from "../../reservations/reservationForm.js";
 
 const service = new RestaurantService();
 
@@ -15,6 +16,7 @@ if (id && id > 0) {
     .getById(id)
     .then((restaurant: Restaurant) => {
       displayRestaurantDetails(restaurant);
+      reservationHandler(restaurant.id);
     })
     .catch((error) => {
       console.error("Greska pri dohvatanju restorana:", error);
@@ -25,7 +27,8 @@ if (id && id > 0) {
 }
 
 function displayRestaurantDetails(restaurant: Restaurant): void {
-  container.innerHTML = `
+  const infoDiv = document.getElementById("restaurantInfo") as HTMLDivElement;
+  infoDiv.innerHTML = `
     <h2>${restaurant.name}</h2>
     <p>${restaurant.description}</p>
     <p><strong>Kapacitet:</strong> ${restaurant.capacity}</p>
