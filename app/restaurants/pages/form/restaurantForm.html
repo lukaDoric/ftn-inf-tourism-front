@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dodaj restoran</title>
+<link rel="stylesheet" href="../../../../dist/restaurants/pages/form/restaurantForm.css">
+</head>
+<body>
+
+ <nav class="navbar">
+  <div class="logo">
+        <a href="../../../index.html">Gastronomija</a>
+        </div>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="../../../index.html">Home</a></li>
+      <li class="nav-item" id="myRestaurants"><a href="../list/myRestaurant.html">Moji restorani</a></li>      <li class="nav-item" id="logout"><a href="../../../index.html">Logout</a></li>
+    <li class="nav-item" id="my-res" style="display:none">
+  <a href="../my/myReservations.html">Moje rezervacije</a>
+</li>
+    </ul>
+  </nav>
+
+  <script>
+  (function () {
+    var isLoggedIn = !!localStorage.getItem("username");
+    var my = document.getElementById("my-res");
+    if (my) my.style.display = isLoggedIn ? "block" : "none";
+  })();
+</script>
+
+  <h1>Dodaj novi restoran</h1>
+  
+  <form id="restaurantForm">
+    <label>Naziv:</label>
+    <input type="text" id="name" required/>
+
+    <label>Opis:</label>
+    <textarea id="description" required></textarea>
+
+    <label>Kapacitet:</label>
+    <input type="number" id="capacity" required  min="1"/>
+
+    <label>Slike (URL, odvojene zarezom):</label>
+    <input type="text" id="images" />
+
+    <label>Geografska sirina:</label>
+    <input type="number" step="any" id="latitude" required  step="any" />
+
+    <label>Geografska duzina:</label>
+    <input type="number" step="any" id="longitude" required  step="any" />
+
+    <button type="submit">Sacuvaj</button>
+    <button type="button" id="publishBtn">Objavi restoran</button>
+
+  </form>
+
+  <h2>Jelovnik</h2>
+<div id="mealsList"></div>
+<button id="addMealBtn">+ Dodaj jelo</button>
+
+
+<div id="mealFormContainer" style="display:none;">
+  <input type="text" id="mealName" placeholder="Naziv jela" />
+  <input type="number" id="mealPrice" placeholder="Cena" />
+  <input type="text" id="mealIngredients" placeholder="Sastojci" />
+  <input type="text" id="mealImageUrl" placeholder="URL slike (opciono)" />
+  <button id="saveMealBtn">Sacuvaj jelo</button>
+</div>
+
+
+<script type="module" src="../../../../dist/restaurants/pages/form/restaurantForm.js"></script>
+</body>
+</html>
